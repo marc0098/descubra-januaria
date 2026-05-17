@@ -1,6 +1,7 @@
 import React from 'react';
 import { MapPin, Clock, ChevronRight, ArrowLeft, Phone, Star, Check, Camera, Mountain, Waves, TreePine, Sun } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import MobileNav from '@/components/MobileNav';
 
 /**
  * Página: Roteiro Detalhado Peruaçu
@@ -11,8 +12,9 @@ import { Link } from 'react-router-dom';
 export default function GuiaPeruacu() {
   return (
     <div className="min-h-screen bg-background">
+      <MobileNav />
       {/* Banner de Herói com Imagem de Fundo */}
-      <section className="relative h-[60vh] md:h-[70vh] lg:h-[75vh] overflow-hidden" aria-labelledby="peruacu-title">
+      <section className="relative h-[60vh] md:h-[70vh] lg:h-[75vh] overflow-hidden pt-16" aria-labelledby="peruacu-title">
         <img 
           src="https://images.unsplash.com/photo-1558452048-e4a88a5502b4?auto=format&fit=crop&q=80&w=1920" 
           alt="Paisagem deslumbrante do Vale do Peruaçu" 

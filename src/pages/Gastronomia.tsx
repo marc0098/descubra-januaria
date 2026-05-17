@@ -95,7 +95,7 @@ export default function Gastronomia() {
         placeholder="Buscar pratos, restaurantes..."
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
-        bgColor="bg-[#2E8B57]"
+        bgColor="bg-transparent"
       />
 
 

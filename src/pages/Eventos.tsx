@@ -114,7 +114,7 @@ export default function Eventos() {
         placeholder="Buscar eventos, festas..."
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
-        bgColor="bg-[#6B3FA0]"
+        bgColor="bg-transparent"
       />
 
       {/* CONTEÚDO - EVENTOS */}

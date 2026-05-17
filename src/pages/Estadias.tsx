@@ -88,7 +88,7 @@ export default function Estadias() {
         placeholder="Buscar hoteis, pousadas..."
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
-        bgColor="bg-[#136862]"
+        bgColor="bg-transparent"
       />
 
       {/* CONTEÚDO */}

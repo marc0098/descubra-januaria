@@ -101,14 +101,15 @@ export default function Pontos() {
   }, []);
 
   const nextImage = useCallback(() => {
-    if (selectedPonto) {
-      setActiveImageIndex(prev => (prev + 1) % selectedPonto.images.length);
+    if (selectedPonto?.images && selectedPonto.images.length > 0) {
+      setActiveImageIndex((prev: number) => (prev + 1) % selectedPonto.images.length);
     }
   }, [selectedPonto]);
 
   const prevImage = useCallback(() => {
-    if (selectedPonto) {
-      setActiveImageIndex(prev => (prev - 1 + selectedPonto.images.length) % selectedPonto.images.length);
+    if (selectedPonto?.images && selectedPonto.images.length > 0) {
+      const len = selectedPonto.images.length;
+      setActiveImageIndex((prev: number) => (prev - 1 + len) % len);
     }
   }, [selectedPonto]);
 
@@ -134,7 +135,7 @@ export default function Pontos() {
         placeholder="Buscar locais, atrações..."
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
-        bgColor="bg-[#136862]"
+        bgColor="bg-transparent"
       />
       <MobileNav />
 
@@ -146,12 +147,12 @@ export default function Pontos() {
 
         {/* Filtros */}
         <div className="flex items-center gap-2 mb-6 overflow-x-auto no-scrollbar scrollbar-hide pb-1">
-          {categories.map((cat) => {
-            const Icon = categoryIcons[cat] || categoryIcons.default;
+          {categories.filter((cat): cat is string => cat !== undefined).map((cat) => {
+            const Icon = categoryIcons[cat as keyof typeof categoryIcons] || categoryIcons.default;
             return (
               <button
                 key={cat}
-                onClick={() => setSelectedCategory(cat)}
+                onClick={() => setSelectedCategory(cat as string)}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-full font-sans text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-all duration-200 ${
                   selectedCategory === cat
                     ? 'bg-primary text-white shadow-md shadow-primary/15'
@@ -179,7 +180,7 @@ export default function Pontos() {
         >
           <AnimatePresence mode="popLayout">
             {filteredPontos.map((ponto, index) => {
-              const Icon = categoryIcons[ponto.category] || categoryIcons.default;
+              const Icon = categoryIcons[(ponto.category || 'default') as keyof typeof categoryIcons] || categoryIcons.default;
 
               return (
                 <motion.article
@@ -347,11 +348,11 @@ export default function Pontos() {
                 {/* Contador de fotos */}
                 <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-black/40 backdrop-blur-sm px-3 py-1.5 rounded-xl flex items-center gap-1.5">
                   <Camera size={12} className="text-white/70" />
-                  <span className="font-sans text-[11px] font-bold text-white">{activeImageIndex + 1} / {selectedPonto.images?.length || 0}</span>
+                  <span className="font-sans text-[11px] font-bold text-white">{activeImageIndex + 1} / {(selectedPonto.images?.length ?? 0)}</span>
                 </div>
 
                 {/* Navegação prev/next */}
-{selectedPonto.images?.length && selectedPonto.images.length > 1 && (
+{(selectedPonto.images?.length ?? 0) > 1 && (
                   <>
                     <button
                       onClick={prevImage}
@@ -370,9 +371,9 @@ export default function Pontos() {
               </div>
 
               {/* Thumbnails */}
-              {selectedPonto.images.length > 1 && (
+              {(selectedPonto.images?.length ?? 0) > 1 && (
                 <div className="flex gap-2 px-4 sm:px-6 pt-4 overflow-x-auto no-scrollbar scrollbar-hide shrink-0">
-                  {selectedPonto.images.map((img, idx) => (
+                  {(selectedPonto.images || []).map((img, idx) => (
                     <button
                       key={idx}
                       onClick={() => setActiveImageIndex(idx)}

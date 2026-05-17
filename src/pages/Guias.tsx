@@ -92,7 +92,7 @@ export default function Guias() {
         placeholder="Buscar guias, especialidades..."
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
-        bgColor="bg-[#1565C0]"
+        bgColor="bg-transparent"
       />
 
       {/* ═══════════════════════════════════════════════════════════════
