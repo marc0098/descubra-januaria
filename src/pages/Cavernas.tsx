@@ -68,7 +68,6 @@ export default function Cavernas() {
 
   return (
     <main className="pt-16 sm:pt-20 md:pt-28 lg:pt-32 2xl:pt-36 pb-24 sm:pb-12 md:pb-16 lg:pb-20 2xl:pb-24 bg-background min-h-screen">
-      <MobileNav />
       <div className="max-w-[1300px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20 2xl:px-24 py-6 md:py-10 2xl:py-12">
         
         {/* Cabeçalho da Página */}

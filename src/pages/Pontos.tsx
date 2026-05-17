@@ -126,8 +126,6 @@ export default function Pontos() {
 
   return (
     <main className="min-h-screen bg-background">
-      <MobileNav />
-
       <PageHeader
         title="Pontos Turísticos"
         subtitle="Explore a história, natureza e cultura de Januária."
@@ -138,6 +136,7 @@ export default function Pontos() {
         onSearchChange={setSearchTerm}
         bgColor="bg-[#136862]"
       />
+      <MobileNav />
 
 
       {/* ═══════════════════════════════════════════════════════════════
