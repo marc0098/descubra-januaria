@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   ChevronLeft, ChevronRight, ImageOff, X,
-  MapPin, ArrowRight, History, Mountain, Palmtree, Camera, Compass
+  MapPin, ArrowRight, History, Mountain, Palmtree, Camera, Compass, Search
 } from 'lucide-react';
 import MobileNav from '@/components/MobileNav';
 import PageHeader from '@/components/PageHeader';
