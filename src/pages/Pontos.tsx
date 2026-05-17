@@ -136,7 +136,7 @@ export default function Pontos() {
         placeholder="Buscar locais, atrações..."
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
-        bgColor="bg-pontos"
+        bgColor="bg-[#136862]"
       />
 
 
