@@ -1,8 +1,10 @@
+"use client";
+
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { motion } from 'motion/react';
 import { 
-  Mountain, Utensils, Compass, Bed, Calendar, MapPin, ArrowLeft, ArrowRight
+  Mountain, Utensils, Compass, Bed, Calendar, MapPin, ArrowRight
 } from 'lucide-react';
 
 interface NavButtonsProps {
@@ -19,8 +21,7 @@ const pages = [
 ];
 
 export default function NavButtons({ currentPage }: NavButtonsProps) {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const router = useRouter();
 
   const currentIndex = pages.findIndex(p => p.id === currentPage);
   const currentPageData = pages[currentIndex];
@@ -47,7 +48,7 @@ export default function NavButtons({ currentPage }: NavButtonsProps) {
                 key={page.id}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => navigate(page.path)}
+                onClick={() => router.push(page.path)}
                 className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl ${page.color} text-white shrink-0 group hover:shadow-lg transition-all duration-300`}
               >
                 <Icon size={14} className="group-hover:scale-110 transition-transform" />

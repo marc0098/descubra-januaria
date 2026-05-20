@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { motion } from 'motion/react';
 import { Search, X, ArrowLeft } from 'lucide-react';
 
@@ -25,7 +27,7 @@ export default function PageHeader({
   bgColor = 'bg-transparent'
 }: PageHeaderProps) {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <section className={`${bgColor} lg:bg-surface transition-colors duration-300`}>
@@ -35,7 +37,7 @@ export default function PageHeader({
           {/* Título com contagem inline */}
           <div className="flex items-center gap-2 mb-3">
             <button 
-              onClick={() => navigate(-1)}
+              onClick={() => router.back()}
               className="p-1.5 -ml-1 rounded-full hover:bg-on-surface/5 transition-colors"
               aria-label="Voltar"
             >
