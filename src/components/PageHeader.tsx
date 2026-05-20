@@ -28,7 +28,7 @@ export default function PageHeader({
   const navigate = useNavigate();
 
   return (
-    <section className={`${bgColor} lg:bg-white`}>
+    <section className={`${bgColor} lg:bg-surface transition-colors duration-300`}>
       {/* Mobile: Header estilo app nativo */}
       <div className="lg:hidden">
         <div className="px-4 pt-4 pb-3 bg-surface-container">
@@ -78,7 +78,7 @@ export default function PageHeader({
       </div>
 
       {/* Desktop: Mantém o estilo original */}
-      <div className="hidden lg:block max-w-[1200px] 2xl:max-w-[1400px] mx-auto px-5 sm:px-8 md:px-12 lg:px-16 2xl:px-20 pt-14 pb-6 2xl:pb-8 bg-white">
+      <div className="hidden lg:block max-w-[1200px] 2xl:max-w-[1400px] mx-auto px-5 sm:px-8 md:px-12 lg:px-16 2xl:px-20 pt-14 pb-6 2xl:pb-8 bg-surface transition-colors duration-300">
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

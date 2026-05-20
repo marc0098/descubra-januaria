@@ -124,13 +124,16 @@ export default function Home() {
 
         <div className="relative z-20 flex flex-col justify-center h-full w-full max-w-[1280px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20 pt-16 sm:pt-20 md:pt-24">
           <div className="w-full max-w-[1200px] flex flex-col items-start">
-            <div className="flex flex-col items-start text-white text-left drop-shadow-[0_4px_10px_rgba(0,0,0,0.7)] mb-6 sm:mb-8">
+            <motion.div 
+              style={{ y: useTransform(scrollYProgress, [0, 0.5], [0, 80]) }}
+              className="flex flex-col items-start text-white text-left drop-shadow-[0_4px_10px_rgba(0,0,0,0.7)] mb-6 sm:mb-8"
+            >
               <h1 className="flex flex-col">
                 <span className="font-headline text-[clamp(20px,5vw,50px)] lg:text-[56px] xl:text-[64px] font-normal tracking-[0.15em] uppercase leading-none mb-1">DESCUBRA</span>
                 <span className="font-headline text-[clamp(38px,10vw,90px)] lg:text-[96px] xl:text-[110px] 2xl:text-[120px] font-bold tracking-[-0.01em] leading-none">JANUÁRIA</span>
               </h1>
               <span className="font-sans text-[clamp(12px,2.5vw,22px)] lg:text-[24px] xl:text-[28px] font-semibold tracking-[0.1em] uppercase mt-3 sm:mt-4">CULTURA, NATUREZA E HISTÓRIA</span>
-            </div>
+            </motion.div>
 
             {/* Botões de Chamada para Ação (CTA) */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
@@ -229,15 +232,15 @@ export default function Home() {
       </section>
 
       {/* Seção de Boas-Vindas */}
-      <section className="w-full py-10 sm:py-14 md:py-16 lg:py-20 bg-emerald-50">
+      <section className="w-full py-10 sm:py-14 md:py-16 lg:py-20 bg-emerald-50/70 dark:bg-emerald-950/10 border-y border-outline-variant/15 transition-all duration-300">
         <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16 flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8 lg:gap-12">
           <div className="md:w-1/2 lg:w-[45%] flex items-center justify-start">
-            <h2 className="font-headline text-[clamp(24px,4vw,32px)] lg:text-[36px] sm:text-[28px] md:text-[32px] leading-[clamp(28px,5vw,40px)] lg:leading-[44px] font-bold uppercase text-[#136862]">
+            <h2 className="font-headline text-[clamp(24px,4vw,32px)] lg:text-[36px] sm:text-[28px] md:text-[32px] leading-[clamp(28px,5vw,40px)] lg:leading-[44px] font-bold uppercase text-primary">
               BEM-VINDO<br className="md:hidden" />AO PORTAL<br className="hidden md:inline lg:hidden" />DE TURISMO<br className="md:hidden lg:inline" />DE JANUÁRIA
             </h2>
           </div>
           <div className="md:w-1/2 lg:w-[50%] flex items-center justify-start">
-            <p className="font-sans text-[clamp(14px,2vw,19px)] lg:text-[17px] sm:text-[16px] md:text-[17px] leading-[clamp(22px,4vw,28px)] lg:leading-[28px] text-[#121111]">
+            <p className="font-sans text-[clamp(14px,2vw,19px)] lg:text-[17px] sm:text-[16px] md:text-[17px] leading-[clamp(22px,4vw,28px)] lg:leading-[28px] text-on-surface">
               Explore as melhores experiências turísticas da região. Aproveite paisagens, gastronomia, atrativos naturais e as culturas que fazem de Januária um destino único.
             </p>
           </div>
@@ -247,17 +250,17 @@ export default function Home() {
       <div className="flex flex-col">
         {/* Seção: Atrativos Naturais (Destaque Peruaçu) */}
         <section className="relative w-full min-h-[500px] sm:min-h-[600px] md:min-h-[700px] lg:min-h-[600px] xl:min-h-[700px] 2xl:min-h-[800px] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${atrativosImg})` }}>
-          <div className="absolute top-0 right-0 bg-[rgba(243,236,226,0.95)] w-full h-[340px] sm:w-[85%] sm:h-[360px] md:w-[70%] md:h-[380px] lg:w-[60%] lg:h-[400px] xl:w-[50%] xl:h-[450px] 2xl:w-[45%] 2xl:h-[480px] rounded-bl-[60px] sm:rounded-bl-[100px] md:rounded-bl-[180px] z-10 p-4 sm:p-6 md:p-8 flex items-center">
+          <div className="absolute top-0 right-0 bg-surface/90 backdrop-blur-md border-l border-b border-outline-variant/30 w-full h-[340px] sm:w-[85%] sm:h-[360px] md:w-[70%] md:h-[380px] lg:w-[60%] lg:h-[400px] xl:w-[50%] xl:h-[450px] 2xl:w-[45%] 2xl:h-[480px] rounded-bl-[60px] sm:rounded-bl-[100px] md:rounded-bl-[180px] z-10 p-4 sm:p-6 md:p-8 flex items-center transition-all duration-300 shadow-xl">
             <div className="flex flex-col md:flex-col lg:flex-row items-center md:items-center lg:items-start gap-4 md:gap-5 lg:gap-8 w-full h-full justify-center">
-              <div className="flex h-10 w-10 sm:h-12 sm:w-12 md:h-[52px] md:w-[52px] lg:h-[56px] lg:w-[56px] shrink-0 items-center justify-center rounded-t-[100px] sm:rounded-t-[150px] rounded-b-[8px] md:rounded-b-[10px] bg-tertiary">
+              <div className="flex h-10 w-10 sm:h-12 sm:w-12 md:h-[52px] md:w-[52px] lg:h-[56px] lg:w-[56px] shrink-0 items-center justify-center rounded-t-[100px] sm:rounded-t-[150px] rounded-b-[8px] md:rounded-b-[10px] bg-tertiary shadow-md">
                 <Mountain className="w-5 h-5 sm:w-6 sm:h-6 md:w-6 h-6 text-white" />
               </div>
               <div className="w-full max-w-[90%] sm:max-w-[520px] md:max-w-[420px] lg:max-w-[480px] flex flex-col gap-4 md:gap-5 lg:gap-5 text-center items-center md:text-center md:items-center lg:text-left lg:items-start">
                 <h2 className="font-headline text-[clamp(22px,5vw,44px)] lg:text-[38px] leading-[clamp(26px,6vw,50px)] lg:leading-[48px] font-bold uppercase text-primary">CAVERNAS DO PERUAÇU</h2>
-                <p className="font-sans text-[clamp(14px,2vw,17px)] lg:text-[16px] leading-[clamp(22px,4vw,28px)] lg:leading-[26px] text-[#1E1E1E]">
+                <p className="font-sans text-[clamp(14px,2vw,17px)] lg:text-[16px] leading-[clamp(22px,4vw,28px)] lg:leading-[26px] text-on-surface-variant">
                   Explore o maior patrimônio de cavernas do Brasil com mais de 140 grutas, pinturas rupestres de 12 mil anos e a maior estalactite do mundo. Patrimônio mundial da UNESCO desde 2025.
                 </p>
-                <button onClick={() => navigate('/cavernas')} className="font-sans text-white px-6 sm:px-8 lg:px-8 py-2.5 sm:py-3 lg:py-2.5 rounded-full text-[11px] sm:text-[12px] lg:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 transition bg-tertiary w-full sm:w-auto lg:w-auto">
+                <button onClick={() => navigate('/cavernas')} className="font-sans text-white px-6 sm:px-8 lg:px-8 py-2.5 sm:py-3 lg:py-2.5 rounded-full text-[11px] sm:text-[12px] lg:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-tertiary w-full sm:w-auto lg:w-auto shadow-md">
                   SAIBA MAIS
                 </button>
               </div>
@@ -267,17 +270,17 @@ export default function Home() {
 
         {/* Seção: Hospedagem */}
         <section className="relative w-full min-h-[500px] sm:min-h-[600px] md:min-h-[700px] lg:min-h-[600px] xl:min-h-[700px] 2xl:min-h-[800px] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: hospedagemImg ? `url(${hospedagemImg})` : undefined }}>
-          <div className="absolute top-0 left-0 bg-[rgba(243,236,226,0.95)] w-full h-[340px] sm:w-[85%] sm:h-[360px] md:w-[70%] md:h-[380px] lg:w-[60%] lg:h-[400px] xl:w-[50%] xl:h-[450px] 2xl:w-[45%] 2xl:h-[480px] rounded-br-[60px] sm:rounded-br-[100px] md:rounded-br-[180px] z-10 p-4 sm:p-6 md:p-8 flex items-center">
+          <div className="absolute top-0 left-0 bg-surface/90 backdrop-blur-md border-r border-b border-outline-variant/30 w-full h-[340px] sm:w-[85%] sm:h-[360px] md:w-[70%] md:h-[380px] lg:w-[60%] lg:h-[400px] xl:w-[50%] xl:h-[450px] 2xl:w-[45%] 2xl:h-[480px] rounded-br-[60px] sm:rounded-br-[100px] md:rounded-br-[180px] z-10 p-4 sm:p-6 md:p-8 flex items-center transition-all duration-300 shadow-xl">
             <div className="flex flex-col md:flex-col lg:flex-row items-center md:items-center lg:items-start gap-4 md:gap-5 lg:gap-8 w-full h-full justify-center">
-              <div className="flex h-10 w-10 sm:h-12 sm:w-12 md:h-[52px] md:w-[52px] lg:h-[56px] lg:w-[56px] shrink-0 items-center justify-center rounded-t-[100px] sm:rounded-t-[150px] rounded-b-[8px] md:rounded-b-[10px] bg-quaternary">
+              <div className="flex h-10 w-10 sm:h-12 sm:w-12 md:h-[52px] md:w-[52px] lg:h-[56px] lg:w-[56px] shrink-0 items-center justify-center rounded-t-[100px] sm:rounded-t-[150px] rounded-b-[8px] md:rounded-b-[10px] bg-quaternary shadow-md">
                 <Bed className="w-5 h-5 sm:w-6 sm:h-6 md:w-6 h-6 text-white" />
               </div>
               <div className="w-full max-w-[90%] sm:max-w-[520px] md:max-w-[420px] lg:max-w-[480px] flex flex-col gap-4 md:gap-5 lg:gap-5 text-center items-center md:text-center md:items-center lg:text-left lg:items-start">
                 <h2 className="font-headline text-[clamp(22px,5vw,44px)] lg:text-[38px] leading-[clamp(26px,6vw,50px)] lg:leading-[48px] font-bold uppercase text-primary">HOSPEDAGEM</h2>
-                <p className="font-sans text-[clamp(14px,2vw,17px)] lg:text-[16px] leading-[clamp(22px,4vw,28px)] lg:leading-[26px] text-[#1E1E1E]">
+                <p className="font-sans text-[clamp(14px,2vw,17px)] lg:text-[16px] leading-[clamp(22px,4vw,28px)] lg:leading-[26px] text-on-surface-variant">
                   Pousadas, chalés e hotéis para todos os estilos. Encontre o lugar perfeito para descansar, aproveitar a vista e viver Januária com conforto e acolhimento.
                 </p>
-                <button onClick={() => navigate('/estadias')} className="font-sans text-white px-6 sm:px-8 lg:px-8 py-2.5 sm:py-3 lg:py-2.5 rounded-full text-[11px] sm:text-[12px] lg:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 transition bg-quaternary w-full sm:w-auto lg:w-auto">
+                <button onClick={() => navigate('/estadias')} className="font-sans text-white px-6 sm:px-8 lg:px-8 py-2.5 sm:py-3 lg:py-2.5 rounded-full text-[11px] sm:text-[12px] lg:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-quaternary w-full sm:w-auto lg:w-auto shadow-md">
                   SAIBA MAIS
                 </button>
               </div>
@@ -287,17 +290,17 @@ export default function Home() {
 
         {/* Seção: Gastronomia */}
         <section className="relative w-full min-h-[500px] sm:min-h-[600px] md:min-h-[700px] lg:min-h-[600px] xl:min-h-[700px] 2xl:min-h-[800px] bg-cover bg-center bg-no-repeat" style={{ backgroundImage: gastronomiaImg ? `url(${gastronomiaImg})` : undefined }}>
-          <div className="absolute top-0 right-0 bg-[rgba(243,236,226,0.95)] w-full h-[340px] sm:w-[85%] sm:h-[360px] md:w-[70%] md:h-[380px] lg:w-[60%] lg:h-[400px] xl:w-[50%] xl:h-[450px] 2xl:w-[45%] 2xl:h-[480px] rounded-bl-[60px] sm:rounded-bl-[100px] md:rounded-bl-[180px] z-10 p-4 sm:p-6 md:p-8 flex items-center">
+          <div className="absolute top-0 right-0 bg-surface/90 backdrop-blur-md border-l border-b border-outline-variant/30 w-full h-[340px] sm:w-[85%] sm:h-[360px] md:w-[70%] md:h-[380px] lg:w-[60%] lg:h-[400px] xl:w-[50%] xl:h-[450px] 2xl:w-[45%] 2xl:h-[480px] rounded-bl-[60px] sm:rounded-bl-[100px] md:rounded-bl-[180px] z-10 p-4 sm:p-6 md:p-8 flex items-center transition-all duration-300 shadow-xl">
             <div className="flex flex-col md:flex-col lg:flex-row items-center md:items-center lg:items-start gap-4 md:gap-5 lg:gap-8 w-full h-full justify-center">
-              <div className="flex h-10 w-10 sm:h-12 sm:w-12 md:h-[52px] md:w-[52px] lg:h-[56px] lg:w-[56px] shrink-0 items-center justify-center rounded-t-[100px] sm:rounded-t-[150px] rounded-b-[8px] md:rounded-b-[10px] bg-primary">
+              <div className="flex h-10 w-10 sm:h-12 sm:w-12 md:h-[52px] md:w-[52px] lg:h-[56px] lg:w-[56px] shrink-0 items-center justify-center rounded-t-[100px] sm:rounded-t-[150px] rounded-b-[8px] md:rounded-b-[10px] bg-primary shadow-md">
                 <Utensils className="w-5 h-5 sm:w-6 sm:h-6 md:w-6 h-6 text-white" />
               </div>
               <div className="w-full max-w-[90%] sm:max-w-[520px] md:max-w-[420px] lg:max-w-[480px] flex flex-col gap-4 md:gap-5 lg:gap-5 text-center items-center md:text-center md:items-center lg:text-left lg:items-start">
                 <h2 className="font-headline text-[clamp(22px,5vw,44px)] lg:text-[38px] leading-[clamp(26px,6vw,50px)] lg:leading-[48px] font-bold uppercase text-primary">GASTRONOMIA</h2>
-                <p className="font-sans text-[clamp(14px,2vw,17px)] lg:text-[16px] leading-[clamp(22px,4vw,28px)] lg:leading-[26px] text-[#1E1E1E]">
+                <p className="font-sans text-[clamp(14px,2vw,17px)] lg:text-[16px] leading-[clamp(22px,4vw,28px)] lg:leading-[26px] text-on-surface-variant">
                   Sabores únicos da culinária mineira e regional. Dos peixes do rio ao tradicional arroz com pequi, experiências gastronômicas que traduzem o verdadeiro sabor de Januária.
                 </p>
-                <button onClick={() => navigate('/gastronomia')} className="font-sans text-white px-6 sm:px-8 lg:px-8 py-2.5 sm:py-3 lg:py-2.5 rounded-full text-[11px] sm:text-[12px] lg:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 transition bg-[#264b27] w-full sm:w-auto lg:w-auto">
+                <button onClick={() => navigate('/gastronomia')} className="font-sans text-white px-6 sm:px-8 lg:px-8 py-2.5 sm:py-3 lg:py-2.5 rounded-full text-[11px] sm:text-[12px] lg:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-primary w-full sm:w-auto lg:w-auto shadow-md">
                   SAIBA MAIS
                 </button>
               </div>

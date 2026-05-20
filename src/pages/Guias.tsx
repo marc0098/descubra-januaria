@@ -128,7 +128,7 @@ export default function Guias() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.96 }}
                 transition={{ duration: 0.25, delay: index * 0.05 }}
-                className="bg-white rounded-2xl border border-outline-variant/40 overflow-hidden group hover:shadow-[0_12px_40px_rgba(0,0,0,0.07)] hover:border-primary/20 transition-all duration-500 flex flex-col"
+                className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group premium-card-hover flex flex-col"
               >
                 {/* Imagem compacta */}
                 <div className="relative aspect-[4/3] overflow-hidden bg-surface-container">
@@ -140,7 +140,7 @@ export default function Guias() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
                   {/* Rating badge */}
-                  <div className="absolute top-2.5 right-2.5 bg-white/95 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center gap-1 shadow-sm">
+                  <div className="absolute top-2.5 right-2.5 bg-surface/90 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center gap-1 shadow-sm">
                     <Star className="text-quaternary fill-quaternary" size={11} />
                     <span className="font-sans text-[10px] font-black text-on-surface">{guia.rating}</span>
                   </div>
@@ -157,7 +157,7 @@ export default function Guias() {
                   <p className="font-sans text-[11px] sm:text-xs text-on-surface-variant leading-relaxed line-clamp-2 flex-1">{guia.specialty}</p>
 
                   {/* Meta compacto */}
-                  <div className="flex items-center gap-2 text-on-surface-variant/50">
+                  <div className="flex items-center gap-2 text-on-surface-variant/60">
                     <Shield size={11} />
                     <span className="font-sans text-[10px] font-medium">ICMBio</span>
                     <div className="w-px h-3 bg-outline-variant" />
@@ -230,12 +230,12 @@ export default function Guias() {
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-3">
                 <Award size={14} className="text-secondary" />
-                <span className="font-sans text-[9px] font-bold uppercase tracking-[0.25em] text-white/40">Oportunidade</span>
+                <span className="font-sans text-[9px] font-bold uppercase tracking-[0.25em] text-white/70">Oportunidade</span>
               </div>
               <h2 className="font-headline text-xl sm:text-2xl font-bold text-white uppercase leading-tight mb-2">
                 Você é guia local?
               </h2>
-              <p className="font-sans text-white/40 text-xs sm:text-sm leading-relaxed max-w-md">
+              <p className="font-sans text-white/80 text-xs sm:text-sm leading-relaxed max-w-md">
                 Cadastre-se e conecte-se com turistas que buscam experiências autênticas.
               </p>
             </div>

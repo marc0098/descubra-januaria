@@ -143,7 +143,7 @@ export default function Eventos() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.25, delay: index * 0.04 }}
-                  className="bg-white rounded-2xl border border-outline-variant/40 overflow-hidden group hover:shadow-[0_12px_40px_rgba(0,0,0,0.07)] hover:border-quaternary/20 transition-all duration-500 flex flex-col cursor-pointer"
+                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover"
                   onClick={() => setSelectedEvent(evento)}
                 >
                   {/* IMAGEM */}
@@ -153,11 +153,11 @@ export default function Eventos() {
                       alt={evento.nome}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
 
                     {/* Badge tipo */}
                     <div className="absolute top-3 left-3">
-                      <div className="bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-sm">
+                      <div className="bg-surface/90 backdrop-blur-sm px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-sm border border-outline-variant/20">
                         <Icon className="text-quaternary" size={12} />
                         <span className="font-sans text-[9px] font-black uppercase tracking-wider text-on-surface">{evento.tipo}</span>
                       </div>
@@ -247,7 +247,7 @@ export default function Eventos() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.3, type: 'spring', damping: 25 }}
-              className="bg-white rounded-2xl sm:rounded-3xl overflow-hidden w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl"
+              className="bg-surface rounded-2xl sm:rounded-3xl border border-outline-variant/30 overflow-hidden w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               {/* IMAGEM */}
@@ -257,7 +257,7 @@ export default function Eventos() {
                   alt={selectedEvent.nome}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 pointer-events-none" />
 
                 <button
                   onClick={() => setSelectedEvent(null)}
@@ -266,7 +266,7 @@ export default function Eventos() {
                   <X size={18} />
                 </button>
 
-                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-xl flex items-center gap-2">
+                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-surface/90 backdrop-blur-sm px-3 py-1.5 rounded-xl flex items-center gap-2 border border-outline-variant/20">
                   <span className="font-sans text-[10px] font-bold uppercase tracking-[0.1em] text-quaternary">{selectedEvent.tipo}</span>
                   <span className="font-sans text-[9px] text-on-surface-variant">·</span>
                   <span className="font-sans text-[10px] font-bold text-on-surface">{selectedEvent.mes}</span>

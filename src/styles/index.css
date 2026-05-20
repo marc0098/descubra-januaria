@@ -32,6 +32,18 @@
   --font-adonais: "Playfair Display", ui-serif, Georgia, serif;
 }
 
+/* Modo Caverna - Dark Theme Overrides */
+.dark {
+  --color-background: #0b0d0d;
+  --color-surface: #121515;
+  --color-on-surface: #F3ECE2;
+  --color-on-surface-variant: #9babb0;
+  --color-surface-container: #171c1c;
+  --color-surface-container-low: #0f1212;
+  --color-surface-container-lowest: #080a0a;
+  --color-outline-variant: #262e2e;
+}
+
 @layer utilities {
   .no-border { border: none !important; }
   .scale-up-102:hover { transform: scale(1.02); }
@@ -40,6 +52,28 @@
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
+  }
+  .glass-header {
+    background: rgba(38, 75, 39, 0.75); /* Verde Cerrado Translúcido */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .dark .glass-header {
+    background: rgba(17, 22, 22, 0.75); /* Dark Caverna Translúcido */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  }
+  .premium-card-hover {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .premium-card-hover:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    border-color: rgba(220, 96, 55, 0.3) !important; /* Brilho terracota suave */
+  }
+  .dark .premium-card-hover:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-color: rgba(220, 96, 55, 0.45) !important;
   }
   .hero-gradient {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.8) 100%);
@@ -74,6 +108,7 @@
     color: var(--color-on-surface);
     font-family: var(--font-body);
     padding-bottom: env(safe-area-inset-bottom, 0px);
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-headline);

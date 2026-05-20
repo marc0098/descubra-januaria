@@ -205,7 +205,7 @@ export default function AdminHoteis() {
                   type="checkbox"
                   id="destaque"
                   checked={form.destaque || false}
-                  onChange={(e) => setForm({ ...form, destino: e.target.checked })}
+                  onChange={(e) => setForm({ ...form, destaque: e.target.checked })}
                   className="w-4 h-4"
                 />
                 <label htmlFor="destaque" className="text-sm text-gray-700">Marcar como destaque</label>

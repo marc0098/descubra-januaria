@@ -87,7 +87,7 @@ export default function Cavernas() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-primary font-sans text-[clamp(14px,2vw,17px)] lg:text-[17px] leading-[clamp(22px,4vw,28px)] lg:leading-[28px] mb-8 max-w-3xl"
+          className="text-on-surface-variant font-sans text-[clamp(14px,2vw,17px)] lg:text-[17px] leading-[clamp(22px,4vw,28px)] lg:leading-[28px] mb-8 max-w-3xl"
         >
           O Parque Nacional Cavernas do Peruaçu é um dos patrimônios naturais mais impressionantes do Brasil. Com mais de 140 cavernas catalogadas e pinturas rupestres de até 12.000 anos, é patrimônio mundial da UNESCO desde 2025. Explore abaixo os principais roteiros disponíveis.
         </motion.p>
@@ -101,7 +101,7 @@ export default function Cavernas() {
           onClick={() => setShowMap(true)}
         >
           <div className="absolute inset-0 bg-primary/5 rounded-[32px] -m-2 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          <div className="relative overflow-hidden rounded-[32px] border-4 border-white shadow-2xl aspect-[16/7] md:aspect-[21/8]">
+          <div className="relative overflow-hidden rounded-[32px] border-4 border-surface shadow-2xl aspect-[16/7] md:aspect-[21/8] transition-all duration-300">
             <img 
               src="/img/Mapa peruaçu.jpeg" 
               alt="Mapa do Parque Nacional Cavernas do Peruaçu" 
@@ -134,7 +134,7 @@ export default function Cavernas() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-2xl sm:rounded-3xl lg:rounded-[32px] overflow-hidden shadow-xl flex flex-col border border-gray-100 group"
+                className="bg-surface rounded-2xl sm:rounded-3xl lg:rounded-[32px] overflow-hidden shadow-xl flex flex-col border border-outline-variant/30 group premium-card-hover"
               >
                 {/* Imagem Container */}
                 <div className="h-56 sm:h-64 lg:h-72 2xl:h-80 relative overflow-hidden">
@@ -153,7 +153,7 @@ export default function Cavernas() {
                 {/* Conteúdo do Card */}
                 <div className="p-6 sm:p-8 lg:p-10 2xl:p-12 flex-1 flex flex-col">
                   <div className="flex items-start justify-between mb-4">
-                    <h3 className="font-headline text-[clamp(20px,3vw,28px)] lg:text-[26px] 2xl:text-[28px] font-bold text-primary uppercase leading-tight">
+                    <h3 className="font-headline text-[clamp(20px,3vw,28px)] lg:text-[26px] 2xl:text-[28px] font-bold text-on-surface uppercase leading-tight">
                       {item.nome}
                     </h3>
                     <div className={`p-2 rounded-lg ${item.cor_tema} text-white`}>
@@ -161,18 +161,18 @@ export default function Cavernas() {
                     </div>
                   </div>
                   
-                  <p className="text-[#333] font-sans text-[clamp(14px,2vw,16px)] lg:text-[15px] 2xl:text-[16px] leading-[26px] 2xl:leading-[28px] mb-6 flex-1 opacity-90">
+                  <p className="text-on-surface-variant font-sans text-[clamp(14px,2vw,16px)] lg:text-[15px] 2xl:text-[16px] leading-[26px] 2xl:leading-[28px] mb-6 flex-1">
                     {item.descricao}
                   </p>
 
                   {/* Badges de Info Técnica */}
                   <div className="grid grid-cols-2 gap-3 mb-8">
-                    <div className="bg-gray-50 p-3 rounded-2xl border border-gray-100">
-                      <span className="block text-[10px] font-bold text-gray-400 uppercase tracking-tighter mb-1">Trilha</span>
+                    <div className="bg-surface-container p-3 rounded-2xl border border-outline-variant/30">
+                      <span className="block text-[10px] font-bold text-on-surface-variant/60 uppercase tracking-tighter mb-1">Trilha</span>
                       <span className="font-sans text-xs font-bold text-primary">{item.trilha}</span>
                     </div>
-                    <div className="bg-gray-50 p-3 rounded-2xl border border-gray-100">
-                      <span className="block text-[10px] font-bold text-gray-400 uppercase tracking-tighter mb-1">Dificuldade</span>
+                    <div className="bg-surface-container p-3 rounded-2xl border border-outline-variant/30">
+                      <span className="block text-[10px] font-bold text-on-surface-variant/60 uppercase tracking-tighter mb-1">Dificuldade</span>
                       <span className={`font-sans text-xs font-bold ${item.text_tema}`}>{item.dificuldade}</span>
                     </div>
                   </div>
@@ -200,12 +200,12 @@ export default function Cavernas() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-16 sm:mt-24 bg-white rounded-3xl lg:rounded-[40px] p-8 sm:p-12 lg:p-16 shadow-2xl border border-gray-100 xl:max-w-6xl xl:mx-auto relative overflow-hidden"
+          className="mt-16 sm:mt-24 bg-surface rounded-3xl lg:rounded-[40px] p-8 sm:p-12 lg:p-16 shadow-2xl border border-outline-variant/30 xl:max-w-6xl xl:mx-auto relative overflow-hidden"
         >
-          <div className="absolute top-0 right-0 w-32 h-32 bg-tertiary/5 rounded-bl-full"></div>
+          <div className="absolute top-0 right-0 w-32 h-32 bg-tertiary/10 rounded-bl-full"></div>
           
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary">
+            <div className="w-10 h-10 rounded-full bg-tertiary/15 flex items-center justify-center text-tertiary">
               <Info size={24} />
             </div>
             <h3 className="font-headline text-[clamp(20px,3vw,32px)] lg:text-[32px] font-bold text-primary uppercase">Guia de Visitação</h3>
@@ -214,25 +214,25 @@ export default function Cavernas() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 relative z-10">
             <div className="flex flex-col group/info">
               <span className="font-sans text-[12px] font-bold text-tertiary uppercase mb-2 tracking-widest border-b border-tertiary/20 pb-1 w-fit">Entrada</span>
-              <span className="font-sans text-[16px] text-gray-800 font-medium">Franca</span>
+              <span className="font-sans text-[16px] text-on-surface font-medium">Franca</span>
             </div>
             <div className="flex flex-col group/info">
               <span className="font-sans text-[12px] font-bold text-tertiary uppercase mb-2 tracking-widest border-b border-tertiary/20 pb-1 w-fit">Horário</span>
-              <span className="font-sans text-[16px] text-gray-800 font-medium">8h às 18h</span>
+              <span className="font-sans text-[16px] text-on-surface font-medium">8h às 18h</span>
             </div>
             <div className="flex flex-col group/info">
               <span className="font-sans text-[12px] font-bold text-tertiary uppercase mb-2 tracking-widest border-b border-tertiary/20 pb-1 w-fit">Modalidade</span>
-              <span className="font-sans text-[16px] text-gray-800 font-medium">Apenas com Condutor</span>
+              <span className="font-sans text-[16px] text-on-surface font-medium">Apenas com Condutor</span>
             </div>
             <div className="flex flex-col group/info">
               <span className="font-sans text-[12px] font-bold text-tertiary uppercase mb-2 tracking-widest border-b border-tertiary/20 pb-1 w-fit">Território</span>
-              <span className="font-sans text-[16px] text-gray-800 font-medium">56.448 hectares</span>
+              <span className="font-sans text-[16px] text-on-surface font-medium">56.448 hectares</span>
             </div>
           </div>
 
-          <div className="mt-10 pt-10 border-t border-gray-100 flex flex-col md:flex-row items-center gap-6">
+          <div className="mt-10 pt-10 border-t border-outline-variant/30 flex flex-col md:flex-row items-center gap-6">
             <div className="bg-primary/5 p-6 rounded-2xl flex-1">
-              <p className="font-sans text-[15px] lg:text-[16px] text-gray-700 leading-relaxed italic">
+              <p className="font-sans text-[15px] lg:text-[16px] text-on-surface-variant leading-relaxed italic">
                 <strong>Importante:</strong> A visitação requer agendamento prévio. É necessário contratar um condutor credenciado (máximo 8 pessoas por grupo, exceto Lapa Bonita onde o limite é 5).
               </p>
             </div>

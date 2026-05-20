@@ -70,7 +70,7 @@ export default function Estadias() {
   const filteredHoteis = useMemo(() => {
     return dataSource.filter(hotel => {
       const matchesSearch = hotel.nome.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                           (hotel.sobre || hotel.descricao || '').toLowerCase().includes(searchTerm.toLowerCase());
+                           (hotel.sobre || '').toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = selectedCategory === 'Todos' || hotel.categoria === selectedCategory;
       return matchesSearch && matchesCategory;
     });
@@ -136,7 +136,7 @@ export default function Estadias() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.25, delay: index * 0.04 }}
-                  className="bg-white rounded-2xl border border-outline-variant/40 overflow-hidden group hover:shadow-[0_12px_40px_rgba(0,0,0,0.07)] hover:border-primary/20 transition-all duration-500 flex flex-col cursor-pointer"
+                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover"
                   onClick={() => setSelectedHotel(hotel)}
                 >
                   <div className="relative aspect-[4/3] overflow-hidden bg-surface-container">
@@ -145,10 +145,10 @@ export default function Estadias() {
                       alt={hotel.nome}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent pointer-events-none" />
 
                     <div className="absolute top-2.5 left-2.5">
-                      <div className="bg-white/95 backdrop-blur-sm px-2 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+                      <div className="bg-surface/90 backdrop-blur-sm px-2 py-1 rounded-lg flex items-center gap-1 shadow-sm border border-outline-variant/20">
                         <Icon className="text-secondary" size={10} />
                         <span className="font-sans text-[8px] sm:text-[9px] font-black uppercase tracking-wider text-on-surface">{hotel.categoria}</span>
                       </div>
@@ -226,7 +226,7 @@ export default function Estadias() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.3, type: 'spring', damping: 25 }}
-              className="bg-white rounded-2xl sm:rounded-3xl overflow-hidden w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl"
+              className="bg-surface rounded-2xl sm:rounded-3xl border border-outline-variant/30 overflow-hidden w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative aspect-[16/10] sm:aspect-[16/9] bg-surface-container shrink-0 overflow-hidden">
@@ -244,7 +244,7 @@ export default function Estadias() {
                   <X size={18} />
                 </button>
 
-                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-xl flex items-center gap-2">
+                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-surface/90 backdrop-blur-sm px-3 py-1.5 rounded-xl flex items-center gap-2 border border-outline-variant/20">
                   <span className="font-sans text-[10px] font-bold uppercase tracking-[0.1em] text-primary">{selectedHotel.categoria}</span>
                 </div>
               </div>

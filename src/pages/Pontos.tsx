@@ -190,7 +190,7 @@ export default function Pontos() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.25, delay: index * 0.04 }}
-                  className="bg-white rounded-2xl border border-outline-variant/40 overflow-hidden group hover:shadow-[0_12px_40px_rgba(0,0,0,0.07)] hover:border-primary/20 transition-all duration-500 flex flex-col cursor-pointer"
+                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover"
                   onClick={(e) => {
                     e.stopPropagation();
                     openGallery(ponto);
@@ -210,11 +210,11 @@ export default function Pontos() {
                         onError={() => handleImageError(ponto.id)}
                       />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent pointer-events-none" />
 
                     {/* Badge */}
                     <div className="absolute top-2.5 left-2.5">
-                      <div className="bg-white/95 backdrop-blur-sm px-2 py-1 rounded-lg flex items-center gap-1 shadow-sm">
+                      <div className="bg-surface/90 backdrop-blur-sm px-2 py-1 rounded-lg flex items-center gap-1 shadow-sm border border-outline-variant/20">
                         <Icon className="text-secondary" size={10} />
                         <span className="font-sans text-[8px] sm:text-[9px] font-black uppercase tracking-wider text-on-surface">{ponto.categoria || ponto.category}</span>
                       </div>
@@ -290,7 +290,7 @@ export default function Pontos() {
             </div>
             <div>
               <span className="font-sans text-[10px] font-bold uppercase tracking-[0.25em] text-secondary mb-3 block">Você sabia?</span>
-              <p className="font-sans text-base sm:text-lg text-on-surface/80 leading-relaxed">
+              <p className="font-sans text-base sm:text-lg text-on-surface-variant leading-relaxed">
                 Januária abriga a Igreja N. Sra. do Rosário, datada de 1688, sendo a segunda mais antiga de Minas Gerais. Sua história é o reflexo vivo do desbravamento do sertão mineiro.
               </p>
             </div>
@@ -316,7 +316,7 @@ export default function Pontos() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.3, type: 'spring', damping: 25 }}
-              className="bg-white rounded-2xl sm:rounded-3xl overflow-hidden w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl"
+              className="bg-surface rounded-2xl sm:rounded-3xl border border-outline-variant/30 overflow-hidden w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Imagem principal com navegação */}
@@ -335,7 +335,7 @@ export default function Pontos() {
                 </AnimatePresence>
 
                 {/* Overlay gradiente */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
 
                 {/* Botão fechar */}
                 <button
@@ -352,7 +352,7 @@ export default function Pontos() {
                 </div>
 
                 {/* Navegação prev/next */}
-{(selectedPonto.images?.length ?? 0) > 1 && (
+                {(selectedPonto.images?.length ?? 0) > 1 && (
                   <>
                     <button
                       onClick={prevImage}
