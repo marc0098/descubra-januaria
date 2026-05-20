@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { User, Menu, Home, Mountain, Compass, Bed, Calendar, X, Utensils, Sun, Moon } from 'lucide-react';
+import { User, Menu, Home, Mountain, Compass, Bed, Calendar, X, Utensils, Sun, Moon, MapPin } from 'lucide-react';
 
 interface LayoutWrapperProps {
   children: React.ReactNode;
@@ -173,117 +173,104 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
         </div>
       </header>
 
-      {/* Menu Mobile Overlay - Bottom Sheet estilo apps modernos */}
-      {isMobileMenuOpen && (
-        <>
-          {/* Backdrop com blur */}
-          <div 
-            className="lg:hidden fixed inset-0 z-[60] bg-black/50 backdrop-blur-sm"
-            onClick={() => setIsMobileMenuOpen(false)}
-          />
-          
-          {/* Menu Slide-up */}
-          <div className="lg:hidden fixed bottom-0 left-0 right-0 z-[70] bg-surface rounded-t-3xl shadow-2xl border-t border-outline-variant/30 animate-slideUp pb-safe">
-            {/* Alça visual */}
-            <div className="flex justify-center pt-3 pb-1">
-              <div className="w-12 h-1.5 bg-outline-variant rounded-full" />
-            </div>
-            
-            {/* Cabeçalho */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-outline-variant/30 bg-surface">
-              <div className="flex items-center gap-3">
-                <span className="font-headline text-lg font-bold text-primary">Navegação</span>
-                <button
-                  onClick={toggleTheme}
-                  className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container border border-outline-variant/30 text-xs font-semibold text-on-surface"
-                >
-                  {theme === 'light' ? (
-                    <>
-                      <Mountain size={12} className="text-[#DC6037]" />
-                      <span>Modo Caverna</span>
-                    </>
-                  ) : (
-                    <>
-                      <Sun size={12} className="text-[#E0AC4B]" />
-                      <span>Modo Sol</span>
-                    </>
-                  )}
-                </button>
-              </div>
-              <button 
-                className="p-2 rounded-full bg-surface-container text-on-surface-variant hover:bg-outline-variant/30 transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-                aria-label="Fechar menu"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            
-            {/* Links de navegação */}
-            <nav className="flex flex-col py-4 px-4 gap-1">
-              <Link 
-                href="/" 
-                onClick={() => setIsMobileMenuOpen(false)} 
-                className={activeMobileLinkClass('/')}
-              >
-                <span className="text-lg">🏠</span>
-                Início
-              </Link>
-              <Link 
-                href="/cavernas" 
-                onClick={() => setIsMobileMenuOpen(false)} 
-                className={activeMobileLinkClass('/cavernas')}
-              >
-                <span className="text-lg">⛰️</span>
-                Cavernas do Peruaçu
-              </Link>
-              <Link 
-                href="/gastronomia" 
-                onClick={() => setIsMobileMenuOpen(false)} 
-                className={activeMobileLinkClass('/gastronomia')}
-              >
-                <span className="text-lg">🍽️</span>
-                Gastronomia
-              </Link>
-              <Link 
-                href="/guias" 
-                onClick={() => setIsMobileMenuOpen(false)} 
-                className={activeMobileLinkClass('/guias')}
-              >
-                <span className="text-lg">🧭</span>
-                Guias
-              </Link>
-              <Link 
-                href="/estadias" 
-                onClick={() => setIsMobileMenuOpen(false)} 
-                className={activeMobileLinkClass('/estadias')}
-              >
-                <span className="text-lg">🏨</span>
-                Hospedagem
-              </Link>
-              <Link 
-                href="/eventos" 
-                onClick={() => setIsMobileMenuOpen(false)} 
-                className={activeMobileLinkClass('/eventos')}
-              >
-                <span className="text-lg">🎉</span>
-                Eventos
-              </Link>
-              <Link 
-                href="/pontos" 
-                onClick={() => setIsMobileMenuOpen(false)} 
-                className={activeMobileLinkClass('/pontos')}
-              >
-                <span className="text-lg">📍</span>
-                Pontos Turísticos
-              </Link>
-            </nav>
-            
-            {/* Espaço extra para área segura */}
-            <div className="h-4" />
+      {/* Menu Mobile Overlay - Fullscreen Premium */}
+      <div 
+        className={`lg:hidden fixed inset-0 z-[70] bg-background/95 dark:bg-background/95 backdrop-blur-xl transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        <div className="flex flex-col h-full w-full pb-safe">
+          {/* Cabeçalho do Menu */}
+          <div className="flex items-center justify-between px-6 pt-6 pb-4">
+            <span className="font-headline text-2xl font-bold text-primary dark:text-primary tracking-widest uppercase">Menu</span>
+            <button 
+              className="p-2 -mr-2 rounded-full bg-surface-container/50 text-on-surface-variant hover:bg-surface-container transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+              aria-label="Fechar menu"
+            >
+              <X className="w-6 h-6" />
+            </button>
           </div>
-        </>
-      )}
+
+          {/* Links Principais */}
+          <div className="flex-1 overflow-y-auto px-6 py-4 flex flex-col justify-center">
+            <nav className="flex flex-col gap-6 sm:gap-8">
+              {[
+                { path: '/', label: 'Início', icon: Home },
+                { path: '/cavernas', label: 'Cavernas do Peruaçu', icon: Mountain },
+                { path: '/gastronomia', label: 'Gastronomia', icon: Utensils },
+                { path: '/guias', label: 'Guias Locais', icon: Compass },
+                { path: '/estadias', label: 'Hospedagem', icon: Bed },
+                { path: '/eventos', label: 'Eventos', icon: Calendar },
+                { path: '/pontos', label: 'Pontos Turísticos', icon: MapPin },
+              ].map((item, index) => {
+                const active = isActive(item.path);
+                const Icon = item.icon;
+                return (
+                  <Link 
+                    key={item.path}
+                    href={item.path} 
+                    onClick={() => setIsMobileMenuOpen(false)} 
+                    className={`group flex items-center justify-between transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                      isMobileMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+                    }`}
+                    style={{ transitionDelay: `${index * 40}ms` }}
+                  >
+                    <div className="flex items-center gap-5">
+                      <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300 ${
+                        active ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'bg-surface-container text-on-surface-variant group-hover:bg-primary/10 group-hover:text-primary'
+                      }`}>
+                        <Icon size={22} strokeWidth={active ? 2.5 : 2} />
+                      </div>
+                      <span className={`font-headline text-2xl sm:text-3xl tracking-wide transition-colors ${
+                        active ? 'font-bold text-primary' : 'text-on-surface group-hover:text-primary'
+                      }`}>
+                        {item.label}
+                      </span>
+                    </div>
+                    {active && <div className="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_rgba(220,96,55,0.8)]" />}
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+
+          {/* Rodapé do Menu (Tema + Contato) */}
+          <div className={`px-6 pb-8 pt-6 border-t border-outline-variant/30 transition-all duration-500 ease-out ${
+            isMobileMenuOpen ? 'translate-y-0 opacity-100 delay-300' : 'translate-y-8 opacity-0'
+          }`}>
+            <div className="flex items-center justify-between">
+              <button
+                onClick={toggleTheme}
+                className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-surface-container/50 border border-outline-variant/30 text-sm font-semibold text-on-surface hover:bg-surface-container transition-colors"
+              >
+                {theme === 'light' ? (
+                  <>
+                    <div className="w-8 h-8 rounded-full bg-surface shadow-sm flex items-center justify-center">
+                      <Mountain size={16} className="text-[#DC6037]" />
+                    </div>
+                    <span>Modo Caverna</span>
+                  </>
+                ) : (
+                  <>
+                    <div className="w-8 h-8 rounded-full bg-surface shadow-sm flex items-center justify-center">
+                      <Sun size={16} className="text-[#E0AC4B]" />
+                    </div>
+                    <span>Modo Sol</span>
+                  </>
+                )}
+              </button>
+              
+              <div className="flex flex-col items-end">
+                <span className="font-sans text-[10px] text-on-surface-variant uppercase tracking-[0.2em] font-bold">Contato</span>
+                <a href="tel:38999999999" className="font-sans text-sm font-bold text-primary mt-1 hover:text-secondary transition-colors">
+                  (38) 9999-9999
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Área de Conteúdo Principal */}
       <main className="flex-grow">
