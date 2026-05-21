@@ -8,7 +8,7 @@ import {
   Palette, Info, ArrowRight, X 
 } from 'lucide-react';
 import MobileNav from '@/components/MobileNav';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 const iconMap: Record<string, React.ElementType> = {
@@ -40,6 +40,23 @@ export default function CavernasPage() {
   const [showMap, setShowMap] = useState(false);
   const [atrativos, setAtrativos] = useState<Atrativo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [pageConfig, setPageConfig] = useState({
+    title: 'Cavernas do Peruaçu',
+    subtitle: 'O Parque Nacional Cavernas do Peruaçu é um dos patrimônios naturais mais impressionantes do Brasil. Com mais de 140 cavernas catalogadas e pinturas rupestres de até 12.000 anos, é patrimônio mundial da UNESCO desde 2025. Explore abaixo os principais roteiros disponíveis.'
+  });
+
+  useEffect(() => {
+    const unsubConfig = onSnapshot(doc(db, 'configuracoes', 'global'), (snap) => {
+      if (snap.exists()) {
+        const data = snap.data();
+        setPageConfig({
+          title: data.cavernasPageTitle || 'Cavernas do Peruaçu',
+          subtitle: data.cavernasPageSubtitle || 'O Parque Nacional Cavernas do Peruaçu é um dos patrimônios naturais mais impressionantes do Brasil.'
+        });
+      }
+    });
+    return () => unsubConfig();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'atrativos'), (snap) => {
@@ -82,7 +99,7 @@ export default function CavernasPage() {
           <div className="w-10 h-10 sm:w-12 sm:h-12 lg:w-12 lg:h-12 rounded-t-[100px] sm:rounded-t-[200px] rounded-b-[8px] sm:rounded-b-[10px] bg-cavernas flex items-center justify-center">
             <Mountain className="text-white w-5 h-5 sm:w-6 sm:h-6" size={20} />
           </div>
-          <h2 className="font-headline text-[clamp(22px,5vw,44px)] lg:text-[40px] leading-[clamp(26px,6vw,50px)] lg:leading-[48px] font-bold text-primary uppercase">Cavernas do Peruaçu</h2>
+          <h2 className="font-headline text-[clamp(22px,5vw,44px)] lg:text-[40px] leading-[clamp(26px,6vw,50px)] lg:leading-[48px] font-bold text-primary uppercase">{pageConfig.title}</h2>
         </motion.div>
         
         <motion.p 
@@ -91,7 +108,7 @@ export default function CavernasPage() {
           transition={{ delay: 0.2 }}
           className="text-on-surface-variant font-sans text-[clamp(14px,2vw,17px)] lg:text-[17px] leading-[clamp(22px,4vw,28px)] lg:leading-[28px] mb-8 max-w-3xl"
         >
-          O Parque Nacional Cavernas do Peruaçu é um dos patrimônios naturais mais impressionantes do Brasil. Com mais de 140 cavernas catalogadas e pinturas rupestres de até 12.000 anos, é patrimônio mundial da UNESCO desde 2025. Explore abaixo os principais roteiros disponíveis.
+          {pageConfig.subtitle}
         </motion.p>
 
         {/* Seção do Mapa do Território */}

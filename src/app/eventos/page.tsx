@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import MobileNav from '@/components/MobileNav';
 import PageHeader from '@/components/PageHeader';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 interface Evento {
@@ -43,6 +43,23 @@ export default function Eventos() {
   const [selectedEvent, setSelectedEvent] = useState<Evento | null>(null);
   const [eventos, setEventos] = useState<Evento[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [pageConfig, setPageConfig] = useState({
+    title: 'Eventos',
+    subtitle: 'Calendário completo das tradições e festas de Januária.'
+  });
+
+  useEffect(() => {
+    const unsubConfig = onSnapshot(doc(db, 'configuracoes', 'global'), (snap) => {
+      if (snap.exists()) {
+        const data = snap.data();
+        setPageConfig({
+          title: data.eventosPageTitle || 'Eventos',
+          subtitle: data.eventosPageSubtitle || 'Calendário completo das tradições e festas de Januária.'
+        });
+      }
+    });
+    return () => unsubConfig();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'eventos'), (snap) => {
@@ -109,8 +126,8 @@ export default function Eventos() {
       <MobileNav />
 
       <PageHeader
-        title="Eventos"
-        subtitle="Calendário completo das tradições e festas de Januária."
+        title={pageConfig.title}
+        subtitle={pageConfig.subtitle}
         count={dataSource.length}
         countLabel="eventos anuais"
         placeholder="Buscar eventos, festas..."

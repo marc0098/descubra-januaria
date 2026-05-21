@@ -3,10 +3,22 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { User, Menu, Home, Mountain, Compass, Bed, Calendar, X, Utensils, Sun, Moon, MapPin } from 'lucide-react';
+import { User, Menu, Home, Mountain, Compass, Bed, Calendar, X, Utensils, Sun, Moon, MapPin, Instagram, Facebook } from 'lucide-react';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 interface LayoutWrapperProps {
   children: React.ReactNode;
+}
+
+interface GlobalConfig {
+  contactPhone?: string;
+  contactWhatsapp?: string;
+  contactAddress?: string;
+  socialInstagram?: string;
+  socialFacebook?: string;
+  footerCopyright?: string;
+  footerQuickLinks?: string;
 }
 
 export default function LayoutWrapper({ children }: LayoutWrapperProps) {
@@ -15,6 +27,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   const isAdmin = pathname.startsWith('/admin');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [config, setConfig] = useState<GlobalConfig>({});
   
   // Estado e persistência do tema (Modo Caverna)
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -42,6 +55,16 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
   const toggleTheme = () => {
     setTheme(prev => prev === 'light' ? 'dark' : 'light');
   };
+
+  // Leitor de Configurações Globais
+  useEffect(() => {
+    const unsub = onSnapshot(doc(db, 'configuracoes', 'global'), (snap) => {
+      if (snap.exists()) {
+        setConfig(snap.data() as GlobalConfig);
+      }
+    });
+    return () => unsub();
+  }, []);
 
   // Leitor de Progresso de Leitura & Scroll
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -263,8 +286,8 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
               
               <div className="flex flex-col items-end">
                 <span className="font-sans text-[10px] text-on-surface-variant uppercase tracking-[0.2em] font-bold">Contato</span>
-                <a href="tel:38999999999" className="font-sans text-sm font-bold text-primary mt-1 hover:text-secondary transition-colors">
-                  (38) 9999-9999
+                <a href={`tel:${config.contactWhatsapp || '38999999999'}`} className="font-sans text-sm font-bold text-primary mt-1 hover:text-secondary transition-colors">
+                  {config.contactPhone || '(38) 9999-9999'}
                 </a>
               </div>
             </div>
@@ -289,24 +312,23 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
             
             {/* Links de navegação rápida */}
             <div className="flex items-center gap-4 sm:gap-6 text-[10px] sm:text-xs text-white/80 dark:text-on-surface-variant">
-              <a className="hover:text-white dark:hover:text-primary transition" href="#">Sobre</a>
-              <a className="hover:text-white dark:hover:text-primary transition" href="#">Guias</a>
-              <a className="hover:text-white dark:hover:text-primary transition" href="#">Termos</a>
-              <a className="hover:text-white dark:hover:text-primary transition" href="#">Privacidade</a>
+              {(config.footerQuickLinks || 'Sobre,Guias,Termos,Privacidade').split(',').map((link, i) => (
+                <a key={i} className="hover:text-white dark:hover:text-primary transition" href="#">{link.trim()}</a>
+              ))}
             </div>
             
             {/* Contato */}
             <div className="flex items-center gap-3 text-[10px] sm:text-xs text-white/70 dark:text-on-surface-variant/80">
-              <span>Januária, MG</span>
+              <span>{config.contactAddress || 'Januária, MG'}</span>
               <span className="opacity-40">•</span>
-              <a href="tel:38999999999" className="hover:text-white dark:hover:text-primary transition">(38) 99999-9999</a>
+              <a href={`tel:${config.contactWhatsapp || '38999999999'}`} className="hover:text-white dark:hover:text-primary transition">{config.contactPhone || '(38) 99999-9999'}</a>
             </div>
           </div>
           
           {/* Copyright */}
           <div className="text-center mt-4 sm:mt-5 pt-4 sm:pt-5 border-t border-white/10 dark:border-outline-variant/10">
             <p className="font-sans text-[9px] sm:text-[10px] tracking-[0.05em] text-white/50 dark:text-on-surface-variant/60">
-              © 2026 Portal de Turismo de Januária. Todos os direitos reservados.
+              {config.footerCopyright || '© 2026 Portal de Turismo de Januária. Todos os direitos reservados.'}
             </p>
           </div>
         </div>

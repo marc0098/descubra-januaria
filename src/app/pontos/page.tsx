@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import MobileNav from '@/components/MobileNav';
 import PageHeader from '@/components/PageHeader';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 interface PontoTuristico {
@@ -37,6 +37,23 @@ export default function Pontos() {
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
   const [pontos, setPontos] = useState<PontoTuristico[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [pageConfig, setPageConfig] = useState({
+    title: 'Pontos Turísticos',
+    subtitle: 'Explore a história, natureza e cultura de Januária.'
+  });
+
+  useEffect(() => {
+    const unsubConfig = onSnapshot(doc(db, 'configuracoes', 'global'), (snap) => {
+      if (snap.exists()) {
+        const data = snap.data();
+        setPageConfig({
+          title: data.pontosPageTitle || 'Pontos Turísticos',
+          subtitle: data.pontosPageSubtitle || 'Explore a história, natureza e cultura de Januária.'
+        });
+      }
+    });
+    return () => unsubConfig();
+  }, []);
 
   const [selectedPonto, setSelectedPonto] = useState<PontoTuristico | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -133,8 +150,8 @@ export default function Pontos() {
   return (
     <main className="min-h-screen bg-background pt-16 sm:pt-20">
       <PageHeader
-        title="Pontos Turísticos"
-        subtitle="Explore a história, natureza e cultura de Januária."
+        title={pageConfig.title}
+        subtitle={pageConfig.subtitle}
         count={dataSource.length}
         countLabel="locais"
         placeholder="Buscar locais, atrações..."

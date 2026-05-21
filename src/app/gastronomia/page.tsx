@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import MobileNav from '@/components/MobileNav';
 import PageHeader from '@/components/PageHeader';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 interface GastronomiaItem {
@@ -38,6 +38,23 @@ export default function Gastronomia() {
   const [selectedItem, setSelectedItem] = useState<GastronomiaItem | null>(null);
   const [gastronomia, setGastronomia] = useState<GastronomiaItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [pageConfig, setPageConfig] = useState({
+    title: 'Gastronomia',
+    subtitle: 'Sabores únicos da culinária mineira e regional.'
+  });
+
+  useEffect(() => {
+    const unsubConfig = onSnapshot(doc(db, 'configuracoes', 'global'), (snap) => {
+      if (snap.exists()) {
+        const data = snap.data();
+        setPageConfig({
+          title: data.gastronomiaPageTitle || 'Gastronomia',
+          subtitle: data.gastronomiaPageSubtitle || 'Sabores únicos da culinária mineira e regional.'
+        });
+      }
+    });
+    return () => unsubConfig();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'gastronomia'), (snap) => {
@@ -90,8 +107,8 @@ export default function Gastronomia() {
       <MobileNav />
 
       <PageHeader
-        title="Gastronomia"
-        subtitle="Sabores únicos da culinária mineira e regional."
+        title={pageConfig.title}
+        subtitle={pageConfig.subtitle}
         count={dataSource.length}
         countLabel="experiências gastronômicas"
         placeholder="Buscar pratos, restaurantes..."

@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import MobileNav from '@/components/MobileNav';
 import PageHeader from '@/components/PageHeader';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 interface Hotel {
@@ -35,6 +35,23 @@ export default function EstadiasPage() {
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
   const [hoteis, setHoteis] = useState<Hotel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [pageConfig, setPageConfig] = useState({
+    title: 'Hospedagem',
+    subtitle: 'Encontre a hospedagem perfeita para sua viagem.'
+  });
+
+  useEffect(() => {
+    const unsubConfig = onSnapshot(doc(db, 'configuracoes', 'global'), (snap) => {
+      if (snap.exists()) {
+        const data = snap.data();
+        setPageConfig({
+          title: data.hospedagemPageTitle || 'Hospedagem',
+          subtitle: data.hospedagemPageSubtitle || 'Encontre a hospedagem perfeita para sua viagem.'
+        });
+      }
+    });
+    return () => unsubConfig();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'hoteis'), (snap) => {
@@ -84,8 +101,8 @@ export default function EstadiasPage() {
       <MobileNav />
 
       <PageHeader
-        title="Hospedagem"
-        subtitle="Encontre a hospedagem perfeita para sua viagem."
+        title={pageConfig.title}
+        subtitle={pageConfig.subtitle}
         count={dataSource.length}
         countLabel="hoteis"
         placeholder="Buscar hoteis, pousadas..."

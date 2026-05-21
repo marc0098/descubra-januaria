@@ -16,11 +16,13 @@ import {
   Menu,
   X,
   Database,
-  Loader2
+  Loader2,
+  Settings
 } from 'lucide-react';
 
 const menuItems = [
   { to: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
+  { to: '/admin/configuracoes', icon: Settings, label: 'Configurações' },
   { to: '/admin/guias', icon: Users, label: 'Guias' },
   { to: '/admin/gastronomia', icon: UtensilsCrossed, label: 'Restaurantes' },
   { to: '/admin/hoteis', icon: Bed, label: 'Hotéis' },

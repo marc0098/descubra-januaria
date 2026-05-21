@@ -21,6 +21,18 @@ export default function HomePage() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll();
   const [images, setImages] = useState<HomeImages>({});
+  const [globalConfig, setGlobalConfig] = useState({
+    homeTitle: 'DESCUBRA JANUÁRIA',
+    homeSubtitle: 'CULTURA, NATUREZA E HISTÓRIA',
+    welcomeTitle: 'BEM-VINDO AO PORTAL DE TURISMO DE JANUÁRIA',
+    welcomeDescription: 'Explore as melhores experiências turísticas da região. Aproveite paisagens, gastronomia, atrativos naturais e as culturas que fazem de Januária um destino único.',
+    cavernasTitle: 'CAVERNAS DO PERUAÇU',
+    cavernasDescription: 'Explore o maior patrimônio de cavernas do Brasil com mais de 140 grutas, paintings rupestres de 12 mil anos e a maior estalactite do mundo. Patrimônio mundial da UNESCO desde 2025.',
+    hospedagemTitle: 'HOSPEDAGEM',
+    hospedagemDescription: 'Pousadas, chalés e hotéis para todos os estilos. Encontre o lugar perfeito para descansar, aproveitar a vista e viver Januária com conforto e acolhimento.',
+    gastronomiaTitle: 'GASTRONOMIA',
+    gastronomiaDescription: 'Sabores únicos da culinária mineira e regional. Dos peixes do rio ao tradicional arroz com pequi, experiências gastronômicas que traduzem o verdadeiro sabor de Januária.'
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [videoSource, setVideoSource] = useState('/video/mobile.mp4');
@@ -70,6 +82,26 @@ export default function HomePage() {
         setImages(prev => ({ ...prev, gastronomia: snap.exists() ? snap.data().url : prev.gastronomia || '' }));
       }, (error) => {
         console.warn('Erro ao escutar banners/gastronomia:', error);
+      }),
+      onSnapshot(doc(db, 'configuracoes', 'global'), (snap) => {
+        if (snap.exists()) {
+          const data = snap.data();
+          setGlobalConfig(prev => ({
+            ...prev,
+            homeTitle: data.homeTitle || prev.homeTitle,
+            homeSubtitle: data.homeSubtitle || prev.homeSubtitle,
+            welcomeTitle: data.welcomeTitle || prev.welcomeTitle,
+            welcomeDescription: data.welcomeDescription || prev.welcomeDescription,
+            cavernasTitle: data.cavernasTitle || prev.cavernasTitle,
+            cavernasDescription: data.cavernasDescription || prev.cavernasDescription,
+            hospedagemTitle: data.hospedagemTitle || prev.hospedagemTitle,
+            hospedagemDescription: data.hospedagemDescription || prev.hospedagemDescription,
+            gastronomiaTitle: data.gastronomiaTitle || prev.gastronomiaTitle,
+            gastronomiaDescription: data.gastronomiaDescription || prev.gastronomiaDescription
+          }));
+        }
+      }, (error) => {
+        console.warn('Erro ao escutar configuracoes globais:', error);
       })
     ];
 
@@ -135,10 +167,13 @@ export default function HomePage() {
               className="flex flex-col items-start text-white text-left drop-shadow-[0_4px_10px_rgba(0,0,0,0.7)] mb-6 sm:mb-8"
             >
               <h1 className="flex flex-col">
-                <span className="font-headline text-[clamp(20px,5vw,50px)] lg:text-[56px] xl:text-[64px] font-normal tracking-[0.15em] uppercase leading-none mb-1">DESCUBRA</span>
-                <span className="font-headline text-[clamp(38px,10vw,90px)] lg:text-[96px] xl:text-[110px] 2xl:text-[120px] font-bold tracking-[-0.01em] leading-none">JANUÁRIA</span>
+                <span className="font-headline text-[clamp(28px,8vw,60px)] lg:text-[72px] xl:text-[90px] 2xl:text-[100px] font-bold tracking-[-0.01em] leading-[1.1] uppercase drop-shadow-lg">
+                  {globalConfig.homeTitle}
+                </span>
               </h1>
-              <span className="font-sans text-[clamp(12px,2.5vw,22px)] lg:text-[24px] xl:text-[28px] font-semibold tracking-[0.1em] uppercase mt-3 sm:mt-4">CULTURA, NATUREZA E HISTÓRIA</span>
+              <span className="font-sans text-[clamp(12px,2.5vw,22px)] lg:text-[24px] xl:text-[28px] font-semibold tracking-[0.1em] uppercase mt-3 sm:mt-4">
+                {globalConfig.homeSubtitle}
+              </span>
             </motion.div>
 
             {/* Botões de Chamada para Ação (CTA) */}
@@ -242,12 +277,12 @@ export default function HomePage() {
         <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16 flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-8 lg:gap-12">
           <div className="md:w-1/2 lg:w-[45%] flex items-center justify-start">
             <h2 className="font-headline text-[clamp(24px,4vw,32px)] lg:text-[36px] sm:text-[28px] md:text-[32px] leading-[clamp(28px,5vw,40px)] lg:leading-[44px] font-bold uppercase text-primary">
-              BEM-VINDO<br className="md:hidden" />AO PORTAL<br className="hidden md:inline lg:hidden" />DE TURISMO<br className="md:hidden lg:inline" />DE JANUÁRIA
+              {globalConfig.welcomeTitle}
             </h2>
           </div>
           <div className="md:w-1/2 lg:w-[50%] flex items-center justify-start">
             <p className="font-sans text-[clamp(14px,2vw,19px)] lg:text-[17px] sm:text-[16px] md:text-[17px] leading-[clamp(22px,4vw,28px)] lg:leading-[28px] text-on-surface">
-              Explore as melhores experiências turísticas da região. Aproveite paisagens, gastronomia, atrativos naturais e as culturas que fazem de Januária um destino único.
+              {globalConfig.welcomeDescription}
             </p>
           </div>
         </div>
@@ -262,9 +297,9 @@ export default function HomePage() {
                 <Mountain className="w-5 h-5 sm:w-6 sm:h-6 md:w-6 h-6 text-white" />
               </div>
               <div className="w-full max-w-[90%] sm:max-w-[520px] md:max-w-[420px] lg:max-w-[480px] flex flex-col gap-4 md:gap-5 lg:gap-5 text-center items-center md:text-center md:items-center lg:text-left lg:items-start">
-                <h2 className="font-headline text-[clamp(22px,5vw,44px)] lg:text-[38px] leading-[clamp(26px,6vw,50px)] lg:leading-[48px] font-bold uppercase text-primary">CAVERNAS DO PERUAÇU</h2>
+                <h2 className="font-headline text-[clamp(22px,5vw,44px)] lg:text-[38px] leading-[clamp(26px,6vw,50px)] lg:leading-[48px] font-bold uppercase text-primary">{globalConfig.cavernasTitle}</h2>
                 <p className="font-sans text-[clamp(14px,2vw,17px)] lg:text-[16px] leading-[clamp(22px,4vw,28px)] lg:leading-[26px] text-on-surface-variant">
-                  Explore o maior patrimônio de cavernas do Brasil com mais de 140 grutas, paintings rupestres de 12 mil anos e a maior estalactite do mundo. Patrimônio mundial da UNESCO desde 2025.
+                  {globalConfig.cavernasDescription}
                 </p>
                 <button onClick={() => router.push('/cavernas')} className="font-sans text-white px-6 sm:px-8 lg:px-8 py-2.5 sm:py-3 lg:py-2.5 rounded-full text-[11px] sm:text-[12px] lg:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-tertiary w-full sm:w-auto lg:w-auto shadow-md">
                   SAIBA MAIS
@@ -282,9 +317,9 @@ export default function HomePage() {
                 <Bed className="w-5 h-5 sm:w-6 sm:h-6 md:w-6 h-6 text-white" />
               </div>
               <div className="w-full max-w-[90%] sm:max-w-[520px] md:max-w-[420px] lg:max-w-[480px] flex flex-col gap-4 md:gap-5 lg:gap-5 text-center items-center md:text-center md:items-center lg:text-left lg:items-start">
-                <h2 className="font-headline text-[clamp(22px,5vw,44px)] lg:text-[38px] leading-[clamp(26px,6vw,50px)] lg:leading-[48px] font-bold uppercase text-primary">HOSPEDAGEM</h2>
+                <h2 className="font-headline text-[clamp(22px,5vw,44px)] lg:text-[38px] leading-[clamp(26px,6vw,50px)] lg:leading-[48px] font-bold uppercase text-primary">{globalConfig.hospedagemTitle}</h2>
                 <p className="font-sans text-[clamp(14px,2vw,17px)] lg:text-[16px] leading-[clamp(22px,4vw,28px)] lg:leading-[26px] text-on-surface-variant">
-                  Pousadas, chalés e hotéis para todos os estilos. Encontre o lugar perfeito para descansar, aproveitar a vista e viver Januária com conforto e acolhimento.
+                  {globalConfig.hospedagemDescription}
                 </p>
                 <button onClick={() => router.push('/estadias')} className="font-sans text-white px-6 sm:px-8 lg:px-8 py-2.5 sm:py-3 lg:py-2.5 rounded-full text-[11px] sm:text-[12px] lg:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-quaternary w-full sm:w-auto lg:w-auto shadow-md">
                   SAIBA MAIS
@@ -302,9 +337,9 @@ export default function HomePage() {
                 <Utensils className="w-5 h-5 sm:w-6 sm:h-6 md:w-6 h-6 text-white" />
               </div>
               <div className="w-full max-w-[90%] sm:max-w-[520px] md:max-w-[420px] lg:max-w-[480px] flex flex-col gap-4 md:gap-5 lg:gap-5 text-center items-center md:text-center md:items-center lg:text-left lg:items-start">
-                <h2 className="font-headline text-[clamp(22px,5vw,44px)] lg:text-[38px] leading-[clamp(26px,6vw,50px)] lg:leading-[48px] font-bold uppercase text-primary">GASTRONOMIA</h2>
+                <h2 className="font-headline text-[clamp(22px,5vw,44px)] lg:text-[38px] leading-[clamp(26px,6vw,50px)] lg:leading-[48px] font-bold uppercase text-primary">{globalConfig.gastronomiaTitle}</h2>
                 <p className="font-sans text-[clamp(14px,2vw,17px)] lg:text-[16px] leading-[clamp(22px,4vw,28px)] lg:leading-[26px] text-on-surface-variant">
-                  Sabores únicos da culinária mineira e regional. Dos peixes do rio ao tradicional arroz com pequi, experiências gastronômicas que traduzem o verdadeiro sabor de Januária.
+                  {globalConfig.gastronomiaDescription}
                 </p>
                 <button onClick={() => router.push('/gastronomia')} className="font-sans text-white px-6 sm:px-8 lg:px-8 py-2.5 sm:py-3 lg:py-2.5 rounded-full text-[11px] sm:text-[12px] lg:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-primary w-full sm:w-auto lg:w-auto shadow-md">
                   SAIBA MAIS

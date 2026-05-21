@@ -9,7 +9,7 @@ import {
 import Link from 'next/link';
 import MobileNav from '@/components/MobileNav';
 import PageHeader from '@/components/PageHeader';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 interface Guia {
@@ -30,6 +30,23 @@ export default function GuiasPage() {
   const [guias, setGuias] = useState<Guia[]>([]);
   const [firebaseError, setFirebaseError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [pageConfig, setPageConfig] = useState({
+    title: 'Guias',
+    subtitle: 'Especialistas nativos para sua jornada em Januária.'
+  });
+
+  useEffect(() => {
+    const unsubConfig = onSnapshot(doc(db, 'configuracoes', 'global'), (snap) => {
+      if (snap.exists()) {
+        const data = snap.data();
+        setPageConfig({
+          title: data.guiasPageTitle || 'Guias',
+          subtitle: data.guiasPageSubtitle || 'Especialistas nativos para sua jornada em Januária.'
+        });
+      }
+    });
+    return () => unsubConfig();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'guias'), (snap) => {
@@ -87,8 +104,8 @@ export default function GuiasPage() {
       )}
 
       <PageHeader
-        title="Guias"
-        subtitle="Especialistas nativos para sua jornada em Januária."
+        title={pageConfig.title}
+        subtitle={pageConfig.subtitle}
         count={dataSource.length}
         countLabel="guias"
         placeholder="Buscar guias, especialidades..."
