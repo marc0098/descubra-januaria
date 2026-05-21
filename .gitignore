@@ -2,9 +2,9 @@ node_modules/
 build/
 dist/
 .next/
-next-env.d.ts
 coverage/
 .DS_Store
 *.log
 .env*
 !.env.example
+tsconfig.tsbuildinfo

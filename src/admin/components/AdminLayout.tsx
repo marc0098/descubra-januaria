@@ -1,4 +1,8 @@
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+"use client";
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/admin/context/AuthContext';
 import { 
   LayoutDashboard, 
@@ -13,10 +17,9 @@ import {
   X,
   Database
 } from 'lucide-react';
-import { useState } from 'react';
 
 const menuItems = [
-  { to: '/admin', icon: LayoutDashboard, label: 'Dashboard', end: true },
+  { to: '/admin', icon: LayoutDashboard, label: 'Dashboard', exact: true },
   { to: '/admin/guias', icon: Users, label: 'Guias' },
   { to: '/admin/gastronomia', icon: UtensilsCrossed, label: 'Restaurantes' },
   { to: '/admin/hoteis', icon: Bed, label: 'Hotéis' },
@@ -26,14 +29,20 @@ const menuItems = [
   { to: '/admin/migracao', icon: Database, label: 'Migração' },
 ];
 
-export default function AdminLayout() {
+export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
+  const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const isActive = (to: string, exact?: boolean) => {
+    if (exact) return pathname === to;
+    return pathname?.startsWith(to);
+  };
 
   const handleLogout = async () => {
     await logout();
-    navigate('/admin/login');
+    router.push('/admin/login');
   };
 
   return (
@@ -51,19 +60,18 @@ export default function AdminLayout() {
         
         <nav className="p-4 space-y-2">
           {menuItems.map((item) => (
-            <NavLink
+            <Link
               key={item.to}
-              to={item.to}
-              end={item.end}
+              href={item.to}
               onClick={() => setSidebarOpen(false)}
-              className={({ isActive }) => `
+              className={`
                 flex items-center gap-3 px-4 py-3 rounded-lg transition-colors
-                ${isActive ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800'}
+                ${isActive(item.to, item.exact) ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800'}
               `}
             >
               <item.icon className="w-5 h-5" />
               {item.label}
-            </NavLink>
+            </Link>
           ))}
         </nav>
 
@@ -102,7 +110,7 @@ export default function AdminLayout() {
 
         {/* Page content */}
         <main className="p-6">
-          <Outlet />
+          {children}
         </main>
       </div>
     </div>

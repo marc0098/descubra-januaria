@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/admin/context/AuthContext';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 
@@ -11,7 +11,7 @@ export default function AdminLogin() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -19,7 +19,7 @@ export default function AdminLogin() {
     setLoading(true);
     try {
       await login(email, password);
-      navigate('/admin');
+      router.push('/admin');
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);

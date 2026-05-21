@@ -4,7 +4,7 @@ import {
   Star, MessageCircle, ExternalLink, 
   Award, Shield, MapPin, Users, X
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import MobileNav from '@/components/MobileNav';
 import PageHeader from '@/components/PageHeader';
 import { collection, onSnapshot } from 'firebase/firestore';
@@ -180,7 +180,7 @@ export default function Guias() {
 
                     {guia.hasDetailedItinerary && (
                       <Link
-                        to="/guias/peruacu"
+                        href="/guias/peruacu"
                         className="flex items-center justify-center w-10 bg-surface-container rounded-xl text-on-surface-variant hover:bg-secondary hover:text-white transition-all"
                         title="Ver Roteiro"
                       >

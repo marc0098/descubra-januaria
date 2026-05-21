@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { Mountain, Map, Compass, Camera, Bed, Utensils, Calendar, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { doc, onSnapshot } from 'firebase/firestore';
@@ -15,7 +15,7 @@ interface HomeImages {
 }
 
 export default function Home() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll();
   const [images, setImages] = useState<HomeImages>({});
@@ -145,7 +145,7 @@ export default function Home() {
                 DESCUBRA
               </button>
               <button
-                onClick={() => navigate('/cavernas')}
+                onClick={() => router.push('/cavernas')}
                 className="font-sans text-white px-6 py-3 sm:px-10 sm:py-3 rounded-full text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:scale-105 transition-all duration-300 shadow-lg flex items-center justify-center gap-2 bg-[#2b5b84] w-full sm:w-auto"
               >
                 <Map className="w-4 h-4" />
@@ -174,7 +174,7 @@ export default function Home() {
             <div ref={scrollContainerRef} className="w-full flex overflow-x-auto scrollbar-hide px-3 sm:px-4 md:px-8 lg:px-12 max-w-[1200px] mx-auto justify-start md:justify-center snap-x snap-mandatory gap-3 sm:gap-4 md:gap-8 lg:gap-10 xl:gap-16">
 
               {/* Cápsula: Cavernas */}
-              <div onClick={() => navigate('/cavernas')} className="relative flex flex-col items-center justify-start shrink-0 text-white group snap-center cursor-pointer" style={{ width: '100px', gap: '8px' }}>
+              <div onClick={() => router.push('/cavernas')} className="relative flex flex-col items-center justify-start shrink-0 text-white group snap-center cursor-pointer" style={{ width: '100px', gap: '8px' }}>
                 <div className="w-[48px] h-[48px] sm:w-[56px] sm:h-[56px] md:w-[64px] md:h-[64px] rounded-full bg-[#264b27]/90 backdrop-blur-md border border-white/30 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#264b27] transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.15)]">
                   <Mountain className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
                 </div>
@@ -183,7 +183,7 @@ export default function Home() {
               </div>
 
               {/* Cápsula: Pontos */}
-              <div onClick={() => navigate('/pontos')} className="relative flex flex-col items-center justify-start shrink-0 text-white group snap-center cursor-pointer" style={{ width: '100px', gap: '8px' }}>
+              <div onClick={() => router.push('/pontos')} className="relative flex flex-col items-center justify-start shrink-0 text-white group snap-center cursor-pointer" style={{ width: '100px', gap: '8px' }}>
                 <div className="w-[48px] h-[48px] sm:w-[56px] sm:h-[56px] md:w-[64px] md:h-[64px] rounded-full bg-[#5B8C5A]/90 backdrop-blur-md border border-white/30 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#5B8C5A] transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.15)]">
                   <Map className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
                 </div>
@@ -192,7 +192,7 @@ export default function Home() {
               </div>
 
               {/* Cápsula: Guias */}
-              <div onClick={() => navigate('/guias')} className="relative flex flex-col items-center justify-start shrink-0 text-white group snap-center cursor-pointer" style={{ width: '100px', gap: '8px' }}>
+              <div onClick={() => router.push('/guias')} className="relative flex flex-col items-center justify-start shrink-0 text-white group snap-center cursor-pointer" style={{ width: '100px', gap: '8px' }}>
                 <div className="w-[48px] h-[48px] sm:w-[56px] sm:h-[56px] md:w-[64px] md:h-[64px] rounded-full bg-[#DC6037]/90 backdrop-blur-md border border-white/30 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#DC6037] transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.15)]">
                   <Compass className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
                 </div>
@@ -201,7 +201,7 @@ export default function Home() {
               </div>
 
               {/* Cápsula: Hospedagem */}
-              <div onClick={() => navigate('/estadias')} className="relative flex flex-col items-center justify-start shrink-0 text-white group snap-center cursor-pointer" style={{ width: '100px', gap: '8px' }}>
+              <div onClick={() => router.push('/estadias')} className="relative flex flex-col items-center justify-start shrink-0 text-white group snap-center cursor-pointer" style={{ width: '100px', gap: '8px' }}>
                 <div className="w-[48px] h-[48px] sm:w-[56px] sm:h-[56px] md:w-[64px] md:h-[64px] rounded-full bg-[#2B5B84]/90 backdrop-blur-md border border-white/30 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#2B5B84] transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.15)]">
                   <Bed className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
                 </div>
@@ -210,7 +210,7 @@ export default function Home() {
               </div>
 
               {/* Cápsula: Gastronomia */}
-              <div onClick={() => navigate('/gastronomia')} className="relative flex flex-col items-center justify-start shrink-0 text-white group snap-center cursor-pointer" style={{ width: '100px', gap: '8px' }}>
+              <div onClick={() => router.push('/gastronomia')} className="relative flex flex-col items-center justify-start shrink-0 text-white group snap-center cursor-pointer" style={{ width: '100px', gap: '8px' }}>
                 <div className="w-[48px] h-[48px] sm:w-[56px] sm:h-[56px] md:w-[64px] md:h-[64px] rounded-full bg-[#C0623D]/90 backdrop-blur-md border border-white/30 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#C0623D] transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.15)]">
                   <Utensils className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
                 </div>
@@ -219,7 +219,7 @@ export default function Home() {
               </div>
 
               {/* Cápsula: Eventos */}
-              <div onClick={() => navigate('/eventos')} className="relative flex flex-col items-center justify-start shrink-0 text-white group snap-center cursor-pointer" style={{ width: '100px', gap: '8px' }}>
+              <div onClick={() => router.push('/eventos')} className="relative flex flex-col items-center justify-start shrink-0 text-white group snap-center cursor-pointer" style={{ width: '100px', gap: '8px' }}>
                 <div className="w-[48px] h-[48px] sm:w-[56px] sm:h-[56px] md:w-[64px] md:h-[64px] rounded-full bg-[#572847]/90 backdrop-blur-md border border-white/30 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#572847] transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.15)]">
                   <Calendar className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-white" />
                 </div>
@@ -260,7 +260,7 @@ export default function Home() {
                 <p className="font-sans text-[clamp(14px,2vw,17px)] lg:text-[16px] leading-[clamp(22px,4vw,28px)] lg:leading-[26px] text-on-surface-variant">
                   Explore o maior patrimônio de cavernas do Brasil com mais de 140 grutas, pinturas rupestres de 12 mil anos e a maior estalactite do mundo. Patrimônio mundial da UNESCO desde 2025.
                 </p>
-                <button onClick={() => navigate('/cavernas')} className="font-sans text-white px-6 sm:px-8 lg:px-8 py-2.5 sm:py-3 lg:py-2.5 rounded-full text-[11px] sm:text-[12px] lg:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-tertiary w-full sm:w-auto lg:w-auto shadow-md">
+                <button onClick={() => router.push('/cavernas')} className="font-sans text-white px-6 sm:px-8 lg:px-8 py-2.5 sm:py-3 lg:py-2.5 rounded-full text-[11px] sm:text-[12px] lg:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-tertiary w-full sm:w-auto lg:w-auto shadow-md">
                   SAIBA MAIS
                 </button>
               </div>
@@ -280,7 +280,7 @@ export default function Home() {
                 <p className="font-sans text-[clamp(14px,2vw,17px)] lg:text-[16px] leading-[clamp(22px,4vw,28px)] lg:leading-[26px] text-on-surface-variant">
                   Pousadas, chalés e hotéis para todos os estilos. Encontre o lugar perfeito para descansar, aproveitar a vista e viver Januária com conforto e acolhimento.
                 </p>
-                <button onClick={() => navigate('/estadias')} className="font-sans text-white px-6 sm:px-8 lg:px-8 py-2.5 sm:py-3 lg:py-2.5 rounded-full text-[11px] sm:text-[12px] lg:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-quaternary w-full sm:w-auto lg:w-auto shadow-md">
+                <button onClick={() => router.push('/estadias')} className="font-sans text-white px-6 sm:px-8 lg:px-8 py-2.5 sm:py-3 lg:py-2.5 rounded-full text-[11px] sm:text-[12px] lg:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-quaternary w-full sm:w-auto lg:w-auto shadow-md">
                   SAIBA MAIS
                 </button>
               </div>
@@ -300,7 +300,7 @@ export default function Home() {
                 <p className="font-sans text-[clamp(14px,2vw,17px)] lg:text-[16px] leading-[clamp(22px,4vw,28px)] lg:leading-[26px] text-on-surface-variant">
                   Sabores únicos da culinária mineira e regional. Dos peixes do rio ao tradicional arroz com pequi, experiências gastronômicas que traduzem o verdadeiro sabor de Januária.
                 </p>
-                <button onClick={() => navigate('/gastronomia')} className="font-sans text-white px-6 sm:px-8 lg:px-8 py-2.5 sm:py-3 lg:py-2.5 rounded-full text-[11px] sm:text-[12px] lg:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-primary w-full sm:w-auto lg:w-auto shadow-md">
+                <button onClick={() => router.push('/gastronomia')} className="font-sans text-white px-6 sm:px-8 lg:px-8 py-2.5 sm:py-3 lg:py-2.5 rounded-full text-[11px] sm:text-[12px] lg:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-primary w-full sm:w-auto lg:w-auto shadow-md">
                   SAIBA MAIS
                 </button>
               </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MapPin, Clock, ChevronRight, ArrowLeft, Phone, Star, Check, Camera, Mountain, Waves, TreePine, Sun } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import MobileNav from '@/components/MobileNav';
 
 /**
@@ -24,7 +24,7 @@ export default function GuiaPeruacu() {
         
         {/* Botão de Voltar */}
         <div className="absolute top-6 left-6 md:top-8 md:left-10">
-          <Link to="/guias" className="flex items-center gap-2 text-white/90 hover:text-white transition-colors bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full" aria-label="Voltar para a lista de guias">
+          <Link href="/guias" className="flex items-center gap-2 text-white/90 hover:text-white transition-colors bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full" aria-label="Voltar para a lista de guias">
             <ArrowLeft size={18} />
             <span className="font-sans text-sm font-medium">Voltar aos Guias</span>
           </Link>
@@ -217,7 +217,7 @@ export default function GuiaPeruacu() {
               <span>Agendar Agora</span>
             </button>
             <Link 
-              to="/guias" 
+              href="/guias" 
               className="border-2 border-white text-white font-sans font-bold py-4 px-8 rounded-full hover:bg-white hover:text-primary transition-colors flex items-center justify-center gap-2"
               aria-label="Ver lista completa de guias"
             >

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Mountain, Map, Compass, Anchor, Palmtree, Camera, 
@@ -178,7 +178,7 @@ export default function Cavernas() {
                   </div>
 
                   <div className="flex gap-4">
-                    <Link to="/guias" className={`flex-1 ${item.cor_tema} text-white py-3 2xl:py-3.5 rounded-full font-sans text-[11px] sm:text-[12px] 2xl:text-[13px] font-bold uppercase tracking-[0.2em] hover:opacity-95 transition-all flex items-center justify-center gap-2 group/btn`}>
+                    <Link href="/guias" className={`flex-1 ${item.cor_tema} text-white py-3 2xl:py-3.5 rounded-full font-sans text-[11px] sm:text-[12px] 2xl:text-[13px] font-bold uppercase tracking-[0.2em] hover:opacity-95 transition-all flex items-center justify-center gap-2 group/btn`}>
                       Agendar Passeio
                       <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
                     </Link>

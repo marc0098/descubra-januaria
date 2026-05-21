@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   ChevronLeft, ChevronRight, ImageOff, X,
@@ -30,7 +31,7 @@ const categoryIcons: Record<string, React.ElementType> = {
 };
 
 export default function Pontos() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
@@ -240,7 +241,7 @@ export default function Pontos() {
 
                     {/* CTA */}
                     <Link
-                      to="/guias"
+                      href="/guias"
                       className="flex items-center justify-between pt-2.5 border-t border-outline-variant/30"
                       onClick={(e) => e.stopPropagation()}
                     >
@@ -408,7 +409,7 @@ export default function Pontos() {
 
                 {/* Botão Visitar */}
                 <Link
-                  to="/guias"
+                  href="/guias"
                   onClick={closeGallery}
                   className="flex items-center justify-center gap-2.5 w-full bg-primary text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-primary/90 active:scale-[0.98] transition-all mt-1"
                 >

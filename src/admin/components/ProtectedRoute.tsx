@@ -1,11 +1,20 @@
-import { Navigate, useLocation } from 'react-router-dom';
+"use client";
+
+import React from 'react';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/admin/context/AuthContext';
 import { Loader2 } from 'lucide-react';
 import type { ReactNode } from 'react';
 
 export function ProtectedRoute({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
-  const location = useLocation();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (!loading && !user) {
+      router.replace('/admin/login');
+    }
+  }, [user, loading, router]);
 
   if (loading) {
     return (
@@ -16,7 +25,7 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
   }
 
   if (!user) {
-    return <Navigate to="/admin/login" state={{ from: location }} replace />;
+    return null;
   }
 
   return <>{children}</>;
