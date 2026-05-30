@@ -132,6 +132,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
               <Link href="/guias" className={activeLinkClass('/guias')}>Guias</Link>
               <Link href="/estadias" className={activeLinkClass('/estadias')}>Estadias</Link>
               <Link href="/eventos" className={activeLinkClass('/eventos')}>Eventos</Link>
+              <Link href="/pontos" className={activeLinkClass('/pontos')}>Pontos</Link>
             </div>
           </nav>
           
@@ -169,6 +170,7 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
               <Link href="/guias" className={activeLinkClass('/guias')}>Guias</Link>
               <Link href="/estadias" className={activeLinkClass('/estadias')}>Estadias</Link>
               <Link href="/eventos" className={activeLinkClass('/eventos')}>Eventos</Link>
+              <Link href="/pontos" className={activeLinkClass('/pontos')}>Pontos</Link>
             </div>
           </nav>
           

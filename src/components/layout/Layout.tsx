@@ -77,6 +77,7 @@ export default function Layout({ children }: { children?: React.ReactNode }) {
               <Link href="/guias" className="font-sans text-white font-bold uppercase tracking-widest text-xs sm:text-sm hover:text-secondary transition-colors">Guias</Link>
               <Link href="/estadias" className="font-sans text-white font-bold uppercase tracking-widest text-xs sm:text-sm hover:text-secondary transition-colors">Estadias</Link>
               <Link href="/eventos" className="font-sans text-white font-bold uppercase tracking-widest text-xs sm:text-sm hover:text-secondary transition-colors">Eventos</Link>
+              <Link href="/pontos" className="font-sans text-white font-bold uppercase tracking-widest text-xs sm:text-sm hover:text-secondary transition-colors">Pontos</Link>
             </div>
           </nav>
           <div className="w-[80px] flex justify-end">
