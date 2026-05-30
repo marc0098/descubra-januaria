@@ -34,9 +34,116 @@ interface Atrativo {
   icone: string;
 }
 
+const atrativosLocais: Atrativo[] = [
+  {
+    id: 'lapa-do-janelao',
+    nome: 'Caverna do Janelão',
+    categoria: 'Caverna Monumental',
+    descricao: 'O cartão-postal do parque, destaca-se por sua monumentalidade, claraboias naturais e abriga a "Perna da Bailarina", a maior estalactite do mundo com 28 metros.',
+    imagem: '/img/janelao.jpeg',
+    trilha: 'Trilha do Janelão',
+    dificuldade: 'Média/Alta',
+    cor_tema: 'bg-primary',
+    text_tema: 'text-primary',
+    border_tema: 'border-primary',
+    icone: 'Mountain'
+  },
+  {
+    id: 'lapa-bonita',
+    nome: 'Lapa Bonita',
+    categoria: 'Caverna',
+    descricao: 'Rica em espeleotemas como estalactites e estalagmites. É uma das poucas cavernas totalmente escuras abertas à visitação, oferecendo uma experiência imersiva com lanternas.',
+    imagem: '/img/gruta-bonita.jpeg',
+    trilha: 'Trilha da Lapa Bonita',
+    dificuldade: 'Fácil/Média',
+    cor_tema: 'bg-tertiary',
+    text_tema: 'text-tertiary',
+    border_tema: 'border-tertiary',
+    icone: 'Mountain'
+  },
+  {
+    id: 'lapa-do-boquete',
+    nome: 'Lapa do Boquete',
+    categoria: 'Sítio Arqueológico',
+    descricao: 'Um dos sítios arqueológicos mais importantes do parque. Escavações revelaram sepultamentos e instrumentos que comprovam a ocupação humana de até 12.000 anos.',
+    imagem: '/img/lapa-do-boquete.jpeg',
+    trilha: 'Trilha do Boquete',
+    dificuldade: 'Fácil',
+    cor_tema: 'bg-secondary',
+    text_tema: 'text-secondary',
+    border_tema: 'border-secondary',
+    icone: 'Map'
+  },
+  {
+    id: 'lapa-do-indio',
+    nome: 'Lapa do Índio',
+    categoria: 'Sítio Arqueológico',
+    descricao: 'Localizada em uma área alta, oferece não apenas impressionantes painéis de pinturas rupestres, mas também um mirante com uma bela vista para a abertura do Janelão.',
+    imagem: '/img/lapa-do-indio.jpeg',
+    trilha: 'Trilha da Lapa do Índio',
+    dificuldade: 'Fácil',
+    cor_tema: 'bg-primary',
+    text_tema: 'text-primary',
+    border_tema: 'border-primary',
+    icone: 'Palette'
+  },
+  {
+    id: 'lapa-do-caboclo',
+    nome: 'Lapa do Caboclo',
+    categoria: 'Sítio Arqueológico',
+    descricao: 'Destaca-se pelos paredões rochosos repletos de pinturas rupestres do "estilo Caboclo", caracterizado por formas geométricas bem definidas.',
+    imagem: '/img/lapa-do-caboclo.jpeg',
+    trilha: 'Trilha do Caboclo e Carlúcio',
+    dificuldade: 'Média',
+    cor_tema: 'bg-tertiary',
+    text_tema: 'text-tertiary',
+    border_tema: 'border-tertiary',
+    icone: 'Palette'
+  },
+  {
+    id: 'lapa-do-cascudo',
+    nome: 'Lapa do Cascudo',
+    categoria: 'Caverna',
+    descricao: 'O nome deriva da presença de peixes cascudos em trechos onde o Rio Peruaçu ressurge dentro da cavidade. Faz parte dos roteiros mais profundos do parque.',
+    imagem: '/img/lapa-do-cascudo.jpeg',
+    trilha: 'Arco do André / Lapa dos Troncos',
+    dificuldade: 'Alta',
+    cor_tema: 'bg-secondary',
+    text_tema: 'text-secondary',
+    border_tema: 'border-secondary',
+    icone: 'Anchor'
+  },
+  {
+    id: 'lapa-dos-troncos',
+    nome: 'Lapa dos Troncos',
+    categoria: 'Caverna',
+    descricao: 'Frequentemente visitada como parte da trilha do Arco do André, uma rota exigente e voltada para aventureiros que buscam contato intenso com a natureza e mirantes.',
+    imagem: '/img/lapa-dos-troncos.jpeg',
+    trilha: 'Arco do André',
+    dificuldade: 'Alta',
+    cor_tema: 'bg-primary',
+    text_tema: 'text-primary',
+    border_tema: 'border-primary',
+    icone: 'Compass'
+  },
+  {
+    id: 'mirante-mundo-inteiro',
+    nome: 'Mirante Mundo Inteiro',
+    categoria: 'Mirante',
+    descricao: 'Oferece vistas privilegiadas e panorâmicas da paisagem do parque, permitindo contemplar as formações rochosas e a grandiosidade do cânion do Rio Peruaçu.',
+    imagem: '/img/mirante-mundo-inteiro.jpeg',
+    trilha: 'Arco do André',
+    dificuldade: 'Alta',
+    cor_tema: 'bg-tertiary',
+    text_tema: 'text-tertiary',
+    border_tema: 'border-tertiary',
+    icone: 'Camera'
+  }
+];
+
 export default function Cavernas() {
   const [showMap, setShowMap] = useState(false);
-  const [atrativos, setAtrativos] = useState<Atrativo[]>([]);
+  const [atrativos, setAtrativos] = useState<Atrativo[]>(atrativosLocais);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -57,7 +164,15 @@ export default function Cavernas() {
           icone: data.icone || 'Mountain'
         } as Atrativo;
       });
-      setAtrativos(firebaseData);
+      
+      const mergedAtrativos = [...atrativosLocais];
+      firebaseData.forEach(fd => {
+        if (!mergedAtrativos.some(ma => ma.nome === fd.nome)) {
+          mergedAtrativos.push(fd);
+        }
+      });
+      setAtrativos(mergedAtrativos);
+      
       setIsLoading(false);
     }, (error) => {
       console.error("Erro Firebase (Cavernas):", error);

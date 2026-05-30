@@ -76,6 +76,7 @@ export default function CavernasPage() {
           icone: data.icone || 'Mountain'
         } as Atrativo;
       });
+      
       setAtrativos(firebaseData);
       setIsLoading(false);
     }, (error) => {
