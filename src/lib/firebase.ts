@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -19,9 +20,18 @@ try {
   app = initializeApp(firebaseConfig);
 } catch (error) {
   console.warn('Firebase app já inicializado, reutilizando instância existente');
-  app = initializeApp(firebaseConfig);
+  app = initializeApp(firebaseConfig); // Isso pode falhar no catch, mas o fallback padrão da V1
 }
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+
+// Inicializa o App Check apenas no ambiente do cliente (navegador)
+export let appCheck;
+if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
+  appCheck = initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY),
+    isTokenAutoRefreshEnabled: true
+  });
+}
