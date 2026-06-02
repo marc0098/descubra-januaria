@@ -4,13 +4,13 @@ import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDL2iEqf1XzjwCzqVgWzDR4i23Z973WSAI",
-  authDomain: "atheris-delivery.firebaseapp.com",
-  projectId: "atheris-delivery",
-  storageBucket: "atheris-delivery.firebasestorage.app",
-  messagingSenderId: "1061125891534",
-  appId: "1:1061125891534:web:9e2209098148b34230b79f",
-  measurementId: "G-Z0N13R7P0L"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
 // Verifica se o Firebase já foi inicializado para evitar erros

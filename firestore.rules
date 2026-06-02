@@ -1,0 +1,23 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Função auxiliar para verificar se o usuário está autenticado
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Configuração para coleções públicas (guias, gastronomia, hoteis, pontos, eventos, banners, configuracoes)
+    // Permite leitura pública (qualquer visitante pode ver o site)
+    // Permite escrita e deleção APENAS se o usuário for um administrador logado
+    match /{document=**} {
+      allow read: if true;
+      allow write, update, delete: if isAuthenticated();
+    }
+    
+    // Aqui você pode adicionar regras mais granulares no futuro. Exemplo para perfis de usuário:
+    // match /users/{userId} {
+    //   allow read, write: if request.auth != null && request.auth.uid == userId;
+    // }
+  }
+}

@@ -9,6 +9,15 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'www.januaria.mg.gov.br' },
+      { protocol: 'https', hostname: 'cf.bstatic.com' },
+      { protocol: 'https', hostname: 'dynamic-media-cdn.tripadvisor.com' },
+      { protocol: 'https', hostname: 'firebasestorage.googleapis.com' },
+    ],
+  },
 };
 
 export default nextConfig;

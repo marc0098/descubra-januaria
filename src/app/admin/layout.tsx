@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useAuth } from '@/admin/context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import { 
   LayoutDashboard, 
   Users, 
@@ -31,7 +31,6 @@ const menuItems = [
   { to: '/admin/pontos', icon: MapPin, label: 'Pontos' },
   { to: '/admin/cavernas', icon: Mountain, label: 'Cavernas' },
   { to: '/admin/banners', icon: ImageIcon, label: 'Banners' },
-  { to: '/admin/migracao', icon: Database, label: 'Migração' },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

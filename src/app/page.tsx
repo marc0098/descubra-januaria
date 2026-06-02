@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Mountain, Map, Compass, Camera, Bed, Utensils, Calendar, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'motion/react';
@@ -144,17 +145,21 @@ export default function HomePage() {
       <section className="relative w-full h-[85vh] sm:h-[90vh] lg:h-[85vh] xl:h-[90vh] 2xl:h-[85vh] overflow-hidden bg-black">
         <div className="absolute inset-0">
           {heroMobile && (
-            <img
+            <Image
               alt="Januária - Cultura e Natureza"
-              className="object-cover w-full h-full opacity-50 xl:hidden"
+              className="object-cover opacity-50 xl:hidden"
               src={heroMobile}
+              fill
+              priority
             />
           )}
           {heroDesktop && (
-            <img
+            <Image
               alt="Januária - Cultura e Natureza"
-              className="object-cover w-full h-full opacity-50 hidden xl:block"
+              className="object-cover opacity-50 hidden xl:block"
               src={heroDesktop}
+              fill
+              priority
             />
           )}
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/30 to-black/80 pointer-events-none"></div>

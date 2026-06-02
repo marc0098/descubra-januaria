@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import type { FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/admin/context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 
 export default function AdminLogin() {
