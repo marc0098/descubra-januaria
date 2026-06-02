@@ -21,7 +21,13 @@ export default function HomePage() {
   const router = useRouter();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll();
-  const [images, setImages] = useState<HomeImages>({});
+  const [images, setImages] = useState<HomeImages>({
+    hero: "https://firebasestorage.googleapis.com/v0/b/atheris-delivery.firebasestorage.app/o/banners%2Fhero_1776786143775_WhatsApp%20Image%202026-04-08%20at%2023.25.08.jpeg?alt=media&token=b2c07c40-9b4a-4b88-8ad3-94c84f0335ed",
+    hero_desktop: "https://firebasestorage.googleapis.com/v0/b/atheris-delivery.firebasestorage.app/o/banners%2Fhero_desktop_1776810085306_WhatsApp%20Image%202026-04-21%20at%2012.56.47.jpeg?alt=media&token=ca75d938-2981-4a50-9043-af1c266b411b",
+    atrativos: "https://firebasestorage.googleapis.com/v0/b/atheris-delivery.firebasestorage.app/o/banners%2Fatrativos_1776787469379_WhatsApp%20Image%202026-04-21%20at%2012.56.41.jpeg?alt=media&token=d78d7b31-0819-4cfd-a0b4-f356964ac23e",
+    hospedagem: "https://firebasestorage.googleapis.com/v0/b/atheris-delivery.firebasestorage.app/o/banners%2Fhospedagem_1776789297328_WhatsApp%20Image%202026-04-21%20at%2012.56.43.jpeg?alt=media&token=768cade6-ff85-42af-bbc0-e9eb7ba96d5e",
+    gastronomia: "https://firebasestorage.googleapis.com/v0/b/atheris-delivery.firebasestorage.app/o/banners%2Fgastronomia_1776789311518_WhatsApp%20Image%202026-04-21%20at%2012.56.42.jpeg?alt=media&token=06ff9c3e-aa92-4313-8196-541eab5716d5"
+  });
   const [globalConfig, setGlobalConfig] = useState({
     homeTitle: 'DESCUBRA JANUÁRIA',
     homeSubtitle: 'CULTURA, NATUREZA E HISTÓRIA',
