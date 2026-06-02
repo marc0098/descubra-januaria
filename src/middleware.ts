@@ -19,13 +19,13 @@ export function middleware(request: NextRequest) {
     script-src 'self' 'unsafe-eval' 'unsafe-inline' https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://vercel.live https://va.vercel-scripts.com;
     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
     img-src 'self' blob: data: https://* http://*;
-    font-src 'self' https://fonts.gstatic.com;
+    font-src 'self' https://fonts.gstatic.com https://vercel.live;
     object-src 'none';
     base-uri 'self';
     form-action 'self';
     frame-src 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/ https://vercel.live;
     frame-ancestors 'none';
-    connect-src 'self' https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com wss://ws-us3.pusher.com https://vercel.live;
+    connect-src 'self' https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com wss://ws-us3.pusher.com https://vercel.live https://www.google.com/recaptcha/;
   `.replace(/\s{2,}/g, ' ').trim();
   
   response.headers.set('Content-Security-Policy', cspHeader);
