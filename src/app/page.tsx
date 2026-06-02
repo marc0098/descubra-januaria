@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Mountain, Map, Compass, Camera, Bed, Utensils, Calendar, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { Mountain, Map, Compass, Camera, Bed, Utensils, Calendar, ChevronLeft, ChevronRight, Play, Sun } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
@@ -37,8 +37,12 @@ export default function HomePage() {
     cavernasDescription: 'Explore o maior patrimônio de cavernas do Brasil com mais de 140 grutas, paintings rupestres de 12 mil anos e a maior estalactite do mundo. Patrimônio mundial da UNESCO desde 2025.',
     hospedagemTitle: 'HOSPEDAGEM',
     hospedagemDescription: 'Pousadas, chalés e hotéis para todos os estilos. Encontre o lugar perfeito para descansar, aproveitar a vista e viver Januária com conforto e acolhimento.',
+    hospedagemDescription: 'Pousadas, chalés e hotéis para todos os estilos. Encontre o lugar perfeito para descansar, aproveitar a vista e viver Januária com conforto e acolhimento.',
     gastronomiaTitle: 'GASTRONOMIA',
-    gastronomiaDescription: 'Sabores únicos da culinária mineira e regional. Dos peixes do rio ao tradicional arroz com pequi, experiências gastronômicas que traduzem o verdadeiro sabor de Januária.'
+    gastronomiaDescription: 'Sabores únicos da culinária mineira e regional. Dos peixes do rio ao tradicional arroz com pequi, experiências gastronômicas que traduzem o verdadeiro sabor de Januária.',
+    praiaAtivo: false,
+    praiaTitle: 'TEMPORADA DE PRAIA 100 DIAS',
+    praiaDescription: 'Prepare-se para o evento mais esperado do ano! 100 dias de sol, areia, shows e muita animação nas margens do majestoso Rio São Francisco.'
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
@@ -103,8 +107,12 @@ export default function HomePage() {
             cavernasDescription: data.cavernasDescription || prev.cavernasDescription,
             hospedagemTitle: data.hospedagemTitle || prev.hospedagemTitle,
             hospedagemDescription: data.hospedagemDescription || prev.hospedagemDescription,
+            hospedagemDescription: data.hospedagemDescription || prev.hospedagemDescription,
             gastronomiaTitle: data.gastronomiaTitle || prev.gastronomiaTitle,
-            gastronomiaDescription: data.gastronomiaDescription || prev.gastronomiaDescription
+            gastronomiaDescription: data.gastronomiaDescription || prev.gastronomiaDescription,
+            praiaAtivo: data.praiaAtivo || false,
+            praiaTitle: data.praiaTitle || prev.praiaTitle,
+            praiaDescription: data.praiaDescription || prev.praiaDescription
           }));
         }
       }, (error) => {
@@ -298,6 +306,67 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Seção Condicional: Temporada de Praia */}
+      {globalConfig.praiaAtivo && (
+        <section className="relative w-full py-16 sm:py-24 bg-gradient-to-br from-amber-400 via-orange-500 to-rose-600 overflow-hidden text-white">
+          {/* Grafismo de Ondas e Sol no fundo */}
+          <div className="absolute inset-0 opacity-10 pointer-events-none">
+            <svg viewBox="0 0 1440 320" className="absolute bottom-0 w-full" preserveAspectRatio="none">
+              <path fill="#ffffff" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,272,576,250.7C672,229,768,160,864,138.7C960,117,1056,144,1152,160C1248,176,1344,181,1392,184L1440,186.7L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+          </div>
+          
+          <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16 flex flex-col md:flex-row items-center gap-8 lg:gap-12">
+            <div className="w-full md:w-1/2 flex flex-col items-start text-left">
+              <div className="flex items-center gap-3 mb-4 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30 shadow-sm">
+                <Sun className="w-5 h-5 text-yellow-300 fill-current animate-pulse" />
+                <span className="font-sans text-xs sm:text-sm font-bold tracking-[0.15em] uppercase text-white">
+                  Evento Especial
+                </span>
+              </div>
+              <h2 className="font-headline text-[clamp(32px,5vw,56px)] leading-[1.1] font-bold uppercase drop-shadow-md mb-6">
+                {globalConfig.praiaTitle}
+              </h2>
+              <p className="font-sans text-[clamp(15px,2vw,18px)] leading-relaxed text-white/90 mb-8 max-w-xl">
+                {globalConfig.praiaDescription}
+              </p>
+              <button 
+                onClick={() => router.push('/praia')} 
+                className="font-sans text-orange-600 bg-white px-8 py-3.5 rounded-full text-sm font-bold uppercase tracking-[0.2em] hover:bg-yellow-50 hover:scale-105 active:scale-95 transition-all shadow-[0_8px_30px_rgba(0,0,0,0.2)] flex items-center gap-2"
+              >
+                Garantir o Verão
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+            
+            <div className="w-full md:w-1/2 flex justify-center mt-8 md:mt-0 relative">
+              {/* Efeito de Vidro Flutuante com Destaques */}
+              <div className="relative w-full max-w-[400px] aspect-[4/3] rounded-[40px] bg-white/10 backdrop-blur-md border border-white/30 shadow-2xl p-6 flex flex-col justify-between overflow-hidden group">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-300/30 rounded-full blur-3xl -mr-10 -mt-10"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-rose-400/30 rounded-full blur-3xl -ml-10 -mb-10"></div>
+                
+                <div className="relative z-10">
+                  <h3 className="text-xl font-bold font-headline mb-2 text-yellow-50">O que te espera:</h3>
+                  <ul className="space-y-3 font-sans text-sm text-white/90">
+                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-yellow-300"></div> Shows ao vivo todo fim de semana</li>
+                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-yellow-300"></div> Barracas com gastronomia típica</li>
+                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-yellow-300"></div> Segurança reforçada 24h</li>
+                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-yellow-300"></div> Pôr do sol inesquecível no rio</li>
+                  </ul>
+                </div>
+                
+                <div className="relative z-10 w-full bg-black/20 backdrop-blur-sm rounded-2xl p-4 mt-6 border border-white/10 flex items-center justify-between cursor-pointer hover:bg-black/30 transition-colors" onClick={() => router.push('/praia')}>
+                  <span className="font-bold text-sm">Ver Programação Completa</span>
+                  <div className="w-8 h-8 rounded-full bg-white text-orange-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <ChevronRight className="w-5 h-5" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       <div className="flex flex-col">
         {/* Seção: Atrativos Naturais (Destaque Peruaçu) */}

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { Settings, Save, Loader2, Check, Globe, Home, Map, Bed, Utensils, Share2, Search, FileText, Calendar, Compass } from 'lucide-react';
+import { Settings, Save, Loader2, Check, Globe, Home, Map, Bed, Utensils, Share2, Search, FileText, Calendar, Compass, Sun } from 'lucide-react';
 
 interface ConfigState {
   homeTitle: string;
@@ -37,6 +37,9 @@ interface ConfigState {
   siteMetaDescription: string;
   footerCopyright: string;
   footerQuickLinks: string;
+  praiaAtivo: boolean;
+  praiaTitle: string;
+  praiaDescription: string;
 }
 
 const defaultConfig: ConfigState = {
@@ -70,7 +73,10 @@ const defaultConfig: ConfigState = {
   siteTitle: 'Descubra Januária - Portal de Turismo',
   siteMetaDescription: 'Descubra as melhores experiências turísticas em Januária, MG. Cavernas, gastronomia, hospedagem, eventos e muito mais no Norte de Minas.',
   footerCopyright: '© 2026 Portal de Turismo de Januária. Todos os direitos reservados.',
-  footerQuickLinks: 'Sobre,Guias,Termos,Privacidade'
+  footerQuickLinks: 'Sobre,Guias,Termos,Privacidade',
+  praiaAtivo: false,
+  praiaTitle: 'TEMPORADA DE PRAIA 100 DIAS',
+  praiaDescription: 'Prepare-se para o evento mais esperado do ano! 100 dias de sol, areia, shows e muita animação nas margens do majestoso Rio São Francisco.'
 };
 
 export default function ConfiguracoesPage() {
@@ -115,8 +121,13 @@ export default function ConfiguracoesPage() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setConfig(prev => ({ ...prev, [name]: value }));
+    const { name, value, type } = e.target;
+    if (type === 'checkbox') {
+      const checked = (e.target as HTMLInputElement).checked;
+      setConfig(prev => ({ ...prev, [name]: checked }));
+    } else {
+      setConfig(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const tabs = [
@@ -230,6 +241,46 @@ export default function ConfiguracoesPage() {
         {/* SECTIONS TAB */}
         {activeTab === 'sections' && (
           <div className="space-y-8">
+            {/* Temporada de Praia */}
+            <div className="pb-6 border-b border-gray-100 dark:border-zinc-800">
+              <div className="flex items-center gap-2 mb-4">
+                <Sun className="w-5 h-5 text-amber-500" />
+                <h2 className="text-lg font-bold font-headline">Seção Especial: Temporada de Praia</h2>
+              </div>
+              <div className="mb-4">
+                <label className="flex items-center gap-3 cursor-pointer">
+                  <div className="relative">
+                    <input 
+                      type="checkbox" 
+                      name="praiaAtivo" 
+                      checked={config.praiaAtivo} 
+                      onChange={handleChange} 
+                      className="sr-only"
+                    />
+                    <div className={`block w-14 h-8 rounded-full transition-colors ${config.praiaAtivo ? 'bg-amber-500' : 'bg-gray-300 dark:bg-zinc-700'}`}></div>
+                    <div className={`dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform ${config.praiaAtivo ? 'transform translate-x-6' : ''}`}></div>
+                  </div>
+                  <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    {config.praiaAtivo ? 'Modo Praia: LIGADO (Ativo no site)' : 'Modo Praia: DESLIGADO'}
+                  </span>
+                </label>
+              </div>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Título do Evento</label>
+                  <input type="text" name="praiaTitle" value={config.praiaTitle} onChange={handleChange}
+                    disabled={!config.praiaAtivo}
+                    className="w-full px-4 py-2 bg-gray-50 dark:bg-zinc-950 border border-gray-300 dark:border-zinc-700 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all dark:text-white disabled:opacity-50" />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Descrição do Evento</label>
+                  <textarea name="praiaDescription" value={config.praiaDescription} onChange={handleChange} rows={3}
+                    disabled={!config.praiaAtivo}
+                    className="w-full px-4 py-2 bg-gray-50 dark:bg-zinc-950 border border-gray-300 dark:border-zinc-700 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all dark:text-white resize-none disabled:opacity-50" />
+                </div>
+              </div>
+            </div>
             {/* Cavernas */}
             <div className="pb-6 border-b border-gray-100 dark:border-zinc-800">
               <div className="flex items-center gap-2 mb-4">
