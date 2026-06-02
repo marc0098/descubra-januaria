@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import '@/styles/index.css';
 import { Providers } from './providers';
 import LayoutWrapper from '@/components/layout/LayoutWrapper';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://descubra-januaria.com.br'),
@@ -40,6 +41,7 @@ export default function RootLayout({
             {children}
           </LayoutWrapper>
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
