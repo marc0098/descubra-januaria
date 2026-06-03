@@ -300,61 +300,58 @@ export default function HomePage() {
 
       {/* Seção Condicional: Temporada de Praia */}
       {globalConfig.praiaAtivo && (
-        <section className="relative w-full py-16 sm:py-24 bg-gradient-to-br from-amber-400 via-orange-500 to-rose-600 overflow-hidden text-white">
-          {/* Grafismo de Ondas e Sol no fundo */}
-          <div className="absolute inset-0 opacity-10 pointer-events-none">
-            <svg viewBox="0 0 1440 320" className="absolute bottom-0 w-full" preserveAspectRatio="none">
-              <path fill="#ffffff" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,272,576,250.7C672,229,768,160,864,138.7C960,117,1056,144,1152,160C1248,176,1344,181,1392,184L1440,186.7L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-            </svg>
-          </div>
+        <section className="relative w-full min-h-[600px] md:min-h-[700px] lg:min-h-[800px] bg-cover bg-center bg-no-repeat overflow-hidden" style={{ backgroundImage: `url(/img/praia.jpeg)` }}>
+          {/* Overlay Escuro Opcional para manter legibilidade se a imagem for clara */}
+          <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
           
-          <div className="relative z-10 w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16 flex flex-col md:flex-row items-center gap-8 lg:gap-12">
+          <div className="absolute top-0 left-0 bg-surface/90 backdrop-blur-md border-r border-b border-outline-variant/30 w-full lg:w-[90%] xl:w-[85%] h-auto rounded-br-[60px] sm:rounded-br-[100px] md:rounded-br-[150px] z-10 p-6 sm:p-10 md:p-12 lg:p-16 flex flex-col md:flex-row items-center gap-8 lg:gap-12 transition-all duration-300 shadow-xl">
+            
             <div className="w-full md:w-1/2 flex flex-col items-start text-left">
-              <div className="flex items-center gap-3 mb-4 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30 shadow-sm">
-                <Sun className="w-5 h-5 text-yellow-300 fill-current animate-pulse" />
-                <span className="font-sans text-xs sm:text-sm font-bold tracking-[0.15em] uppercase text-white">
+              <div className="flex items-center gap-3 mb-4 bg-amber-500/10 backdrop-blur-sm px-4 py-2 rounded-full border border-amber-500/30 text-amber-600 dark:text-amber-400">
+                <Sun className="w-5 h-5 fill-current animate-pulse" />
+                <span className="font-sans text-xs sm:text-sm font-bold tracking-[0.15em] uppercase">
                   Evento Especial
                 </span>
               </div>
-              <h2 className="font-headline text-[clamp(32px,5vw,56px)] leading-[1.1] font-bold uppercase drop-shadow-md mb-6">
+              <h2 className="font-headline text-[clamp(32px,5vw,56px)] leading-[1.1] font-bold uppercase text-primary mb-6">
                 {globalConfig.praiaTitle}
               </h2>
-              <p className="font-sans text-[clamp(15px,2vw,18px)] leading-relaxed text-white/90 mb-8 max-w-xl">
+              <p className="font-sans text-[clamp(15px,2vw,18px)] leading-relaxed text-on-surface-variant mb-8 max-w-xl">
                 {globalConfig.praiaDescription}
               </p>
               <button 
                 onClick={() => router.push('/praia')} 
-                className="font-sans text-orange-600 bg-white px-8 py-3.5 rounded-full text-sm font-bold uppercase tracking-[0.2em] hover:bg-yellow-50 hover:scale-105 active:scale-95 transition-all shadow-[0_8px_30px_rgba(0,0,0,0.2)] flex items-center gap-2"
+                className="font-sans text-white bg-amber-500 px-8 py-3.5 rounded-full text-sm font-bold uppercase tracking-[0.2em] hover:bg-amber-600 hover:scale-105 active:scale-95 transition-all shadow-[0_8px_30px_rgba(245,158,11,0.3)] flex items-center gap-2"
               >
                 Garantir o Verão
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
             
-            <div className="w-full md:w-1/2 flex justify-center mt-8 md:mt-0 relative">
-              {/* Efeito de Vidro Flutuante com Destaques */}
-              <div className="relative w-full max-w-[400px] aspect-[4/3] rounded-[40px] bg-white/10 backdrop-blur-md border border-white/30 shadow-2xl p-6 flex flex-col justify-between overflow-hidden group">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-300/30 rounded-full blur-3xl -mr-10 -mt-10"></div>
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-rose-400/30 rounded-full blur-3xl -ml-10 -mb-10"></div>
+            <div className="w-full md:w-1/2 flex justify-center mt-4 md:mt-0 relative">
+              <div className="relative w-full max-w-[400px] aspect-[4/3] rounded-[40px] bg-primary/5 dark:bg-primary/10 backdrop-blur-md border border-primary/20 shadow-lg p-6 flex flex-col justify-between overflow-hidden group">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-amber-400/20 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-rose-400/20 rounded-full blur-3xl -ml-10 -mb-10 pointer-events-none"></div>
                 
-                <div className="relative z-10">
-                  <h3 className="text-xl font-bold font-headline mb-2 text-yellow-50">O que te espera:</h3>
-                  <ul className="space-y-3 font-sans text-sm text-white/90">
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-yellow-300"></div> Shows ao vivo todo fim de semana</li>
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-yellow-300"></div> Barracas com gastronomia típica</li>
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-yellow-300"></div> Segurança reforçada 24h</li>
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-yellow-300"></div> Pôr do sol inesquecível no rio</li>
+                <div className="relative z-10 text-on-surface">
+                  <h3 className="text-xl font-bold font-headline mb-4 text-primary">O que te espera:</h3>
+                  <ul className="space-y-3 font-sans text-sm text-on-surface-variant">
+                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Shows ao vivo todo fim de semana</li>
+                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Barracas com gastronomia típica</li>
+                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Segurança reforçada 24h</li>
+                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Pôr do sol inesquecível no rio</li>
                   </ul>
                 </div>
                 
-                <div className="relative z-10 w-full bg-black/20 backdrop-blur-sm rounded-2xl p-4 mt-6 border border-white/10 flex items-center justify-between cursor-pointer hover:bg-black/30 transition-colors" onClick={() => router.push('/praia')}>
-                  <span className="font-bold text-sm">Ver Programação Completa</span>
-                  <div className="w-8 h-8 rounded-full bg-white text-orange-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <div className="relative z-10 w-full bg-surface/50 dark:bg-surface/30 backdrop-blur-sm rounded-2xl p-4 mt-6 border border-outline-variant/30 flex items-center justify-between cursor-pointer hover:bg-surface/80 dark:hover:bg-surface/50 transition-colors" onClick={() => router.push('/praia')}>
+                  <span className="font-bold text-sm text-on-surface">Ver Programação Completa</span>
+                  <div className="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
                     <ChevronRight className="w-5 h-5" />
                   </div>
                 </div>
               </div>
             </div>
+            
           </div>
         </section>
       )}
