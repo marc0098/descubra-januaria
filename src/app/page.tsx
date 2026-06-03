@@ -298,9 +298,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Seção Condicional: Temporada de Praia */}
-      {globalConfig.praiaAtivo && (
-        <section className="relative w-full min-h-[600px] md:min-h-[700px] lg:min-h-[800px] bg-sky-100 bg-cover bg-center bg-no-repeat overflow-hidden" style={{ backgroundImage: "url('/img/praia.jpeg')" }}>
+      {/* Seção Temporada de Praia */}
+      <section className="relative w-full min-h-[600px] md:min-h-[700px] lg:min-h-[800px] bg-sky-100 bg-cover bg-center bg-no-repeat overflow-hidden" style={{ backgroundImage: "url('/img/praia.jpeg')" }}>
           {/* Overlay Escuro Opcional para manter legibilidade se a imagem for clara */}
           <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
           
@@ -354,7 +353,6 @@ export default function HomePage() {
             
           </div>
         </section>
-      )}
 
       <div className="flex flex-col">
         {/* Seção: Atrativos Naturais (Destaque Peruaçu) */}
