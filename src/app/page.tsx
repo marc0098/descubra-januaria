@@ -40,10 +40,7 @@ export default function HomePage() {
     hospedagemTitle: 'HOSPEDAGEM',
     hospedagemDescription: 'Pousadas, chalés e hotéis para todos os estilos. Encontre o lugar perfeito para descansar, aproveitar a vista e viver Januária com conforto e acolhimento.',
     gastronomiaTitle: 'GASTRONOMIA',
-    gastronomiaDescription: 'Sabores únicos da culinária mineira e regional. Dos peixes do rio ao tradicional arroz com pequi, experiências gastronômicas que traduzem o verdadeiro sabor de Januária.',
-    praiaAtivo: false,
-    praiaTitle: 'TEMPORADA DE PRAIA 100 DIAS',
-    praiaDescription: 'Prepare-se para o evento mais esperado do ano! 100 dias de sol, areia, shows e muita animação nas margens do majestoso Rio São Francisco.'
+    gastronomiaDescription: 'Sabores únicos da culinária mineira e regional. Dos peixes do rio ao tradicional arroz com pequi, experiências gastronômicas que traduzem o verdadeiro sabor de Januária.'
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
@@ -96,10 +93,7 @@ export default function HomePage() {
             hospedagemTitle: data.hospedagemTitle || prev.hospedagemTitle,
             hospedagemDescription: data.hospedagemDescription || prev.hospedagemDescription,
             gastronomiaTitle: data.gastronomiaTitle || prev.gastronomiaTitle,
-            gastronomiaDescription: data.gastronomiaDescription || prev.gastronomiaDescription,
-            praiaAtivo: data.praiaAtivo || false,
-            praiaTitle: data.praiaTitle || prev.praiaTitle,
-            praiaDescription: data.praiaDescription || prev.praiaDescription
+            gastronomiaDescription: data.gastronomiaDescription || prev.gastronomiaDescription
           }));
         }
       }, (error) => {
@@ -298,61 +292,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Seção Temporada de Praia */}
-      <section className="relative w-full min-h-[600px] md:min-h-[700px] lg:min-h-[800px] bg-sky-100 bg-cover bg-center bg-no-repeat overflow-hidden" style={{ backgroundImage: "url('/img/praia.jpeg')" }}>
-          {/* Overlay Escuro Opcional para manter legibilidade se a imagem for clara */}
-          <div className="absolute inset-0 bg-black/20 pointer-events-none"></div>
-          
-          <div className="absolute top-0 left-0 bg-surface/90 backdrop-blur-md border-r border-b border-outline-variant/30 w-full lg:w-[90%] xl:w-[85%] h-auto rounded-br-[60px] sm:rounded-br-[100px] md:rounded-br-[150px] z-10 p-6 sm:p-10 md:p-12 lg:p-16 flex flex-col md:flex-row items-center gap-8 lg:gap-12 transition-all duration-300 shadow-xl">
-            
-            <div className="w-full md:w-1/2 flex flex-col items-start text-left">
-              <div className="flex items-center gap-3 mb-4 bg-amber-500/10 backdrop-blur-sm px-4 py-2 rounded-full border border-amber-500/30 text-amber-600 dark:text-amber-400">
-                <Sun className="w-5 h-5 fill-current animate-pulse" />
-                <span className="font-sans text-xs sm:text-sm font-bold tracking-[0.15em] uppercase">
-                  Evento Especial
-                </span>
-              </div>
-              <h2 className="font-headline text-[clamp(32px,5vw,56px)] leading-[1.1] font-bold uppercase text-primary mb-6">
-                {globalConfig.praiaTitle}
-              </h2>
-              <p className="font-sans text-[clamp(15px,2vw,18px)] leading-relaxed text-on-surface-variant mb-8 max-w-xl">
-                {globalConfig.praiaDescription}
-              </p>
-              <button 
-                onClick={() => router.push('/praia')} 
-                className="font-sans text-white bg-amber-500 px-8 py-3.5 rounded-full text-sm font-bold uppercase tracking-[0.2em] hover:bg-amber-600 hover:scale-105 active:scale-95 transition-all shadow-[0_8px_30px_rgba(245,158,11,0.3)] flex items-center gap-2"
-              >
-                Garantir o Verão
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
-            
-            <div className="w-full md:w-1/2 flex justify-center mt-4 md:mt-0 relative">
-              <div className="relative w-full max-w-[400px] aspect-[4/3] rounded-[40px] bg-primary/5 dark:bg-primary/10 backdrop-blur-md border border-primary/20 shadow-lg p-6 flex flex-col justify-between overflow-hidden group">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-amber-400/20 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-rose-400/20 rounded-full blur-3xl -ml-10 -mb-10 pointer-events-none"></div>
-                
-                <div className="relative z-10 text-on-surface">
-                  <h3 className="text-xl font-bold font-headline mb-4 text-primary">O que te espera:</h3>
-                  <ul className="space-y-3 font-sans text-sm text-on-surface-variant">
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Shows ao vivo todo fim de semana</li>
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Barracas com gastronomia típica</li>
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Segurança reforçada 24h</li>
-                    <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div> Pôr do sol inesquecível no rio</li>
-                  </ul>
-                </div>
-                
-                <div className="relative z-10 w-full bg-surface/50 dark:bg-surface/30 backdrop-blur-sm rounded-2xl p-4 mt-6 border border-outline-variant/30 flex items-center justify-between cursor-pointer hover:bg-surface/80 dark:hover:bg-surface/50 transition-colors" onClick={() => router.push('/praia')}>
-                  <span className="font-bold text-sm text-on-surface">Ver Programação Completa</span>
-                  <div className="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm">
-                    <ChevronRight className="w-5 h-5" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-        </section>
+
 
       <div className="flex flex-col">
         {/* Seção: Atrativos Naturais (Destaque Peruaçu) */}
