@@ -18,7 +18,8 @@ import {
   Database,
   Loader2,
   Settings,
-  Mountain
+  Mountain,
+  Megaphone
 } from 'lucide-react';
 
 const menuItems = [
@@ -30,6 +31,7 @@ const menuItems = [
   { to: '/admin/eventos', icon: Calendar, label: 'Eventos' },
   { to: '/admin/pontos', icon: MapPin, label: 'Pontos' },
   { to: '/admin/cavernas', icon: Mountain, label: 'Cavernas' },
+  { to: '/admin/destaques', icon: Megaphone, label: 'Destaques' },
   { to: '/admin/banners', icon: ImageIcon, label: 'Banners' },
 ];
 

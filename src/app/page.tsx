@@ -3,9 +3,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Mountain, Map, Compass, Camera, Bed, Utensils, Calendar, ChevronLeft, ChevronRight, Play, Sun } from 'lucide-react';
-import { motion, useScroll, useTransform } from 'motion/react';
-import { doc, onSnapshot } from 'firebase/firestore';
+import { Mountain, Map, Compass, Camera, Bed, Utensils, Calendar, ChevronLeft, ChevronRight, Play, Sun, ArrowRight } from 'lucide-react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
+import { doc, onSnapshot, collection, query, where, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 interface HomeImages {
@@ -15,6 +15,17 @@ interface HomeImages {
   cavernas?: string;
   hospedagem?: string;
   gastronomia?: string;
+}
+
+interface Destaque {
+  id: string;
+  title: string;
+  description: string;
+  buttonText: string;
+  link: string;
+  imageUrl: string;
+  isActive: boolean;
+  order: number;
 }
 
 export default function HomePage() {
@@ -44,6 +55,8 @@ export default function HomePage() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [destaques, setDestaques] = useState<Destaque[]>([]);
+  const [currentDestaque, setCurrentDestaque] = useState(0);
 
   useEffect(() => {
     const unsubs = [
@@ -98,6 +111,12 @@ export default function HomePage() {
         }
       }, (error) => {
         console.warn('Erro ao escutar configuracoes globais:', error);
+      }),
+      onSnapshot(query(collection(db, 'destaques'), where('isActive', '==', true), orderBy('order', 'asc')), (snap) => {
+        const data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Destaque));
+        setDestaques(data);
+      }, (error) => {
+        console.warn('Erro ao escutar destaques:', error);
       })
     ];
 
@@ -105,6 +124,14 @@ export default function HomePage() {
 
     return () => unsubs.forEach(unsub => unsub());
   }, []);
+
+  useEffect(() => {
+    if (destaques.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentDestaque((prev) => (prev + 1) % destaques.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [destaques.length]);
 
   const heroMobile = images.hero || '';
   const heroDesktop = images.hero_desktop || images.hero || '';
@@ -291,6 +318,87 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Seção Destaques (Carrossel) */}
+      {destaques.length > 0 && (
+        <section className="relative w-full h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden bg-black">
+          <AnimatePresence initial={false} mode="wait">
+            <motion.div
+              key={currentDestaque}
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: `url('${destaques[currentDestaque]?.imageUrl}')` }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent"></div>
+              
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16 flex flex-col items-start text-left pt-20">
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.6 }}
+                  >
+                    <div className="inline-flex items-center gap-2 mb-4 bg-amber-500/20 backdrop-blur-md px-4 py-1.5 rounded-full border border-amber-500/30 text-amber-400">
+                      <Sun className="w-4 h-4 fill-current animate-spin-slow" />
+                      <span className="text-xs font-bold uppercase tracking-[0.2em]">Destaque</span>
+                    </div>
+                  </motion.div>
+                  
+                  <motion.h2 
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    className="text-white font-headline text-4xl md:text-5xl lg:text-7xl font-bold uppercase tracking-tight leading-[1.1] mb-6 drop-shadow-lg max-w-3xl"
+                  >
+                    {destaques[currentDestaque]?.title}
+                  </motion.h2>
+
+                  <motion.p 
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.6 }}
+                    className="text-white/90 font-sans text-lg md:text-xl font-medium max-w-2xl mb-10 drop-shadow-md leading-relaxed"
+                  >
+                    {destaques[currentDestaque]?.description}
+                  </motion.p>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6, duration: 0.6 }}
+                  >
+                    <button 
+                      onClick={() => router.push(destaques[currentDestaque]?.link || '#')} 
+                      className="group flex items-center gap-3 bg-amber-500 hover:bg-amber-400 text-black px-8 py-4 rounded-full text-sm font-bold uppercase tracking-[0.15em] transition-all shadow-[0_0_30px_rgba(245,158,11,0.3)] hover:shadow-[0_0_50px_rgba(245,158,11,0.5)] hover:-translate-y-1"
+                    >
+                      {destaques[currentDestaque]?.buttonText}
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Indicadores do Carrossel */}
+          {destaques.length > 1 && (
+            <div className="absolute bottom-8 left-0 right-0 flex justify-center items-center gap-3 z-20">
+              {destaques.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentDestaque(idx)}
+                  className={`transition-all duration-300 rounded-full ${currentDestaque === idx ? 'w-8 h-2 bg-amber-500' : 'w-2 h-2 bg-white/50 hover:bg-white/80'}`}
+                  aria-label={`Ir para o slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+          )}
+        </section>
+      )}
 
 
 
