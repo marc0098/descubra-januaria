@@ -6,6 +6,8 @@ import { db } from '@/lib/firebase';
 import { Settings, Save, Loader2, Check, Globe, Home, Map, Bed, Utensils, Share2, Search, FileText, Calendar, Compass, Sun } from 'lucide-react';
 
 interface ConfigState {
+  heroButtonText: string;
+  heroVideoUrl: string;
   homeTitle: string;
   homeSubtitle: string;
   welcomeTitle: string;
@@ -43,6 +45,8 @@ interface ConfigState {
 }
 
 const defaultConfig: ConfigState = {
+  heroButtonText: 'DESCUBRA',
+  heroVideoUrl: '/video/mobile.mp4',
   homeTitle: 'Descubra Januária',
   homeSubtitle: 'Natureza, Cultura e Sabores Únicos no Norte de Minas',
   welcomeTitle: 'BEM-VINDO AO PORTAL DE TURISMO DE JANUÁRIA',
@@ -187,7 +191,34 @@ export default function ConfiguracoesPage() {
               <h2 className="text-lg font-bold font-headline">Página Inicial (Hero)</h2>
             </div>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="pt-2 pb-6 border-b border-gray-100 dark:border-zinc-800">
+              <h3 className="text-md font-bold font-headline mb-4 text-gray-800 dark:text-gray-200">Botão Principal e Vídeo</h3>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Texto do Botão (ex: DESCUBRA)</label>
+                  <input
+                    type="text"
+                    name="heroButtonText"
+                    value={config.heroButtonText || ''}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 bg-gray-50 dark:bg-zinc-950 border border-gray-300 dark:border-zinc-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">URL do Vídeo (MP4)</label>
+                  <input
+                    type="text"
+                    name="heroVideoUrl"
+                    value={config.heroVideoUrl || ''}
+                    onChange={handleChange}
+                    placeholder="/video/mobile.mp4 ou https://..."
+                    className="w-full px-4 py-2 bg-gray-50 dark:bg-zinc-950 border border-gray-300 dark:border-zinc-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all dark:text-white"
+                  />
+                </div>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Título Principal</label>
                 <input

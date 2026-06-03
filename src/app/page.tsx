@@ -29,6 +29,8 @@ export default function HomePage() {
     gastronomia: "https://firebasestorage.googleapis.com/v0/b/atheris-delivery.firebasestorage.app/o/banners%2Fgastronomia_1776789311518_WhatsApp%20Image%202026-04-21%20at%2012.56.42.jpeg?alt=media&token=06ff9c3e-aa92-4313-8196-541eab5716d5"
   });
   const [globalConfig, setGlobalConfig] = useState({
+    heroButtonText: 'DESCUBRA',
+    heroVideoUrl: '/video/mobile.mp4',
     homeTitle: 'DESCUBRA JANUÁRIA',
     homeSubtitle: 'CULTURA, NATUREZA E HISTÓRIA',
     welcomeTitle: 'BEM-VINDO AO PORTAL DE TURISMO DE JANUÁRIA',
@@ -36,7 +38,6 @@ export default function HomePage() {
     cavernasTitle: 'CAVERNAS DO PERUAÇU',
     cavernasDescription: 'Explore o maior patrimônio de cavernas do Brasil com mais de 140 grutas, paintings rupestres de 12 mil anos e a maior estalactite do mundo. Patrimônio mundial da UNESCO desde 2025.',
     hospedagemTitle: 'HOSPEDAGEM',
-    hospedagemDescription: 'Pousadas, chalés e hotéis para todos os estilos. Encontre o lugar perfeito para descansar, aproveitar a vista e viver Januária com conforto e acolhimento.',
     hospedagemDescription: 'Pousadas, chalés e hotéis para todos os estilos. Encontre o lugar perfeito para descansar, aproveitar a vista e viver Januária com conforto e acolhimento.',
     gastronomiaTitle: 'GASTRONOMIA',
     gastronomiaDescription: 'Sabores únicos da culinária mineira e regional. Dos peixes do rio ao tradicional arroz com pequi, experiências gastronômicas que traduzem o verdadeiro sabor de Januária.',
@@ -46,21 +47,6 @@ export default function HomePage() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [videoSource, setVideoSource] = useState('/video/mobile.mp4');
-
-  // Detectar tamanho da tela para escolher o vídeo correto
-  useEffect(() => {
-    const handleResize = () => {
-      const isDesktop = window.innerWidth >= 1024;
-      setVideoSource(isDesktop ? '/video/mobile.mp4' : '/video/mobile.mp4');
-    };
-
-    // Inicializar com o tamanho atual
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   useEffect(() => {
     const unsubs = [
@@ -99,6 +85,8 @@ export default function HomePage() {
           const data = snap.data();
           setGlobalConfig(prev => ({
             ...prev,
+            heroButtonText: data.heroButtonText || prev.heroButtonText,
+            heroVideoUrl: data.heroVideoUrl || prev.heroVideoUrl,
             homeTitle: data.homeTitle || prev.homeTitle,
             homeSubtitle: data.homeSubtitle || prev.homeSubtitle,
             welcomeTitle: data.welcomeTitle || prev.welcomeTitle,
@@ -106,7 +94,6 @@ export default function HomePage() {
             cavernasTitle: data.cavernasTitle || prev.cavernasTitle,
             cavernasDescription: data.cavernasDescription || prev.cavernasDescription,
             hospedagemTitle: data.hospedagemTitle || prev.hospedagemTitle,
-            hospedagemDescription: data.hospedagemDescription || prev.hospedagemDescription,
             hospedagemDescription: data.hospedagemDescription || prev.hospedagemDescription,
             gastronomiaTitle: data.gastronomiaTitle || prev.gastronomiaTitle,
             gastronomiaDescription: data.gastronomiaDescription || prev.gastronomiaDescription,
@@ -165,6 +152,7 @@ export default function HomePage() {
               src={heroMobile}
               fill
               priority
+              unoptimized
             />
           )}
           {heroDesktop && (
@@ -174,6 +162,7 @@ export default function HomePage() {
               src={heroDesktop}
               fill
               priority
+              unoptimized
             />
           )}
           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/30 to-black/80 pointer-events-none"></div>
@@ -202,15 +191,17 @@ export default function HomePage() {
                 className="font-sans text-white px-6 py-3 sm:px-10 sm:py-3 rounded-full text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:scale-105 transition-all duration-300 shadow-lg bg-secondary w-full sm:w-auto flex items-center justify-center gap-2"
               >
                 <Play className="w-4 h-4 fill-current" />
-                DESCUBRA
+                {globalConfig.heroButtonText || 'DESCUBRA'}
               </button>
-              <button
-                onClick={() => router.push('/cavernas')}
+              <a
+                href="https://www.google.com/maps/place/Janu%C3%A1ria,+MG,+39480-000/@-15.4831204,-44.3998399,8234m/data=!3m1!1e3!4m6!3m5!1s0x755e7568b04c947:0xba33d9bc5f08070e!8m2!3d-15.4887575!4d-44.3620074!16zL20vMDl6MF96?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="font-sans text-white px-6 py-3 sm:px-10 sm:py-3 rounded-full text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:scale-105 transition-all duration-300 shadow-lg flex items-center justify-center gap-2 bg-[#2b5b84] w-full sm:w-auto"
               >
                 <Map className="w-4 h-4" />
                 Mapa
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -448,8 +439,8 @@ export default function HomePage() {
               controls
               autoPlay
             >
-              <source src={videoSource} type="video/mp4" />
-              <source src={videoSource} type="video/quicktime" />
+              <source src={globalConfig.heroVideoUrl || '/video/mobile.mp4'} type="video/mp4" />
+              <source src={globalConfig.heroVideoUrl || '/video/mobile.mp4'} type="video/quicktime" />
               Seu navegador não suporta o elemento de vídeo.
             </video>
           </div>
