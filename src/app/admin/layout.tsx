@@ -81,11 +81,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       
       {/* Sidebar */}
       <aside className={`
-        fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 text-white transform transition-transform duration-300
+        fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 text-white transform transition-transform duration-300 flex flex-col
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         lg:translate-x-0
       `}>
-        <div className="p-6 border-b border-gray-800 flex flex-col">
+        <div className="p-6 border-b border-gray-800 flex flex-col shrink-0">
           <Link href="/" className="font-headline text-lg font-bold hover:text-secondary transition-colors mb-2">
             Descubra Januária
           </Link>
@@ -94,7 +94,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <p className="text-xs text-gray-400 mt-1 truncate" title={user.email || ''}>{user.email}</p>
         </div>
         
-        <nav className="p-4 space-y-1">
+        <nav className="p-4 space-y-1 flex-1 overflow-y-auto">
           {menuItems.map((item) => {
             const active = isActive(item.to);
             return (
@@ -116,7 +116,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           })}
         </nav>
 
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-800 bg-gray-900">
+        <div className="p-4 border-t border-gray-800 bg-gray-900 shrink-0">
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-4 py-3 w-full rounded-lg text-red-400 hover:bg-gray-800 transition-colors font-sans text-sm font-semibold"
