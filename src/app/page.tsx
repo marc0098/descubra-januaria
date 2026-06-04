@@ -61,32 +61,32 @@ export default function HomePage() {
   useEffect(() => {
     const unsubs = [
       onSnapshot(doc(db, 'banners', 'hero'), (snap) => {
-        setImages(prev => ({ ...prev, hero: snap.exists() ? snap.data().url : prev.hero || '' }));
+        setImages(prev => ({ ...prev, hero: snap.exists() && snap.data().url ? snap.data().url : prev.hero }));
       }, (error) => {
         console.warn('Erro ao escutar banners/hero:', error);
       }),
       onSnapshot(doc(db, 'banners', 'hero_desktop'), (snap) => {
-        setImages(prev => ({ ...prev, hero_desktop: snap.exists() ? snap.data().url : prev.hero_desktop || '' }));
+        setImages(prev => ({ ...prev, hero_desktop: snap.exists() && snap.data().url ? snap.data().url : prev.hero_desktop }));
       }, (error) => {
         console.warn('Erro ao escutar banners/hero_desktop:', error);
       }),
       onSnapshot(doc(db, 'banners', 'atrativos'), (snap) => {
-        setImages(prev => ({ ...prev, atrativos: snap.exists() ? snap.data().url : prev.atrativos || '' }));
+        setImages(prev => ({ ...prev, atrativos: snap.exists() && snap.data().url ? snap.data().url : prev.atrativos }));
       }, (error) => {
         console.warn('Erro ao escutar banners/atrativos:', error);
       }),
       onSnapshot(doc(db, 'banners', 'cavernas'), (snap) => {
-        setImages(prev => ({ ...prev, cavernas: snap.exists() ? snap.data().url : prev.cavernas || '' }));
+        setImages(prev => ({ ...prev, cavernas: snap.exists() && snap.data().url ? snap.data().url : prev.cavernas }));
       }, (error) => {
         console.warn('Erro ao escutar banners/cavernas:', error);
       }),
       onSnapshot(doc(db, 'banners', 'hospedagem'), (snap) => {
-        setImages(prev => ({ ...prev, hospedagem: snap.exists() ? snap.data().url : prev.hospedagem || '' }));
+        setImages(prev => ({ ...prev, hospedagem: snap.exists() && snap.data().url ? snap.data().url : prev.hospedagem }));
       }, (error) => {
         console.warn('Erro ao escutar banners/hospedagem:', error);
       }),
       onSnapshot(doc(db, 'banners', 'gastronomia'), (snap) => {
-        setImages(prev => ({ ...prev, gastronomia: snap.exists() ? snap.data().url : prev.gastronomia || '' }));
+        setImages(prev => ({ ...prev, gastronomia: snap.exists() && snap.data().url ? snap.data().url : prev.gastronomia }));
       }, (error) => {
         console.warn('Erro ao escutar banners/gastronomia:', error);
       }),

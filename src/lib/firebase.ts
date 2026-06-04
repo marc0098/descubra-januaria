@@ -27,9 +27,9 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 
-// Inicializa o App Check apenas no ambiente do cliente (navegador)
-export let appCheck;
-if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
+// Inicializa o App Check apenas no ambiente de produção para evitar atrasos no localhost
+export let appCheck: any;
+if (typeof window !== 'undefined' && process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && process.env.NODE_ENV !== 'development') {
   appCheck = initializeAppCheck(app, {
     provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY),
     isTokenAutoRefreshEnabled: true
