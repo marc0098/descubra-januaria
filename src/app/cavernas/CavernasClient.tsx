@@ -146,7 +146,7 @@ export default function CavernasClient({ initialAtrativos, initialConfig }: { in
               <motion.div 
                 key={item.id}
                 id={item.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={false}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ delay: index * 0.1 }}
