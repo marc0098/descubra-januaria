@@ -194,11 +194,7 @@ export default function PontosClient({ initialPontos, initialConfig }: { initial
         </div>
 
         {/* Grid */}
-        <motion.div
-          layout
-          className="columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 md:gap-5 space-y-3 sm:space-y-4 md:space-y-5"
-        >
-          <AnimatePresence mode="popLayout">
+        <div className="columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 md:gap-5 space-y-3 sm:space-y-4 md:space-y-5">
             {filteredPontos.map((ponto, index) => {
               const Icon = categoryIcons[(ponto.category || 'default') as keyof typeof categoryIcons] || categoryIcons.default;
 
@@ -213,11 +209,9 @@ export default function PontosClient({ initialPontos, initialConfig }: { initial
                   passHref legacyBehavior
                 >
                   <motion.a
-                    layout
                     initial={false}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.96 }}
-                    transition={{ duration: 0.25, delay: index * 0.04 }}
+                    transition={{ duration: 0.25 }}
                     className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left break-inside-avoid inline-block w-full"
                   >
                   {/* Imagem */}
@@ -278,8 +272,7 @@ export default function PontosClient({ initialPontos, initialConfig }: { initial
                 </Link>
               );
             })}
-          </AnimatePresence>
-        </motion.div>
+        </div>
 
         {/* Estado Vazio */}
         {filteredPontos.length === 0 && (

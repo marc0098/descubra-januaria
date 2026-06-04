@@ -142,11 +142,7 @@ export default function EstadiasClient({ initialHoteis, initialConfig }: { initi
           </p>
         </div>
 
-        <motion.div
-          layout
-          className="columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 md:gap-5 space-y-3 sm:space-y-4 md:space-y-5"
-        >
-          <AnimatePresence mode="popLayout">
+        <div className="columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 md:gap-5 space-y-3 sm:space-y-4 md:space-y-5">
             {filteredHoteis.map((hotel, index) => {
               const Icon = categoryIcons[hotel.categoria] || categoryIcons.default;
 
@@ -160,12 +156,7 @@ export default function EstadiasClient({ initialHoteis, initialConfig }: { initi
                   }}
                   passHref legacyBehavior
                 >
-                <motion.a
-                  layout
-                  initial={false}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.25, delay: index * 0.04 }}
+                <div
                   className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left break-inside-avoid inline-block w-full"
                 >
                   <div className="relative overflow-hidden bg-surface-container">
@@ -212,12 +203,11 @@ export default function EstadiasClient({ initialHoteis, initialConfig }: { initi
                       </div>
                     </div>
                   </div>
-                </motion.a>
+                </div>
                 </Link>
               );
             })}
-          </AnimatePresence>
-        </motion.div>
+        </div>
 
         {filteredHoteis.length === 0 && (
           <motion.div

@@ -148,11 +148,7 @@ export default function EventosClient({ initialEventos, initialConfig }: { initi
         </div>
 
         {/* GRID DE EVENTOS */}
-        <motion.div
-          layout
-          className="columns-1 md:columns-2 gap-4 sm:gap-6 space-y-4 sm:space-y-6"
-        >
-          <AnimatePresence mode="popLayout">
+        <div className="columns-1 md:columns-2 gap-4 sm:gap-6 space-y-4 sm:space-y-6">
             {filteredEventos.map((evento, index) => {
               const Icon = categoryIcons[evento.tipo] || categoryIcons.default;
 
@@ -166,12 +162,7 @@ export default function EventosClient({ initialEventos, initialConfig }: { initi
                   }}
                   passHref legacyBehavior
                 >
-                <motion.a
-                  layout
-                  initial={false}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.25, delay: index * 0.04 }}
+                <div
                   className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left break-inside-avoid inline-block w-full"
                 >
                   {/* IMAGEM */}
@@ -232,12 +223,11 @@ export default function EventosClient({ initialEventos, initialConfig }: { initi
                       Ver detalhes
                     </button>
                   </div>
-                </motion.a>
+                </div>
                 </Link>
               );
             })}
-          </AnimatePresence>
-        </motion.div>
+        </div>
 
         {filteredEventos.length === 0 && (
           <motion.div

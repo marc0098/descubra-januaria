@@ -138,16 +138,10 @@ export default function GuiasClient({ initialGuias, initialConfig }: { initialGu
         </div>
 
         {/* Grid — 2col mobile, 3col tablet, 4col desktop */}
-        <motion.div layout className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 md:gap-5 space-y-3 sm:space-y-4 md:space-y-5">
-          <AnimatePresence mode="popLayout">
+        <div className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 md:gap-5 space-y-3 sm:space-y-4 md:space-y-5">
             {filteredGuias.map((guia, index) => (
-              <motion.article
-                layout
+              <article
                 key={guia.id}
-                initial={false}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.25, delay: index * 0.05 }}
                 className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group premium-card-hover flex flex-col break-inside-avoid inline-block w-full"
               >
                 {/* Imagem compacta */}
@@ -226,10 +220,9 @@ export default function GuiasClient({ initialGuias, initialConfig }: { initialGu
                     )}
                   </div>
                 </div>
-              </motion.article>
+              </article>
             ))}
-          </AnimatePresence>
-        </motion.div>
+        </div>
 
         {/* Estado Vazio */}
         {filteredGuias.length === 0 && (
