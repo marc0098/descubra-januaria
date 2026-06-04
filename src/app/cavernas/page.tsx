@@ -34,6 +34,7 @@ interface Atrativo {
   text_tema: string;
   border_tema: string;
   icone: string;
+  slug?: string;
 }
 
 export default function CavernasPage() {
@@ -64,6 +65,7 @@ export default function CavernasPage() {
         const data = doc.data();
         return {
           id: doc.id,
+          slug: (data.slug && /^[a-zA-Z0-9_-]+$/.test(data.slug)) ? data.slug : doc.id,
           nome: data.nome || '',
           categoria: data.categoria || '',
           descricao: data.descricao || '',
@@ -162,7 +164,7 @@ export default function CavernasPage() {
                   className="bg-surface rounded-2xl sm:rounded-3xl lg:rounded-[32px] overflow-hidden shadow-xl flex flex-col border border-outline-variant/30 group premium-card-hover"
                 >
                   {/* Imagem Container */}
-                  <div className="h-56 sm:h-64 lg:h-72 2xl:h-80 relative overflow-hidden">
+                  <Link href={`/cavernas/${item.slug || item.id}`} className="h-56 sm:h-64 lg:h-72 2xl:h-80 relative overflow-hidden block">
                     <motion.img 
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.6 }}
@@ -173,7 +175,7 @@ export default function CavernasPage() {
                     <div className={`absolute top-4 left-4 ${item.cor_tema} px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold text-white uppercase tracking-wider shadow-lg`}>
                       {item.categoria}
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Conteúdo do Card */}
                   <div className="p-6 sm:p-8 lg:p-10 2xl:p-12 flex-1 flex flex-col">

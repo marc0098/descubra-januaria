@@ -314,9 +314,28 @@ export default function LayoutWrapper({ children }: LayoutWrapperProps) {
             
             {/* Links de navegação rápida */}
             <div className="flex items-center gap-4 sm:gap-6 text-[10px] sm:text-xs text-white/80 dark:text-on-surface-variant">
-              {(config.footerQuickLinks || 'Sobre,Guias,Termos,Privacidade').split(',').map((link, i) => (
-                <a key={i} className="hover:text-white dark:hover:text-primary transition" href="#">{link.trim()}</a>
-              ))}
+              {(() => {
+                const linkMap: Record<string, string> = {
+                  'Sobre': '/sobre',
+                  'Guias': '/guias',
+                  'Termos': '/termos',
+                  'Privacidade': '/privacidade',
+                  'Cavernas': '/cavernas',
+                  'Pontos': '/pontos',
+                  'Eventos': '/eventos',
+                  'Gastronomia': '/gastronomia',
+                  'Hospedagem': '/estadias',
+                };
+                return (config.footerQuickLinks || 'Sobre,Guias,Termos,Privacidade').split(',').map((link, i) => {
+                  const label = link.trim();
+                  const href = linkMap[label] || '#';
+                  return (
+                    <Link key={i} href={href} className="hover:text-white dark:hover:text-primary transition">
+                      {label}
+                    </Link>
+                  );
+                });
+              })()}
             </div>
             
             {/* Contato */}

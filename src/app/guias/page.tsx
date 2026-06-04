@@ -25,6 +25,7 @@ interface Guia {
   hasDetailedItinerary: boolean;
   instagramUrl?: string;
   websiteUrl?: string;
+  slug?: string;
 }
 
 export default function GuiasPage() {
@@ -58,6 +59,7 @@ export default function GuiasPage() {
         const data = doc.data();
         return {
           id: doc.id,
+          slug: (data.slug && /^[a-zA-Z0-9_-]+$/.test(data.slug)) ? data.slug : doc.id,
           name: data.nome || data.name || 'Guia sem nome',
           specialty: data.especialidades ? data.especialidades.join(', ') : (data.specialty || data.descricao || ''),
           category: data.category || 'Guia',
@@ -160,7 +162,7 @@ export default function GuiasPage() {
                   className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group premium-card-hover flex flex-col"
                 >
                   {/* Imagem compacta */}
-                  <div className="relative aspect-[4/3] overflow-hidden bg-surface-container">
+                  <Link href={`/guias/${guia.slug || guia.id}`} className="relative aspect-[4/3] overflow-hidden bg-surface-container block">
                     <img
                       src={guia.image}
                       alt={guia.name}
@@ -179,7 +181,7 @@ export default function GuiasPage() {
                       <span className="font-sans text-[8px] sm:text-[9px] font-bold uppercase tracking-[0.15em] text-secondary">{guia.category}</span>
                       <h3 className="font-headline text-sm sm:text-base font-bold text-white leading-tight mt-0.5 line-clamp-1">{guia.name}</h3>
                     </div>
-                  </div>
+                  </Link>
 
                   {/* Body compacto */}
                   <div className="p-3 sm:p-4 flex flex-col flex-1 gap-3">

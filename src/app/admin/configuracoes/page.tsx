@@ -543,7 +543,7 @@ export default function ConfiguracoesPage() {
               <h3 className="text-sm font-bold text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wider">Pré-visualização Google</h3>
               <div className="bg-white dark:bg-zinc-950 p-4 rounded-lg border border-gray-200 dark:border-zinc-800 max-w-lg">
                 <p className="text-blue-700 dark:text-blue-400 text-lg font-medium truncate">{config.siteTitle}</p>
-                <p className="text-green-700 dark:text-green-500 text-sm truncate">descubra-januaria.com.br</p>
+                <p className="text-green-700 dark:text-green-500 text-sm truncate">descubrajanuaria.com.br</p>
                 <p className="text-gray-600 dark:text-gray-400 text-sm mt-1 line-clamp-2">{config.siteMetaDescription}</p>
               </div>
             </div>

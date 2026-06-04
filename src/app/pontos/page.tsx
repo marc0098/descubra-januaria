@@ -25,6 +25,7 @@ interface PontoTuristico {
   imagem?: string;
   instagramUrl?: string;
   websiteUrl?: string;
+  slug?: string;
 }
 
 const categoryIcons: Record<string, React.ElementType> = {
@@ -67,6 +68,7 @@ export default function Pontos() {
         const data = doc.data();
         return {
           id: doc.id,
+          slug: (data.slug && /^[a-zA-Z0-9_-]+$/.test(data.slug)) ? data.slug : doc.id,
           nome: data.nome || data.title || 'Ponto sem nome',
           categoria: data.categoria || data.category || 'Natural',
           category: data.categoria || data.category || 'Natural',
@@ -207,19 +209,23 @@ export default function Pontos() {
               const Icon = categoryIcons[(ponto.category || 'default') as keyof typeof categoryIcons] || categoryIcons.default;
 
               return (
-                <motion.article
-                  layout
-                  key={ponto.id}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.25, delay: index * 0.04 }}
-                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover"
+                <Link 
+                  key={ponto.id} 
+                  href={`/pontos/${ponto.slug || ponto.id}`}
                   onClick={(e) => {
-                    e.stopPropagation();
+                    e.preventDefault();
                     openGallery(ponto);
                   }}
+                  passHref legacyBehavior
                 >
+                  <motion.a
+                    layout
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    transition={{ duration: 0.25, delay: index * 0.04 }}
+                    className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left"
+                  >
                   {/* Imagem */}
                   <div className="relative aspect-[4/3] overflow-hidden bg-surface-container">
                     {imageErrors[ponto.id] ? (
@@ -274,7 +280,8 @@ export default function Pontos() {
                       </div>
                     </Link>
                   </div>
-                </motion.article>
+                  </motion.a>
+                </Link>
               );
             })}
           </AnimatePresence>

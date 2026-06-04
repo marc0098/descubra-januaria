@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   X, Bed, MapPin, Phone, ArrowRight, Star, Instagram, Globe
@@ -23,6 +24,7 @@ interface Hotel {
   distancia_parque?: string;
   instagramUrl?: string;
   websiteUrl?: string;
+  slug?: string;
 }
 
 const categoryIcons: Record<string, React.ElementType> = {
@@ -62,6 +64,7 @@ export default function EstadiasPage() {
         const data = doc.data();
         return {
           id: doc.id,
+          slug: (data.slug && /^[a-zA-Z0-9_-]+$/.test(data.slug)) ? data.slug : doc.id,
           nome: data.nome || 'Sem nome',
           categoria: data.categoria || 'Centro',
           endereco: data.endereco || '',
@@ -159,15 +162,22 @@ export default function EstadiasPage() {
                 const Icon = categoryIcons[hotel.categoria] || categoryIcons.default;
 
                 return (
-                  <motion.article
+                  <Link 
+                    key={hotel.nome} 
+                    href={`/estadias/${hotel.slug || hotel.id}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSelectedHotel(hotel);
+                    }}
+                    passHref legacyBehavior
+                  >
+                  <motion.a
                     layout
-                    key={hotel.nome}
                     initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.96 }}
                     transition={{ duration: 0.25, delay: index * 0.04 }}
-                    className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover"
-                    onClick={() => setSelectedHotel(hotel)}
+                    className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left"
                   >
                     <div className="relative aspect-[4/3] overflow-hidden bg-surface-container">
                       <img
@@ -213,7 +223,8 @@ export default function EstadiasPage() {
                         </div>
                       </div>
                     </div>
-                  </motion.article>
+                  </motion.a>
+                  </Link>
                 );
               })}
             </AnimatePresence>

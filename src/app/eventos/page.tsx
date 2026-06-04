@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   X, Calendar, MapPin, Clock, ChevronLeft, ChevronRight, Music, Cross, Instagram, Globe
@@ -24,6 +25,7 @@ interface Evento {
   Highlights?: string[];
   instagramUrl?: string;
   websiteUrl?: string;
+  slug?: string;
 }
 
 const mesesOrdem = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
@@ -85,6 +87,7 @@ export default function Eventos() {
 
         return {
           id: doc.id,
+          slug: (data.slug && /^[a-zA-Z0-9_-]+$/.test(data.slug)) ? data.slug : doc.id,
           nome: data.nome || 'Sem nome',
           tipo: data.tipo || 'Festa Popular',
           data: dataStr || '',
@@ -160,15 +163,22 @@ export default function Eventos() {
               const Icon = categoryIcons[evento.tipo] || categoryIcons.default;
 
               return (
-                <motion.article
+                <Link 
+                  key={evento.id} 
+                  href={`/eventos/${evento.slug || evento.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedEvent(evento);
+                  }}
+                  passHref legacyBehavior
+                >
+                <motion.a
                   layout
-                  key={evento.id}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.25, delay: index * 0.04 }}
-                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover"
-                  onClick={() => setSelectedEvent(evento)}
+                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left"
                 >
                   {/* IMAGEM */}
                   <div className="relative h-48 sm:h-56 overflow-hidden bg-surface-container">
@@ -228,7 +238,8 @@ export default function Eventos() {
                       Ver detalhes
                     </button>
                   </div>
-                </motion.article>
+                </motion.a>
+                </Link>
               );
             })}
           </AnimatePresence>

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   X, Utensils, MapPin, Phone, ArrowRight, Instagram, Globe
@@ -25,6 +26,7 @@ interface GastronomiaItem {
   redes_sociais?: string;
   instagramUrl?: string;
   websiteUrl?: string;
+  slug?: string;
 }
 
 const categoryIcons: Record<string, React.ElementType> = {
@@ -65,6 +67,7 @@ export default function Gastronomia() {
         const data = doc.data();
         return {
           id: doc.id,
+          slug: (data.slug && /^[a-zA-Z0-9_-]+$/.test(data.slug)) ? data.slug : doc.id,
           tipo: data.tipo || 'Restaurante',
           nome: data.nome || data.name || 'Sem nome',
           descricao: data.descricao || data.sobre || '',
@@ -160,15 +163,22 @@ export default function Gastronomia() {
               const Icon = categoryIcons[item.tipo] || categoryIcons.default;
 
               return (
-                <motion.article
+                <Link 
+                  key={item.nome} 
+                  href={`/gastronomia/${item.slug || item.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedItem(item);
+                  }}
+                  passHref legacyBehavior
+                >
+                <motion.a
                   layout
-                  key={item.nome}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.25, delay: index * 0.04 }}
-                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover"
-                  onClick={() => setSelectedItem(item)}
+                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left"
                 >
                   <div className="relative aspect-[4/3] overflow-hidden bg-surface-container">
                     <img
@@ -216,7 +226,8 @@ export default function Gastronomia() {
                       </div>
                     </div>
                   </div>
-                </motion.article>
+                </motion.a>
+                </Link>
               );
             })}
           </AnimatePresence>
