@@ -1,4 +1,4 @@
-import { doc, updateDoc, increment, getDoc } from 'firebase/firestore';
+import { doc, setDoc, increment, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 export type ClickType = 'whatsapp' | 'instagram' | 'website';
@@ -23,12 +23,14 @@ export const trackClick = async (collectionName: string, id: string, type: Click
 
     const docRef = doc(db, collectionName, id);
     
-    // Incrementa apenas o contador especifico
-    // E.g. analytics.whatsapp: increment(1)
-    await updateDoc(docRef, {
-      [`analytics.${type}`]: increment(1),
-      [`analytics.total`]: increment(1)
-    });
+    // Usa setDoc com merge: true para garantir que funciona 
+    // mesmo se o objeto "analytics" ainda não existir no documento.
+    await setDoc(docRef, {
+      analytics: {
+        [type]: increment(1),
+        total: increment(1)
+      }
+    }, { merge: true });
     
     console.log(`[Analytics] Registrado clique em ${type} para ${collectionName}/${id}`);
   } catch (error) {
