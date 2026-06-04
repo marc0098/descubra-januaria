@@ -322,7 +322,7 @@ export default function HomePage() {
       {/* Seção Destaques (Carrossel Anúncios CTA Chamativo) */}
       {destaques.length > 0 && (
         <section className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16 my-8 sm:my-12">
-          <div className="relative w-full h-[350px] sm:h-[450px] md:h-[520px] rounded-[2rem] overflow-hidden shadow-2xl bg-neutral-950 group border border-white/5">
+          <div className="relative w-full h-[350px] sm:h-[450px] md:h-[520px] rounded-[2rem] overflow-hidden shadow-2xl bg-surface group border border-outline-variant/30">
             <AnimatePresence initial={false} mode="wait">
               <motion.div
                 key={currentDestaque}
@@ -332,14 +332,15 @@ export default function HomePage() {
                 transition={{ duration: 0.6, ease: "easeInOut" }}
                 className="absolute inset-0"
               >
-                {/* Layer 1: Blurred Background */}
+                {/* Layer 1: Blurred Background (Fully opaque to fill edges) */}
                 <div
-                  className="absolute inset-0 bg-cover bg-center blur-3xl scale-125 opacity-30 select-none"
+                  className="absolute inset-0 bg-cover bg-center blur-3xl scale-125 select-none"
                   style={{ backgroundImage: `url('${destaques[currentDestaque]?.imageUrl}')` }}
                 />
 
-                {/* Layer 2: Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent pointer-events-none" />
+                {/* Layer 2: Soft Light/Dark Overlay to ensure contrast, but not pitch black */}
+                <div className="absolute inset-0 bg-black/20 dark:bg-black/50" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none" />
 
                 {/* Layer 3: Sharp Image Center */}
                 <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8 md:p-12 pointer-events-none">
