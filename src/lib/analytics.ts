@@ -1,4 +1,4 @@
-import { doc, updateDoc, increment } from 'firebase/firestore';
+import { doc, updateDoc, increment, getDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 export type ClickType = 'whatsapp' | 'instagram' | 'website';
@@ -14,6 +14,13 @@ export const trackClick = async (collectionName: string, id: string, type: Click
   if (!id) return;
 
   try {
+    // Verifica a trava de segurança
+    const configSnap = await getDoc(doc(db, 'configuracoes', 'global'));
+    if (configSnap.exists() && configSnap.data().analyticsEnabled === false) {
+      console.log(`[Analytics] Ignorado: Analytics desativado globalmente.`);
+      return;
+    }
+
     const docRef = doc(db, collectionName, id);
     
     // Incrementa apenas o contador especifico

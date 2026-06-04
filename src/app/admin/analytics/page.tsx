@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect, useState, useMemo } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
-import { BarChart3, TrendingUp, Phone, Instagram, Globe, Loader2, ArrowUpDown } from 'lucide-react';
+import { BarChart3, TrendingUp, Phone, Instagram, Globe, Loader2, ArrowUpDown, Power } from 'lucide-react';
 
 interface AnalyticItem {
   id: string;
@@ -21,6 +21,7 @@ export default function AnalyticsDashboard() {
   const [loading, setLoading] = useState(true);
   const [sortField, setSortField] = useState<keyof AnalyticItem>('total');
   const [sortDesc, setSortDesc] = useState(true);
+  const [analyticsEnabled, setAnalyticsEnabled] = useState(true);
 
   useEffect(() => {
     const fetchAnalytics = async () => {
@@ -33,6 +34,11 @@ export default function AnalyticsDashboard() {
       ];
 
       try {
+        const configSnap = await getDoc(doc(db, 'configuracoes', 'global'));
+        if (configSnap.exists() && configSnap.data().analyticsEnabled === false) {
+          setAnalyticsEnabled(false);
+        }
+
         let allItems: AnalyticItem[] = [];
 
         for (const col of collectionsToFetch) {
@@ -94,6 +100,20 @@ export default function AnalyticsDashboard() {
     }
   };
 
+  const toggleAnalytics = async () => {
+    const newState = !analyticsEnabled;
+    setAnalyticsEnabled(newState);
+    try {
+      await updateDoc(doc(db, 'configuracoes', 'global'), {
+        analyticsEnabled: newState
+      });
+    } catch (error) {
+      console.error("Erro ao atualizar status do analytics", error);
+      // Revert in case of error
+      setAnalyticsEnabled(!newState);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-[70vh] gap-4">
@@ -105,14 +125,28 @@ export default function AnalyticsDashboard() {
 
   return (
     <div className="max-w-6xl mx-auto pb-12">
-      <div className="mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white font-headline flex items-center gap-3">
-          <BarChart3 className="text-blue-600" />
-          Estatísticas & Leads
-        </h1>
-        <p className="text-gray-500 dark:text-gray-400 mt-2 font-sans text-sm max-w-2xl">
-          Monitore o desempenho do seu site e descubra quantos clientes em potencial você está gerando para os estabelecimentos e parceiros locais. Use esses dados para fechar acordos e demonstrar o valor da plataforma.
-        </p>
+      <div className="mb-8 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white font-headline flex items-center gap-3">
+            <BarChart3 className="text-blue-600" />
+            Estatísticas & Leads
+          </h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-2 font-sans text-sm max-w-2xl">
+            Monitore o desempenho do seu site e descubra quantos clientes em potencial você está gerando para os estabelecimentos e parceiros locais. Use esses dados para fechar acordos e demonstrar o valor da plataforma.
+          </p>
+        </div>
+        
+        <button
+          onClick={toggleAnalytics}
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-sans text-xs font-bold uppercase tracking-wider transition-all shadow-sm ${
+            analyticsEnabled 
+              ? 'bg-green-100 text-green-700 hover:bg-green-200 dark:bg-green-900/30 dark:text-green-400 dark:hover:bg-green-900/50' 
+              : 'bg-red-100 text-red-700 hover:bg-red-200 dark:bg-red-900/30 dark:text-red-400 dark:hover:bg-red-900/50'
+          }`}
+        >
+          <Power size={14} />
+          {analyticsEnabled ? 'Analytics Ativado' : 'Analytics Desativado'}
+        </button>
       </div>
 
       {/* Cards de Resumo */}
