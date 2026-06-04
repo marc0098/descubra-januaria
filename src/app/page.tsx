@@ -321,7 +321,7 @@ export default function HomePage() {
 
       {/* Seção Destaques (Carrossel) */}
       {destaques.length > 0 && (
-        <section className="relative w-full h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden bg-black">
+        <section className="relative w-full h-[350px] md:h-[400px] lg:h-[500px] overflow-hidden bg-black">
           <AnimatePresence initial={false} mode="wait">
             <motion.div
               key={currentDestaque}
@@ -329,7 +329,7 @@ export default function HomePage() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.8, ease: "easeInOut" }}
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+              className="absolute inset-0 bg-contain bg-center bg-no-repeat"
               style={{ backgroundImage: `url('${destaques[currentDestaque]?.imageUrl}')` }}
             >
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
