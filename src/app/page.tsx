@@ -200,7 +200,7 @@ export default function HomePage() {
                   {globalConfig.homeTitle}
                 </span>
               </h1>
-              <span className="font-sans text-[clamp(12px,2.5vw,22px)] lg:text-[18px] xl:text-[20px] font-semibold tracking-[0.1em] uppercase mt-3 sm:mt-4">
+              <span className="font-sans text-[clamp(14px,3vw,22px)] lg:text-[18px] xl:text-[20px] font-semibold tracking-[0.1em] uppercase mt-3 sm:mt-4">
                 {globalConfig.homeSubtitle}
               </span>
             </motion.div>
@@ -209,7 +209,7 @@ export default function HomePage() {
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
               <button
                 onClick={() => setIsVideoOpen(true)}
-                className="font-sans text-white px-6 py-3 sm:px-10 sm:py-3 rounded-full text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:scale-105 transition-all duration-300 shadow-lg bg-secondary w-full sm:w-auto flex items-center justify-center gap-2"
+                className="font-sans text-white px-6 py-3.5 sm:px-10 sm:py-3.5 rounded-full text-[12px] sm:text-[13px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:scale-105 transition-all duration-300 shadow-lg bg-secondary w-full sm:w-auto flex items-center justify-center gap-2"
               >
                 <Play className="w-4 h-4 fill-current" />
                 {globalConfig.heroButtonText || 'DESCUBRA'}
@@ -218,7 +218,7 @@ export default function HomePage() {
                 href="https://www.google.com/maps/place/Janu%C3%A1ria,+MG,+39480-000/@-15.4831204,-44.3998399,8234m/data=!3m1!1e3!4m6!3m5!1s0x755e7568b04c947:0xba33d9bc5f08070e!8m2!3d-15.4887575!4d-44.3620074!16zL20vMDl6MF96?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-sans text-white px-6 py-3 sm:px-10 sm:py-3 rounded-full text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:scale-105 transition-all duration-300 shadow-lg flex items-center justify-center gap-2 bg-[#2b5b84] w-full sm:w-auto"
+                className="font-sans text-white px-6 py-3.5 sm:px-10 sm:py-3.5 rounded-full text-[12px] sm:text-[13px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:scale-105 transition-all duration-300 shadow-lg flex items-center justify-center gap-2 bg-[#2b5b84] w-full sm:w-auto"
               >
                 <Map className="w-4 h-4" />
                 Mapa
@@ -347,7 +347,7 @@ export default function HomePage() {
                     transition={{ delay: 0.2, duration: 0.5 }}
                     className="inline-flex items-center gap-2 bg-[#ff3333] px-3 sm:px-4 py-1.5 rounded-full shadow-[0_0_15px_rgba(255,51,51,0.5)] text-white mb-4 sm:mb-6"
                   >
-                    <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.1em] flex items-center gap-1.5">
+                    <span className="text-[11px] sm:text-xs font-black uppercase tracking-[0.1em] flex items-center gap-1.5">
                       <span className="w-2 h-2 rounded-full bg-white animate-pulse" /> Destaque
                     </span>
                   </motion.div>
@@ -428,7 +428,7 @@ export default function HomePage() {
                 <p className="font-sans text-[clamp(14px,2vw,17px)] lg:text-[15px] leading-[1.5] text-on-surface-variant">
                   {globalConfig.cavernasDescription}
                 </p>
-                <button onClick={() => router.push('/cavernas')} className="font-sans text-white px-6 sm:px-8 py-2.5 rounded-full text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-tertiary w-full sm:w-auto shadow-md">
+                <button onClick={() => router.push('/cavernas')} className="font-sans text-white px-6 sm:px-8 py-3.5 rounded-full text-[12px] sm:text-[13px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-tertiary w-full sm:w-auto shadow-md">
                   SAIBA MAIS
                 </button>
               </div>
@@ -448,7 +448,7 @@ export default function HomePage() {
                 <p className="font-sans text-[clamp(14px,2vw,17px)] lg:text-[15px] leading-[1.5] text-on-surface-variant">
                   {globalConfig.hospedagemDescription}
                 </p>
-                <button onClick={() => router.push('/estadias')} className="font-sans text-white px-6 sm:px-8 py-2.5 rounded-full text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-quaternary w-full sm:w-auto shadow-md">
+                <button onClick={() => router.push('/estadias')} className="font-sans text-white px-6 sm:px-8 py-3.5 rounded-full text-[12px] sm:text-[13px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-quaternary w-full sm:w-auto shadow-md">
                   SAIBA MAIS
                 </button>
               </div>
@@ -468,7 +468,7 @@ export default function HomePage() {
                 <p className="font-sans text-[clamp(14px,2vw,17px)] lg:text-[15px] leading-[1.5] text-on-surface-variant">
                   {globalConfig.gastronomiaDescription}
                 </p>
-                <button onClick={() => router.push('/gastronomia')} className="font-sans text-white px-6 sm:px-8 py-2.5 rounded-full text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-primary w-full sm:w-auto shadow-md">
+                <button onClick={() => router.push('/gastronomia')} className="font-sans text-white px-6 sm:px-8 py-3.5 rounded-full text-[12px] sm:text-[13px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] hover:opacity-90 active:scale-95 transition bg-primary w-full sm:w-auto shadow-md">
                   SAIBA MAIS
                 </button>
               </div>
