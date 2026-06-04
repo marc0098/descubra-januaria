@@ -319,84 +319,90 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Seção Destaques (Carrossel) */}
+      {/* Seção Destaques (Carrossel Estilo Lume Studio) */}
       {destaques.length > 0 && (
-        <section className="relative w-full h-[350px] md:h-[400px] lg:h-[500px] overflow-hidden bg-black">
-          <AnimatePresence initial={false} mode="wait">
-            <motion.div
-              key={currentDestaque}
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
-              className="absolute inset-0 bg-contain bg-center bg-no-repeat"
-              style={{ backgroundImage: `url('${destaques[currentDestaque]?.imageUrl}')` }}
-            >
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-              <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent"></div>
-              
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16 flex flex-col items-start text-left pt-20">
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3, duration: 0.6 }}
-                  >
-                    <div className="inline-flex items-center gap-2 mb-4 bg-amber-500/20 backdrop-blur-md px-4 py-1.5 rounded-full border border-amber-500/30 text-amber-400">
-                      <Sun className="w-4 h-4 fill-current animate-spin-slow" />
-                      <span className="text-xs font-bold uppercase tracking-[0.2em]">Destaque</span>
-                    </div>
-                  </motion.div>
-                  
-                  <motion.h2 
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
-                    className="text-white font-headline text-4xl md:text-5xl lg:text-7xl font-bold uppercase tracking-tight leading-[1.1] mb-6 drop-shadow-lg max-w-3xl"
-                  >
-                    {destaques[currentDestaque]?.title}
-                  </motion.h2>
-
-                  <motion.p 
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 0.6 }}
-                    className="text-white/90 font-sans text-lg md:text-xl font-medium max-w-2xl mb-10 drop-shadow-md leading-relaxed"
-                  >
-                    {destaques[currentDestaque]?.description}
-                  </motion.p>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6, duration: 0.6 }}
-                  >
-                    <button 
-                      onClick={() => router.push(destaques[currentDestaque]?.link || '#')} 
-                      className="group flex items-center gap-3 bg-amber-500 hover:bg-amber-400 text-black px-8 py-4 rounded-full text-sm font-bold uppercase tracking-[0.15em] transition-all shadow-[0_0_30px_rgba(245,158,11,0.3)] hover:shadow-[0_0_50px_rgba(245,158,11,0.5)] hover:-translate-y-1"
-                    >
-                      {destaques[currentDestaque]?.buttonText}
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  </motion.div>
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Indicadores do Carrossel */}
-          {destaques.length > 1 && (
-            <div className="absolute bottom-8 left-0 right-0 flex justify-center items-center gap-3 z-20">
-              {destaques.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentDestaque(idx)}
-                  className={`transition-all duration-300 rounded-full ${currentDestaque === idx ? 'w-8 h-2 bg-amber-500' : 'w-2 h-2 bg-white/50 hover:bg-white/80'}`}
-                  aria-label={`Ir para o slide ${idx + 1}`}
+        <section className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16 my-8 sm:my-10">
+          <div className="relative w-full h-[320px] sm:h-[400px] md:h-[460px] rounded-3xl overflow-hidden shadow-lg bg-neutral-900 group">
+            <AnimatePresence initial={false} mode="wait">
+              <motion.div
+                key={currentDestaque}
+                initial={{ opacity: 0, scale: 1.02 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+                className="absolute inset-0"
+              >
+                {/* Layer 1: Blurred Background */}
+                <div
+                  className="absolute inset-0 bg-cover bg-center blur-2xl scale-125 opacity-40 select-none"
+                  style={{ backgroundImage: `url('${destaques[currentDestaque]?.imageUrl}')` }}
                 />
-              ))}
-            </div>
-          )}
+
+                {/* Layer 2: Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+
+                {/* Layer 3: Sharp Image Center */}
+                <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-8 pointer-events-none">
+                  <img
+                    src={destaques[currentDestaque]?.imageUrl}
+                    alt={destaques[currentDestaque]?.title}
+                    className="max-w-full max-h-full object-contain drop-shadow-2xl"
+                  />
+                </div>
+
+                {/* Layer 4: Overlays */}
+                {/* Badge */}
+                <div className="absolute top-4 left-4 sm:top-6 sm:left-6">
+                  <span className="bg-amber-500 text-white text-[10px] sm:text-xs font-bold tracking-wider uppercase px-3 py-1.5 rounded-full shadow-md">
+                    Destaque
+                  </span>
+                </div>
+
+                {/* Info Text */}
+                <div className="absolute bottom-6 left-4 right-20 sm:bottom-8 sm:left-6 sm:right-24 flex flex-col gap-1 text-white">
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold leading-tight drop-shadow-md line-clamp-1">
+                    {destaques[currentDestaque]?.title}
+                  </h2>
+                  <p className="text-[10px] sm:text-xs md:text-sm text-white/80 line-clamp-2 max-w-xl drop-shadow-sm">
+                    {destaques[currentDestaque]?.description}
+                  </p>
+                </div>
+
+                {/* Cart/Arrow Button */}
+                <div className="absolute bottom-6 right-4 sm:bottom-8 sm:right-6 pointer-events-auto">
+                  <button
+                    onClick={() => router.push(destaques[currentDestaque]?.link || '#')}
+                    className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-800 text-white rounded-2xl flex items-center justify-center shadow-lg hover:bg-emerald-700 hover:scale-105 active:scale-95 transition-all duration-200"
+                  >
+                    <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </button>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Carousel Dots */}
+            {destaques.length > 1 && (
+              <div className="absolute bottom-2 left-0 right-0 flex justify-center items-center gap-2 z-20">
+                {destaques.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentDestaque(idx)}
+                    className={`transition-all duration-300 rounded-full ${currentDestaque === idx ? 'w-6 h-1.5 bg-amber-500' : 'w-1.5 h-1.5 bg-white/50 hover:bg-white/80'}`}
+                    aria-label={`Ir para o slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Wide Button Below Banner */}
+          <button
+            onClick={() => router.push(destaques[currentDestaque]?.link || '#')}
+            className="w-full mt-3 flex items-center justify-center gap-2 text-emerald-900 dark:text-emerald-100 text-xs sm:text-sm font-semibold py-3 sm:py-3.5 rounded-xl bg-emerald-600/10 hover:bg-emerald-600/20 active:scale-95 transition-all duration-200"
+          >
+            <span>{destaques[currentDestaque]?.buttonText || 'Ver detalhes'}</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
         </section>
       )}
 
