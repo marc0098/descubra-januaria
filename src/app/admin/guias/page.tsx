@@ -16,6 +16,8 @@ interface Guia {
   email: string;
   especialidades: string[];
   locality?: string;
+  instagramUrl?: string;
+  websiteUrl?: string;
 }
 
 const defaultEspecialidades = ['Cavernas', 'Cidade', 'Rurais', 'Grupos', 'Aventura'];
@@ -51,7 +53,7 @@ export default function AdminGuias() {
       setForm(guia);
     } else {
       setEditing(null);
-      setForm({ nome: '', descricao: '', whatsapp: '', email: '', especialidades: [], foto: '' });
+      setForm({ nome: '', descricao: '', whatsapp: '', email: '', especialidades: [], foto: '', instagramUrl: '', websiteUrl: '' });
     }
     setFotoFile(null);
     setShowModal(true);
@@ -230,6 +232,18 @@ export default function AdminGuias() {
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
                     className="w-full px-4 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 font-sans text-sm"
                   />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Link do Instagram</label>
+                  <input type="url" placeholder="https://instagram.com/..." value={form.instagramUrl || ''} onChange={(e) => setForm({ ...form, instagramUrl: e.target.value })}
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 font-sans text-sm" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Link do Site / Outro</label>
+                  <input type="url" placeholder="https://..." value={form.websiteUrl || ''} onChange={(e) => setForm({ ...form, websiteUrl: e.target.value })}
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 font-sans text-sm" />
                 </div>
               </div>
               <div>

@@ -14,6 +14,8 @@ interface Hotel {
   imagens: string[];
   endereco: string;
   telefone: string;
+  instagramUrl?: string;
+  websiteUrl?: string;
   destaque: boolean;
 }
 
@@ -41,7 +43,7 @@ export default function AdminHoteis() {
 
   const openModal = (item?: Hotel) => {
     if (item) { setEditing(item); setForm(item); }
-    else { setEditing(null); setForm({ nome: '', descricao: '', imagens: [], endereco: '', telefone: '', destaque: false }); }
+    else { setEditing(null); setForm({ nome: '', descricao: '', imagens: [], endereco: '', telefone: '', instagramUrl: '', websiteUrl: '', destaque: false }); }
     setImagensFiles([]);
     setShowModal(true);
   };
@@ -125,6 +127,10 @@ export default function AdminHoteis() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Endereço</label><input type="text" value={form.endereco || ''} onChange={(e) => setForm({ ...form, endereco: e.target.value })} className={inputClass} /></div>
                 <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Telefone</label><input type="tel" value={form.telefone || ''} onChange={(e) => setForm({ ...form, telefone: e.target.value })} className={inputClass} /></div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Link do Instagram</label><input type="url" placeholder="https://instagram.com/..." value={form.instagramUrl || ''} onChange={(e) => setForm({ ...form, instagramUrl: e.target.value })} className={inputClass} /></div>
+                <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Link do Site / Outro</label><input type="url" placeholder="https://..." value={form.websiteUrl || ''} onChange={(e) => setForm({ ...form, websiteUrl: e.target.value })} className={inputClass} /></div>
               </div>
               <div className="flex items-center gap-2">
                 <input type="checkbox" id="destaque" checked={form.destaque || false} onChange={(e) => setForm({ ...form, destaque: e.target.checked })} className="w-4 h-4 accent-cyan-600" />

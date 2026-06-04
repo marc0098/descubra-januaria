@@ -13,6 +13,8 @@ interface Evento {
   descricao: string;
   data: string;
   imagem: string;
+  instagramUrl?: string;
+  websiteUrl?: string;
   destaque: boolean;
 }
 
@@ -40,7 +42,7 @@ export default function AdminEventos() {
 
   const openModal = (item?: Evento) => {
     if (item) { setEditing(item); setForm(item); }
-    else { setEditing(null); setForm({ nome: '', descricao: '', data: '', imagem: '', destaque: false }); }
+    else { setEditing(null); setForm({ nome: '', descricao: '', data: '', imagem: '', instagramUrl: '', websiteUrl: '', destaque: false }); }
     setImagemFile(null);
     setShowModal(true);
   };
@@ -123,6 +125,10 @@ export default function AdminEventos() {
               <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Nome</label><input type="text" value={form.nome || ''} onChange={(e) => setForm({ ...form, nome: e.target.value })} className={inputClass} required /></div>
               <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Descrição</label><textarea value={form.descricao || ''} onChange={(e) => setForm({ ...form, descricao: e.target.value })} className={inputClass} rows={4} /></div>
               <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Data</label><input type="date" value={form.data || ''} onChange={(e) => setForm({ ...form, data: e.target.value })} className={inputClass} required /></div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Link do Instagram</label><input type="url" placeholder="https://instagram.com/..." value={form.instagramUrl || ''} onChange={(e) => setForm({ ...form, instagramUrl: e.target.value })} className={inputClass} /></div>
+                <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Link do Site / Outro</label><input type="url" placeholder="https://..." value={form.websiteUrl || ''} onChange={(e) => setForm({ ...form, websiteUrl: e.target.value })} className={inputClass} /></div>
+              </div>
               <div className="flex items-center gap-2">
                 <input type="checkbox" id="destaque" checked={form.destaque || false} onChange={(e) => setForm({ ...form, destaque: e.target.checked })} className="w-4 h-4 accent-purple-600" />
                 <label htmlFor="destaque" className="text-sm text-gray-700 dark:text-gray-300 font-sans">Mostrar na home</label>

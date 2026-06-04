@@ -14,6 +14,8 @@ interface Ponto {
   imagem: string;
   categoria: string;
   localizacao: string;
+  instagramUrl?: string;
+  websiteUrl?: string;
 }
 
 const categorias = ['Natural', 'Histórico', 'Cultural', 'Religioso', 'Aventura'];
@@ -43,7 +45,7 @@ export default function AdminPontos() {
 
   const openModal = (item?: Ponto) => {
     if (item) { setEditing(item); setForm(item); }
-    else { setEditing(null); setForm({ nome: '', descricao: '', imagem: '', categoria: 'Natural', localizacao: '' }); }
+    else { setEditing(null); setForm({ nome: '', descricao: '', imagem: '', categoria: 'Natural', localizacao: '', instagramUrl: '', websiteUrl: '' }); }
     setImagemFile(null);
     setShowModal(true);
   };
@@ -58,7 +60,7 @@ export default function AdminPontos() {
         await uploadBytes(storageRef, imagemFile);
         imagemUrl = await getDownloadURL(storageRef);
       }
-      const payload = { nome: form.nome, descricao: form.descricao, imagem: imagemUrl, categoria: form.categoria || 'Natural', localizacao: form.localizacao };
+      const payload = { nome: form.nome, descricao: form.descricao, imagem: imagemUrl, categoria: form.categoria || 'Natural', localizacao: form.localizacao, instagramUrl: form.instagramUrl || '', websiteUrl: form.websiteUrl || '' };
       if (editing) { await updateDoc(doc(db, 'pontos', editing.id), payload); }
       else { await addDoc(collection(db, 'pontos'), payload); }
       setShowModal(false);
@@ -143,6 +145,10 @@ export default function AdminPontos() {
                   </select>
                 </div>
                 <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Localização</label><input type="text" value={form.localizacao || ''} onChange={(e) => setForm({ ...form, localizacao: e.target.value })} className={inputClass} placeholder="Ex: 15km do centro" /></div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Link do Instagram</label><input type="url" placeholder="https://instagram.com/..." value={form.instagramUrl || ''} onChange={(e) => setForm({ ...form, instagramUrl: e.target.value })} className={inputClass} /></div>
+                <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Link do Site / Outro</label><input type="url" placeholder="https://..." value={form.websiteUrl || ''} onChange={(e) => setForm({ ...form, websiteUrl: e.target.value })} className={inputClass} /></div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Imagem</label>
