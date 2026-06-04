@@ -11,11 +11,15 @@ export const revalidate = 60; // Cache de 60 segundos (ISR)
 
 async function getGastronomiaData(slug: string): Promise<any> {
   try {
-    const docRef = doc(db, 'gastronomia', slug);
+    const decodedSlug = decodeURIComponent(slug);
+    
+    // 1. Tentar buscar por ID
+    const docRef = doc(db, 'gastronomia', decodedSlug);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) return { id: docSnap.id, ...docSnap.data() };
 
-    const q = query(collection(db, 'gastronomia'), where('slug', '==', slug));
+    // 2. Tentar buscar pelo campo slug
+    const q = query(collection(db, 'gastronomia'), where('slug', '==', decodedSlug));
     const querySnapshot = await getDocs(q);
     if (!querySnapshot.empty) {
       const docData = querySnapshot.docs[0];

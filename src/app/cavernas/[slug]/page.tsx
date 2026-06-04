@@ -22,11 +22,12 @@ const iconMap: Record<string, React.ElementType> = {
 
 async function getAtrativoData(slug: string): Promise<any> {
   try {
-    const docRef = doc(db, 'atrativos', slug);
+    const decodedSlug = decodeURIComponent(slug);
+    const docRef = doc(db, 'atrativos', decodedSlug);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) return { id: docSnap.id, ...docSnap.data() };
 
-    const q = query(collection(db, 'atrativos'), where('slug', '==', slug));
+    const q = query(collection(db, 'atrativos'), where('slug', '==', decodedSlug));
     const querySnapshot = await getDocs(q);
     if (!querySnapshot.empty) {
       const docData = querySnapshot.docs[0];

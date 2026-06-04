@@ -11,11 +11,12 @@ export const revalidate = 60; // Cache de 60 segundos (ISR)
 
 async function getGuiaData(slug: string): Promise<any> {
   try {
-    const docRef = doc(db, 'guias', slug);
+    const decodedSlug = decodeURIComponent(slug);
+    const docRef = doc(db, 'guias', decodedSlug);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) return { id: docSnap.id, ...docSnap.data() };
 
-    const q = query(collection(db, 'guias'), where('slug', '==', slug));
+    const q = query(collection(db, 'guias'), where('slug', '==', decodedSlug));
     const querySnapshot = await getDocs(q);
     if (!querySnapshot.empty) {
       const docData = querySnapshot.docs[0];

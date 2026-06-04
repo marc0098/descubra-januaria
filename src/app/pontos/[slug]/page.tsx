@@ -11,13 +11,14 @@ export const revalidate = 60; // Cache de 60 segundos (ISR)
 
 async function getPontoData(slug: string): Promise<any> {
   try {
+    const decodedSlug = decodeURIComponent(slug);
     // 1. Tentar buscar por ID
-    const docRef = doc(db, 'pontos', slug);
+    const docRef = doc(db, 'pontos', decodedSlug);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) return { id: docSnap.id, ...docSnap.data() };
 
     // 2. Tentar buscar pelo campo slug
-    const q = query(collection(db, 'pontos'), where('slug', '==', slug));
+    const q = query(collection(db, 'pontos'), where('slug', '==', decodedSlug));
     const querySnapshot = await getDocs(q);
     if (!querySnapshot.empty) {
       const docData = querySnapshot.docs[0];

@@ -11,11 +11,12 @@ export const revalidate = 60; // Cache de 60 segundos (ISR)
 
 async function getEventoData(slug: string): Promise<any> {
   try {
-    const docRef = doc(db, 'eventos', slug);
+    const decodedSlug = decodeURIComponent(slug);
+    const docRef = doc(db, 'eventos', decodedSlug);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) return { id: docSnap.id, ...docSnap.data() };
 
-    const q = query(collection(db, 'eventos'), where('slug', '==', slug));
+    const q = query(collection(db, 'eventos'), where('slug', '==', decodedSlug));
     const querySnapshot = await getDocs(q);
     if (!querySnapshot.empty) {
       const docData = querySnapshot.docs[0];
