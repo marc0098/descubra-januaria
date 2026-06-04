@@ -138,18 +138,18 @@ export default function GuiasClient({ initialGuias, initialConfig }: { initialGu
         </div>
 
         {/* Grid — 2col mobile, 3col tablet, 4col desktop */}
-        <div className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 md:gap-5 space-y-3 sm:space-y-4 md:space-y-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
             {filteredGuias.map((guia, index) => (
               <article
                 key={guia.id}
-                className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group premium-card-hover flex flex-col break-inside-avoid inline-block w-full"
+                className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group premium-card-hover flex flex-col w-full h-full"
               >
                 {/* Imagem compacta */}
-                <Link href={`/guias/${guia.slug || guia.id}`} className="relative overflow-hidden bg-surface-container block">
+                <Link href={`/guias/${guia.slug || guia.id}`} className="relative overflow-hidden bg-surface-container block aspect-[3/2] shrink-0">
                   <img
                     src={guia.image}
                     alt={guia.name}
-                    className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 block"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 block"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
 
@@ -168,19 +168,19 @@ export default function GuiasClient({ initialGuias, initialConfig }: { initialGu
 
                 {/* Body compacto */}
                 <div className="p-3 sm:p-4 flex flex-col flex-1 gap-3">
-                  <p className="font-sans text-[11px] sm:text-xs text-on-surface-variant leading-relaxed line-clamp-2 flex-1">{guia.specialty}</p>
+                  <p className="font-sans text-[11px] sm:text-xs text-on-surface-variant leading-relaxed line-clamp-3 mb-1 flex-1">{guia.specialty}</p>
 
                   {/* Meta compacto */}
                   <div className="flex items-center gap-2 text-on-surface-variant/60">
-                    <Shield size={11} />
+                    <Shield size={11} shrink-0 />
                     <span className="font-sans text-[10px] font-medium">ICMBio</span>
                     <div className="w-px h-3 bg-outline-variant" />
-                    <MapPin size={11} />
+                    <MapPin size={11} shrink-0 />
                     <span className="font-sans text-[10px] font-medium">Januária</span>
                   </div>
 
                   {/* Ações */}
-                  <div className="flex flex-col gap-1.5 mt-1">
+                  <div className="flex flex-col gap-1.5 mt-auto pt-2">
                     <div className="flex gap-1.5">
                       <a
                         href={`https://wa.me/${guia.whatsapp}?text=Olá ${guia.name}, vi seu perfil no Descubra Januária e gostaria de agendar um roteiro.`}

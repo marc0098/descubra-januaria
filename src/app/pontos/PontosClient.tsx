@@ -194,7 +194,7 @@ export default function PontosClient({ initialPontos, initialConfig }: { initial
         </div>
 
         {/* Grid */}
-        <div className="columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 md:gap-5 space-y-3 sm:space-y-4 md:space-y-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
             {filteredPontos.map((ponto, index) => {
               const Icon = categoryIcons[(ponto.category || 'default') as keyof typeof categoryIcons] || categoryIcons.default;
 
@@ -212,10 +212,10 @@ export default function PontosClient({ initialPontos, initialConfig }: { initial
                     initial={false}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.25 }}
-                    className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left break-inside-avoid inline-block w-full"
+                    className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left break-inside-avoid w-full h-full"
                   >
                   {/* Imagem */}
-                  <div className="relative overflow-hidden bg-surface-container">
+                  <div className="relative overflow-hidden bg-surface-container aspect-[4/3] shrink-0">
                     {imageErrors[ponto.id] ? (
                       <div className="w-full aspect-[4/3] flex items-center justify-center">
                         <ImageOff className="w-6 h-6 text-on-surface-variant/20" />
@@ -224,7 +224,7 @@ export default function PontosClient({ initialPontos, initialConfig }: { initial
                       <img
                         src={ponto.images?.[0] || ponto.imagem || ''}
                         alt={ponto.nome || ponto.title || ''}
-                        className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 block"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 block"
                         onError={() => handleImageError(ponto.id)}
                       />
                     )}
@@ -252,14 +252,14 @@ export default function PontosClient({ initialPontos, initialConfig }: { initial
 
                   {/* Body */}
                   <div className="p-3 sm:p-4 flex flex-col flex-1 gap-2.5">
-                    <p className="font-sans text-[11px] sm:text-xs text-on-surface-variant leading-relaxed line-clamp-2 flex-1">
+                    <p className="font-sans text-[11px] sm:text-xs text-on-surface-variant leading-relaxed line-clamp-3 mb-2 flex-1">
                       {ponto.descricao || ponto.content}
                     </p>
 
                     {/* CTA */}
                     <Link
                       href="/guias"
-                      className="flex items-center justify-between pt-2.5 border-t border-outline-variant/30"
+                      className="flex items-center justify-between pt-2.5 border-t border-outline-variant/30 mt-auto"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <span className="font-sans text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.1em] text-primary group-hover:text-secondary transition-colors">Explorar</span>

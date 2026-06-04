@@ -148,7 +148,7 @@ export default function EventosClient({ initialEventos, initialConfig }: { initi
         </div>
 
         {/* GRID DE EVENTOS */}
-        <div className="columns-1 md:columns-2 gap-4 sm:gap-6 space-y-4 sm:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredEventos.map((evento, index) => {
               const Icon = categoryIcons[evento.tipo] || categoryIcons.default;
 
@@ -163,14 +163,14 @@ export default function EventosClient({ initialEventos, initialConfig }: { initi
                   passHref legacyBehavior
                 >
                 <div
-                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left break-inside-avoid inline-block w-full"
+                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left break-inside-avoid w-full h-full"
                 >
                   {/* IMAGEM */}
-                  <div className="relative overflow-hidden bg-surface-container">
+                  <div className="relative overflow-hidden bg-surface-container aspect-[16/9] shrink-0">
                     <img
                       src={evento.imagem}
                       alt={evento.nome}
-                      className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 block"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 block"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
 
@@ -214,12 +214,12 @@ export default function EventosClient({ initialEventos, initialConfig }: { initi
                     </div>
 
                     {/* Descrição */}
-                    <p className="font-sans text-xs text-on-surface-variant leading-relaxed line-clamp-2 flex-1">
+                    <p className="font-sans text-xs text-on-surface-variant leading-relaxed line-clamp-3 mb-2 flex-1">
                       {evento.descricao}
                     </p>
 
                     {/* Botão */}
-                    <button className="flex items-center justify-center gap-2 w-full bg-quaternary/10 text-quaternary py-2.5 rounded-xl font-sans text-[10px] font-bold uppercase tracking-wider hover:bg-quaternary hover:text-white transition-all duration-300 mt-1">
+                    <button className="flex items-center justify-center gap-2 w-full bg-quaternary/10 text-quaternary py-2.5 rounded-xl font-sans text-[10px] font-bold uppercase tracking-wider hover:bg-quaternary hover:text-white transition-all duration-300 mt-auto">
                       Ver detalhes
                     </button>
                   </div>

@@ -142,7 +142,7 @@ export default function EstadiasClient({ initialHoteis, initialConfig }: { initi
           </p>
         </div>
 
-        <div className="columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 md:gap-5 space-y-3 sm:space-y-4 md:space-y-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
             {filteredHoteis.map((hotel, index) => {
               const Icon = categoryIcons[hotel.categoria] || categoryIcons.default;
 
@@ -157,13 +157,13 @@ export default function EstadiasClient({ initialHoteis, initialConfig }: { initi
                   passHref legacyBehavior
                 >
                 <div
-                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left break-inside-avoid inline-block w-full"
+                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left break-inside-avoid w-full h-full"
                 >
-                  <div className="relative overflow-hidden bg-surface-container">
+                  <div className="relative overflow-hidden bg-surface-container aspect-[4/3] shrink-0">
                     <img
                       src={hotel.fotos && hotel.fotos.length > 0 ? hotel.fotos[0] : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800'}
                       alt={hotel.nome}
-                      className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 block"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 block"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
 
@@ -187,16 +187,16 @@ export default function EstadiasClient({ initialHoteis, initialConfig }: { initi
                   </div>
 
                   <div className="p-3 sm:p-4 flex flex-col flex-1 gap-2.5">
-                    <p className="font-sans text-[11px] sm:text-xs text-on-surface-variant leading-relaxed line-clamp-2 flex-1">
+                    <p className="font-sans text-[11px] sm:text-xs text-on-surface-variant leading-relaxed line-clamp-3 mb-2 flex-1">
                       {hotel.sobre}
                     </p>
 
-                    <div className="flex items-center gap-1 text-on-surface-variant/60">
-                      <MapPin size={10} />
+                    <div className="flex items-center gap-1 text-on-surface-variant/60 mb-1">
+                      <MapPin size={10} shrink-0 />
                       <span className="font-sans text-[9px] line-clamp-1">{hotel.endereco}</span>
                     </div>
 
-                    <div className="flex items-center justify-between pt-2.5 border-t border-outline-variant/30">
+                    <div className="flex items-center justify-between pt-2.5 border-t border-outline-variant/30 mt-auto">
                       <span className="font-sans text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.1em] text-primary group-hover:text-secondary transition-colors">Ver detalhes</span>
                       <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-surface-container flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all duration-300 text-on-surface-variant">
                         <ArrowRight size={13} />

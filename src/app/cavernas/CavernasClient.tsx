@@ -138,7 +138,7 @@ export default function CavernasClient({ initialAtrativos, initialConfig }: { in
         </motion.div>
 
         {/* Grid de Atrativos do Parque */}
-        <div className="columns-1 md:columns-2 lg:columns-2 gap-8 sm:gap-10 lg:gap-12 2xl:gap-14 space-y-8 sm:space-y-10 lg:space-y-12 2xl:space-y-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 2xl:gap-14">
           {atrativos.map((item, index) => {
             const IconComponent = iconMap[item.icone] || Mountain;
             
@@ -150,14 +150,14 @@ export default function CavernasClient({ initialAtrativos, initialConfig }: { in
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-surface rounded-2xl sm:rounded-3xl lg:rounded-[32px] overflow-hidden shadow-xl flex flex-col border border-outline-variant/30 group premium-card-hover break-inside-avoid inline-block w-full"
+                className="bg-surface rounded-2xl sm:rounded-3xl lg:rounded-[32px] overflow-hidden shadow-xl flex flex-col border border-outline-variant/30 group premium-card-hover w-full h-full"
               >
                 {/* Imagem Container */}
-                <Link href={`/cavernas/${item.slug || item.id}`} className="relative overflow-hidden block">
+                <Link href={`/cavernas/${item.slug || item.id}`} className="relative overflow-hidden block aspect-[16/9] shrink-0">
                   <motion.img 
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.6 }}
-                    className="w-full h-auto object-cover block" 
+                    className="absolute inset-0 w-full h-full object-cover block" 
                     src={item.imagem} 
                     alt={item.nome} 
                   />
@@ -193,7 +193,7 @@ export default function CavernasClient({ initialAtrativos, initialConfig }: { in
                     </div>
                   </div>
 
-                  <div className="flex gap-4">
+                  <div className="flex gap-4 mt-auto">
                     <Link href="/guias" className={`flex-1 ${item.cor_tema} text-white py-3 2xl:py-3.5 rounded-full font-sans text-[11px] sm:text-[12px] 2xl:text-[13px] font-bold uppercase tracking-[0.2em] hover:opacity-95 transition-all flex items-center justify-center gap-2 group/btn`}>
                       Agendar Passeio
                       <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
