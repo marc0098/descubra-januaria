@@ -23,9 +23,9 @@ export function middleware(request: NextRequest) {
     object-src 'none';
     base-uri 'self';
     form-action 'self';
-    frame-src 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/ https://vercel.live;
+    frame-src 'self' https://www.google.com/recaptcha/ https://recaptcha.google.com/recaptcha/ https://www.recaptcha.net/ https://vercel.live;
     frame-ancestors 'none';
-    connect-src 'self' https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com wss://ws-us3.pusher.com https://vercel.live https://www.google.com/recaptcha/;
+    connect-src 'self' https://firestore.googleapis.com https://firebasestorage.googleapis.com https://content-firebaseappcheck.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com wss://ws-us3.pusher.com https://vercel.live https://www.google.com/recaptcha/ https://www.recaptcha.net/;
   `.replace(/\s{2,}/g, ' ').trim();
   
   response.headers.set('Content-Security-Policy', cspHeader);
