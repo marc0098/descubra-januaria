@@ -156,7 +156,7 @@ export default function Eventos() {
         {/* GRID DE EVENTOS */}
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
+          className="columns-1 md:columns-2 gap-4 sm:gap-6 space-y-4 sm:space-y-6"
         >
           <AnimatePresence mode="popLayout">
             {filteredEventos.map((evento, index) => {
@@ -178,14 +178,14 @@ export default function Eventos() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.25, delay: index * 0.04 }}
-                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left"
+                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left break-inside-avoid inline-block w-full"
                 >
                   {/* IMAGEM */}
-                  <div className="relative h-48 sm:h-56 overflow-hidden bg-surface-container">
+                  <div className="relative overflow-hidden bg-surface-container">
                     <img
                       src={evento.imagem}
                       alt={evento.nome}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 block"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
 

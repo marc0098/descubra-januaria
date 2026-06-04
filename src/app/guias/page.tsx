@@ -149,7 +149,7 @@ export default function GuiasPage() {
             <span className="text-on-surface-variant font-sans text-sm">Carregando condutores...</span>
           </div>
         ) : (
-          <motion.div layout className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
+          <motion.div layout className="columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 md:gap-5 space-y-3 sm:space-y-4 md:space-y-5">
             <AnimatePresence mode="popLayout">
               {filteredGuias.map((guia, index) => (
                 <motion.article
@@ -159,16 +159,16 @@ export default function GuiasPage() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.25, delay: index * 0.05 }}
-                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group premium-card-hover flex flex-col"
+                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group premium-card-hover flex flex-col break-inside-avoid inline-block w-full"
                 >
                   {/* Imagem compacta */}
-                  <Link href={`/guias/${guia.slug || guia.id}`} className="relative aspect-[4/3] overflow-hidden bg-surface-container block">
+                  <Link href={`/guias/${guia.slug || guia.id}`} className="relative overflow-hidden bg-surface-container block">
                     <img
                       src={guia.image}
                       alt={guia.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 block"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
 
                     {/* Rating badge */}
                     <div className="absolute top-2.5 right-2.5 bg-surface/90 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center gap-1 shadow-sm">

@@ -202,7 +202,7 @@ export default function Pontos() {
         {/* Grid */}
         <motion.div
           layout
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5"
+          className="columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 md:gap-5 space-y-3 sm:space-y-4 md:space-y-5"
         >
           <AnimatePresence mode="popLayout">
             {filteredPontos.map((ponto, index) => {
@@ -224,23 +224,23 @@ export default function Pontos() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.96 }}
                     transition={{ duration: 0.25, delay: index * 0.04 }}
-                    className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left"
+                    className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left break-inside-avoid inline-block w-full"
                   >
                   {/* Imagem */}
-                  <div className="relative aspect-[4/3] overflow-hidden bg-surface-container">
+                  <div className="relative overflow-hidden bg-surface-container">
                     {imageErrors[ponto.id] ? (
-                      <div className="w-full h-full flex items-center justify-center">
+                      <div className="w-full aspect-[4/3] flex items-center justify-center">
                         <ImageOff className="w-6 h-6 text-on-surface-variant/20" />
                       </div>
                     ) : (
                       <img
                         src={ponto.images?.[0] || ponto.imagem || ''}
                         alt={ponto.nome || ponto.title || ''}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 block"
                         onError={() => handleImageError(ponto.id)}
                       />
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
 
                     {/* Badge */}
                     <div className="absolute top-2.5 left-2.5">

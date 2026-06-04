@@ -149,7 +149,7 @@ export default function CavernasPage() {
             <span className="text-on-surface-variant font-sans">Carregando cavernas...</span>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 2xl:gap-14">
+          <div className="columns-1 md:columns-2 lg:columns-2 gap-8 sm:gap-10 lg:gap-12 2xl:gap-14 space-y-8 sm:space-y-10 lg:space-y-12 2xl:space-y-14">
             {atrativos.map((item, index) => {
               const IconComponent = iconMap[item.icone] || Mountain;
               
@@ -161,14 +161,14 @@ export default function CavernasPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-surface rounded-2xl sm:rounded-3xl lg:rounded-[32px] overflow-hidden shadow-xl flex flex-col border border-outline-variant/30 group premium-card-hover"
+                  className="bg-surface rounded-2xl sm:rounded-3xl lg:rounded-[32px] overflow-hidden shadow-xl flex flex-col border border-outline-variant/30 group premium-card-hover break-inside-avoid inline-block w-full"
                 >
                   {/* Imagem Container */}
-                  <Link href={`/cavernas/${item.slug || item.id}`} className="h-56 sm:h-64 lg:h-72 2xl:h-80 relative overflow-hidden block">
+                  <Link href={`/cavernas/${item.slug || item.id}`} className="relative overflow-hidden block">
                     <motion.img 
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.6 }}
-                      className="w-full h-full object-cover" 
+                      className="w-full h-auto object-cover block" 
                       src={item.imagem} 
                       alt={item.nome} 
                     />

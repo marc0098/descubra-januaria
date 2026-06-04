@@ -156,7 +156,7 @@ export default function Gastronomia() {
 
         <motion.div
           layout
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5"
+          className="columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 md:gap-5 space-y-3 sm:space-y-4 md:space-y-5"
         >
           <AnimatePresence mode="popLayout">
             {filteredItems.map((item, index) => {
@@ -178,15 +178,15 @@ export default function Gastronomia() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.96 }}
                   transition={{ duration: 0.25, delay: index * 0.04 }}
-                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left"
+                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left break-inside-avoid inline-block w-full"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden bg-surface-container">
+                  <div className="relative overflow-hidden bg-surface-container">
                     <img
                       src={item.fotos?.[0] || undefined}
                       alt={item.nome}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 block"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent pointer-events-none" />
 
                     <div className="absolute top-2.5 left-2.5">
                       <div className="bg-surface/90 backdrop-blur-sm px-2 py-1 rounded-lg flex items-center gap-1 shadow-sm border border-outline-variant/20">

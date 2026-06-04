@@ -95,16 +95,16 @@ export default function AdminGastronomia() {
       {loading ? (
         <div className="flex justify-center p-12"><Loader2 className="w-8 h-8 animate-spin text-orange-600" /></div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
           {filtered.map(item => (
-            <div key={item.id} className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-xl shadow-sm overflow-hidden transition-all hover:shadow-md">
-              <div className="h-40 bg-gray-200 dark:bg-zinc-800 relative">
+            <div key={item.id} className="bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-xl shadow-sm overflow-hidden transition-all hover:shadow-md break-inside-avoid inline-block w-full">
+              <div className="bg-gray-200 dark:bg-zinc-800 relative">
                 {item.imagens?.[0] ? (
-                  <img src={item.imagens[0]} alt={item.nome} className="w-full h-full object-cover" />
+                  <img src={item.imagens[0]} alt={item.nome} className="w-full h-auto object-cover block" />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500 font-sans text-sm">Sem imagem</div>
+                  <div className="w-full h-40 flex items-center justify-center text-gray-400 dark:text-gray-500 font-sans text-sm">Sem imagem</div>
                 )}
-                {item.destaque && (<span className="absolute top-2 right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded font-sans font-bold">Destaque</span>)}
+                {item.destaque && (<span className="absolute top-2 right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded font-sans font-bold shadow">Destaque</span>)}
               </div>
               <div className="p-4">
                 <h3 className="font-bold text-gray-900 dark:text-white font-sans">{item.nome}</h3>
