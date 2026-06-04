@@ -14,6 +14,8 @@ interface Restaurante {
   imagens: string[];
   endereco: string;
   telefone: string;
+  instagramUrl?: string;
+  websiteUrl?: string;
   destaque: boolean;
 }
 
@@ -44,7 +46,7 @@ export default function AdminGastronomia() {
 
   const openModal = (item?: Restaurante) => {
     if (item) { setEditing(item); setForm(item); }
-    else { setEditing(null); setForm({ nome: '', descricao: '', imagens: [], endereco: '', telefone: '', destaque: false }); }
+    else { setEditing(null); setForm({ nome: '', descricao: '', imagens: [], endereco: '', telefone: '', instagramUrl: '', websiteUrl: '', destaque: false }); }
     setImagensFiles([]);
     setShowModal(true);
   };
@@ -151,6 +153,18 @@ export default function AdminGastronomia() {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Telefone</label>
                   <input type="tel" value={form.telefone || ''} onChange={(e) => setForm({ ...form, telefone: e.target.value })}
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-orange-500 font-sans text-sm" />
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Link do Instagram</label>
+                  <input type="url" placeholder="https://instagram.com/..." value={form.instagramUrl || ''} onChange={(e) => setForm({ ...form, instagramUrl: e.target.value })}
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-orange-500 font-sans text-sm" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Link do Site / Outro</label>
+                  <input type="url" placeholder="https://..." value={form.websiteUrl || ''} onChange={(e) => setForm({ ...form, websiteUrl: e.target.value })}
                     className="w-full px-4 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-orange-500 font-sans text-sm" />
                 </div>
               </div>
