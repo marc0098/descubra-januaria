@@ -99,6 +99,17 @@
   .animate-slideUp {
     animation: slideUp 0.3s ease-out forwards;
   }
+  @keyframes gradientMove {
+    0% { background-position: 200% 50%; }
+    100% { background-position: -200% 50%; }
+  }
+  @keyframes shine {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(200%); }
+  }
+  .animate-shine {
+    animation: shine 1.5s ease-in-out infinite;
+  }
 }
 
 @layer base {
