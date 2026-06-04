@@ -9,6 +9,7 @@ import MobileNav from '@/components/MobileNav';
 import PageHeader from '@/components/PageHeader';
 import { collection, onSnapshot, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { trackClick } from '@/lib/analytics';
 
 interface GastronomiaItem {
   id: string;
@@ -318,18 +319,18 @@ export default function Gastronomia() {
 
                 <div className="flex flex-col gap-2 mt-1">
                   {selectedItem.instagramUrl && (
-                    <a href={selectedItem.instagramUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-pink-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-pink-700 active:scale-[0.98] transition-all">
+                    <a href={selectedItem.instagramUrl} onClick={() => trackClick('gastronomia', selectedItem.id, 'instagram')} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-pink-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-pink-700 active:scale-[0.98] transition-all">
                       <Instagram size={15} /> Instagram Oficial
                     </a>
                   )}
                   {selectedItem.websiteUrl && (
-                    <a href={selectedItem.websiteUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-blue-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all">
+                    <a href={selectedItem.websiteUrl} onClick={() => trackClick('gastronomia', selectedItem.id, 'website')} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-blue-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all">
                       <Globe size={15} /> Acessar Site
                     </a>
                   )}
-                  {selectedItem.telefone && selectedItem.tipo === 'Restaurante' && (
-                    <a href={`https://wa.me/${selectedItem.telefone.replace(/\D/g, '')}?text=Olá ${selectedItem.nome}, vi seu perfil no Descubra Januária e gostaria de fazer uma reserva.`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-primary text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-primary/90 active:scale-[0.98] transition-all">
-                      <Phone size={15} /> Reservar / Contatar
+                  {selectedItem.telefone && (
+                    <a href={`https://wa.me/${selectedItem.telefone.replace(/\D/g, '')}?text=Olá ${selectedItem.nome}, vi seu perfil no Descubra Januária e gostaria de fazer um pedido ou reserva.`} onClick={() => trackClick('gastronomia', selectedItem.id, 'whatsapp')} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-primary text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-primary/90 active:scale-[0.98] transition-all">
+                      <Phone size={15} /> Fazer Pedido / Reserva
                     </a>
                   )}
                 </div>

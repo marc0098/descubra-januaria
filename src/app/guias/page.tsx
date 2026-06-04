@@ -11,6 +11,7 @@ import MobileNav from '@/components/MobileNav';
 import PageHeader from '@/components/PageHeader';
 import { collection, onSnapshot, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { trackClick } from '@/lib/analytics';
 
 interface Guia {
   id: string;
@@ -198,6 +199,7 @@ export default function GuiasPage() {
                       <div className="flex gap-1.5">
                         <a
                           href={`https://wa.me/${guia.whatsapp}?text=Olá ${guia.name}, vi seu perfil no Descubra Januária e gostaria de agendar um roteiro.`}
+                          onClick={() => trackClick('guias', guia.id, 'whatsapp')}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex-1 flex items-center justify-center gap-1.5 bg-primary text-white py-2.5 sm:py-3 rounded-xl font-sans text-[10px] font-bold uppercase tracking-wider hover:bg-primary/90 active:scale-[0.98] transition-all"
@@ -220,12 +222,12 @@ export default function GuiasPage() {
                       {(guia.instagramUrl || guia.websiteUrl) && (
                         <div className="flex gap-1.5">
                           {guia.instagramUrl && (
-                            <a href={guia.instagramUrl} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1.5 bg-pink-600 text-white py-2.5 rounded-xl font-sans text-[10px] font-bold uppercase tracking-wider hover:bg-pink-700 active:scale-[0.98] transition-all">
+                            <a href={guia.instagramUrl} onClick={() => trackClick('guias', guia.id, 'instagram')} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1.5 bg-pink-600 text-white py-2.5 rounded-xl font-sans text-[10px] font-bold uppercase tracking-wider hover:bg-pink-700 active:scale-[0.98] transition-all">
                               <Instagram size={13} /> Instagram
                             </a>
                           )}
                           {guia.websiteUrl && (
-                            <a href={guia.websiteUrl} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1.5 bg-blue-600 text-white py-2.5 rounded-xl font-sans text-[10px] font-bold uppercase tracking-wider hover:bg-blue-700 active:scale-[0.98] transition-all">
+                            <a href={guia.websiteUrl} onClick={() => trackClick('guias', guia.id, 'website')} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1.5 bg-blue-600 text-white py-2.5 rounded-xl font-sans text-[10px] font-bold uppercase tracking-wider hover:bg-blue-700 active:scale-[0.98] transition-all">
                               <Globe size={13} /> Site
                             </a>
                           )}

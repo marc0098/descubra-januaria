@@ -11,6 +11,7 @@ import MobileNav from '@/components/MobileNav';
 import PageHeader from '@/components/PageHeader';
 import { collection, onSnapshot, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { trackClick } from '@/lib/analytics';
 
 interface PontoTuristico {
   id: string;
@@ -427,12 +428,12 @@ export default function Pontos() {
 
                 <div className="flex flex-col gap-2 mt-1">
                   {selectedPonto.instagramUrl && (
-                    <a href={selectedPonto.instagramUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-pink-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-pink-700 active:scale-[0.98] transition-all">
+                    <a href={selectedPonto.instagramUrl} onClick={() => trackClick('pontos', selectedPonto.id, 'instagram')} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-pink-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-pink-700 active:scale-[0.98] transition-all">
                       <Instagram size={15} /> Instagram Oficial
                     </a>
                   )}
                   {selectedPonto.websiteUrl && (
-                    <a href={selectedPonto.websiteUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-blue-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all">
+                    <a href={selectedPonto.websiteUrl} onClick={() => trackClick('pontos', selectedPonto.id, 'website')} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-blue-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all">
                       <Globe size={15} /> Acessar Site
                     </a>
                   )}

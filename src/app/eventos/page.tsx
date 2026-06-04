@@ -9,6 +9,7 @@ import MobileNav from '@/components/MobileNav';
 import PageHeader from '@/components/PageHeader';
 import { collection, onSnapshot, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { trackClick } from '@/lib/analytics';
 
 interface Evento {
   id: string;
@@ -333,16 +334,16 @@ export default function Eventos() {
 
                 <div className="flex flex-col gap-2 mt-1">
                   {selectedEvent.instagramUrl && (
-                    <a href={selectedEvent.instagramUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-pink-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-pink-700 active:scale-[0.98] transition-all">
+                    <a href={selectedEvent.instagramUrl} onClick={() => trackClick('eventos', selectedEvent.id, 'instagram')} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-pink-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-pink-700 active:scale-[0.98] transition-all">
                       <Instagram size={15} /> Instagram Oficial
                     </a>
                   )}
                   {selectedEvent.websiteUrl && (
-                    <a href={selectedEvent.websiteUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-blue-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all">
+                    <a href={selectedEvent.websiteUrl} onClick={() => trackClick('eventos', selectedEvent.id, 'website')} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-blue-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all">
                       <Globe size={15} /> Acessar Site
                     </a>
                   )}
-                  <a href="https://wa.me/5538992664400?text=Olá, gostaria de informações sobre eventos em Januária." target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-quaternary text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-quaternary/90 active:scale-[0.98] transition-all">
+                  <a href="https://wa.me/5538992664400?text=Olá, gostaria de informações sobre eventos em Januária." onClick={() => trackClick('eventos', selectedEvent.id, 'whatsapp')} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-quaternary text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-quaternary/90 active:scale-[0.98] transition-all">
                     <Calendar size={15} /> Mais informações
                   </a>
                 </div>

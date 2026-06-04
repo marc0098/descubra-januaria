@@ -19,7 +19,8 @@ import {
   Loader2,
   Settings,
   Mountain,
-  Megaphone
+  Megaphone,
+  BarChart3
 } from 'lucide-react';
 
 const menuItems = [
@@ -33,6 +34,7 @@ const menuItems = [
   { to: '/admin/cavernas', icon: Mountain, label: 'Cavernas' },
   { to: '/admin/destaques', icon: Megaphone, label: 'Destaques' },
   { to: '/admin/banners', icon: ImageIcon, label: 'Banners' },
+  { to: '/admin/analytics', icon: BarChart3, label: 'Estatísticas / Leads' },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

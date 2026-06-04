@@ -9,6 +9,7 @@ import MobileNav from '@/components/MobileNav';
 import PageHeader from '@/components/PageHeader';
 import { collection, onSnapshot, doc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { trackClick } from '@/lib/analytics';
 
 interface Hotel {
   id?: string;
@@ -309,17 +310,17 @@ export default function EstadiasPage() {
 
                 <div className="flex flex-col gap-2 mt-1">
                   {selectedHotel.instagramUrl && (
-                    <a href={selectedHotel.instagramUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-pink-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-pink-700 active:scale-[0.98] transition-all">
+                    <a href={selectedHotel.instagramUrl} onClick={() => trackClick('hoteis', selectedHotel.id!, 'instagram')} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-pink-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-pink-700 active:scale-[0.98] transition-all">
                       <Instagram size={15} /> Instagram Oficial
                     </a>
                   )}
                   {selectedHotel.websiteUrl && (
-                    <a href={selectedHotel.websiteUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-blue-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all">
+                    <a href={selectedHotel.websiteUrl} onClick={() => trackClick('hoteis', selectedHotel.id!, 'website')} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-blue-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all">
                       <Globe size={15} /> Acessar Site
                     </a>
                   )}
                   {selectedHotel.telefone && (
-                    <a href={`https://wa.me/${selectedHotel.telefone.replace(/\D/g, '')}?text=Olá ${selectedHotel.nome}, vi seu perfil no Descubra Januária e gostaria de fazer uma reserva.`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-primary text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-primary/90 active:scale-[0.98] transition-all">
+                    <a href={`https://wa.me/${selectedHotel.telefone.replace(/\D/g, '')}?text=Olá ${selectedHotel.nome}, vi seu perfil no Descubra Januária e gostaria de fazer uma reserva.`} onClick={() => trackClick('hoteis', selectedHotel.id!, 'whatsapp')} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-primary text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-primary/90 active:scale-[0.98] transition-all">
                       <Phone size={15} /> Reservar / Contatar
                     </a>
                   )}
