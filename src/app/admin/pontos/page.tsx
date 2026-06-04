@@ -151,13 +151,25 @@ export default function AdminPontos() {
                 <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Link do Site / Outro</label><input type="url" placeholder="https://..." value={form.websiteUrl || ''} onChange={(e) => setForm({ ...form, websiteUrl: e.target.value })} className={inputClass} /></div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Imagem</label>
-                <div className="flex items-center gap-4">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Imagem (URL ou Upload)</label>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                   {form.imagem && <img src={form.imagem} alt="Preview" className="w-20 h-20 object-cover rounded-lg border border-gray-200 dark:border-zinc-800" />}
-                  <label className="flex items-center gap-2 cursor-pointer px-4 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-800 font-sans text-sm">
-                    <Upload className="w-5 h-5" /><span>Upload</span>
-                    <input type="file" accept="image/*" className="hidden" onChange={(e) => setImagemFile(e.target.files?.[0] || null)} />
-                  </label>
+                  <div className="flex-1 w-full flex flex-col gap-2">
+                    <input type="url" placeholder="Cole o link da imagem aqui..." value={form.imagem || ''} onChange={(e) => { setForm({ ...form, imagem: e.target.value }); setImagemFile(null); }} className={inputClass} />
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-500 font-sans">ou</span>
+                      <label className="flex items-center gap-2 cursor-pointer px-4 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-800 font-sans text-sm">
+                        <Upload className="w-5 h-5" /><span>Faça Upload do PC</span>
+                        <input type="file" accept="image/*" className="hidden" onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            setImagemFile(file);
+                            setForm({ ...form, imagem: URL.createObjectURL(file) });
+                          }
+                        }} />
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-zinc-800">

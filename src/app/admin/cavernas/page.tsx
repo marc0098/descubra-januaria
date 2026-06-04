@@ -440,15 +440,25 @@ export default function AdminCavernas() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Imagem</label>
-                <div className="flex items-center gap-4">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Foto Principal (URL ou Upload)</label>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                   {form.imagem && <img src={form.imagem} alt="Preview" className="w-32 h-20 rounded-lg object-cover border border-gray-200 dark:border-zinc-800" />}
-                  <label className="flex items-center gap-2 cursor-pointer px-4 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors font-sans text-sm font-semibold">
-                    <Upload className="w-5 h-5" />
-                    <span>Fazer Upload</span>
-                    <input type="file" accept="image/*" className="hidden" onChange={(e) => setFotoFile(e.target.files?.[0] || null)} />
-                  </label>
-                  {fotoFile && <span className="text-sm text-green-600">Arquivo selecionado: {fotoFile.name}</span>}
+                  <div className="flex-1 w-full flex flex-col gap-2">
+                    <input type="url" placeholder="Cole o link da imagem aqui..." value={form.imagem || ''} onChange={(e) => { setForm({ ...form, imagem: e.target.value }); setFotoFile(null); }} className="w-full px-4 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-indigo-500 font-sans text-sm" />
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-500 font-sans">ou</span>
+                      <label className="flex items-center gap-2 cursor-pointer px-4 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-800 font-sans text-sm">
+                        <Upload className="w-5 h-5" /><span>Fazer Upload</span>
+                        <input type="file" accept="image/*" className="hidden" onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            setFotoFile(file);
+                            setForm({ ...form, imagem: URL.createObjectURL(file) });
+                          }
+                        }} />
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
 

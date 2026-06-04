@@ -169,15 +169,26 @@ export default function AdminDestaques() {
               </div>
 
               <div className="pt-2">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 font-sans">Imagem de Fundo (Horizontal recomendada)</label>
-                <div className="flex items-center gap-4">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 font-sans">Imagem de Fundo (URL ou Upload)</label>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                   {form.imageUrl && <img src={form.imageUrl} alt="Preview" className="w-24 h-16 object-cover rounded-lg border border-gray-200 dark:border-zinc-800" />}
-                  <label className="flex items-center gap-2 cursor-pointer px-4 py-3 border-2 border-dashed border-gray-300 dark:border-zinc-700 rounded-xl bg-gray-50 dark:bg-zinc-900 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:border-amber-500 transition-all font-sans text-sm font-medium w-full justify-center">
-                    <Upload className="w-5 h-5 text-amber-500" /><span>Selecionar Foto</span>
-                    <input type="file" accept="image/*" className="hidden" onChange={(e) => setImagemFile(e.target.files?.[0] || null)} />
-                  </label>
+                  <div className="flex-1 w-full flex flex-col gap-2">
+                    <input type="url" placeholder="Cole o link da imagem aqui..." value={form.imageUrl || ''} onChange={(e) => { setForm({ ...form, imageUrl: e.target.value }); setImagemFile(null); }} className="w-full px-4 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg bg-white dark:bg-zinc-900 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-amber-500 font-sans text-sm" />
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-gray-500 font-sans">ou</span>
+                      <label className="flex items-center gap-2 cursor-pointer px-4 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-800 font-sans text-sm">
+                        <Upload className="w-5 h-5 text-amber-500" /><span>Fazer Upload do PC</span>
+                        <input type="file" accept="image/*" className="hidden" onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            setImagemFile(file);
+                            setForm({ ...form, imageUrl: URL.createObjectURL(file) });
+                          }
+                        }} />
+                      </label>
+                    </div>
+                  </div>
                 </div>
-                {imagemFile && <p className="text-xs text-amber-600 mt-2 font-medium ml-1">Arquivo selecionado: {imagemFile.name}</p>}
               </div>
               <div className="flex justify-end gap-3 pt-6 border-t border-gray-200 dark:border-zinc-800 mt-6">
                 <button type="button" onClick={() => setShowModal(false)} className="px-5 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg text-gray-700 dark:text-gray-300 font-sans text-sm font-semibold hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors">Cancelar</button>

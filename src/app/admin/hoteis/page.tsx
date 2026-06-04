@@ -137,17 +137,40 @@ export default function AdminHoteis() {
                 <label htmlFor="destaque" className="text-sm text-gray-700 dark:text-gray-300 font-sans">Marcar como destaque</label>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Imagens</label>
-                <div className="flex flex-wrap gap-2">
-                  {form.imagens?.map((url, i) => (
-                    <div key={i} className="relative"><img src={url} alt="" className="w-20 h-20 object-cover rounded-lg" />
-                      <button type="button" onClick={() => setForm({ ...form, imagens: form.imagens?.filter((_, j) => j !== i) })} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow"><X className="w-3 h-3" /></button>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Imagens (URLs ou Upload)</label>
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-wrap gap-2">
+                    {form.imagens?.map((url, i) => (
+                      <div key={i} className="relative"><img src={url} alt="" className="w-20 h-20 object-cover rounded-lg" />
+                        <button type="button" onClick={() => setForm({ ...form, imagens: form.imagens?.filter((_, j) => j !== i) })} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow"><X className="w-3 h-3" /></button>
+                      </div>
+                    ))}
+                    {imagensFiles.map((file, i) => (
+                      <div key={'file'+i} className="relative"><img src={URL.createObjectURL(file)} alt="" className="w-20 h-20 object-cover rounded-lg border-2 border-dashed border-cyan-500" />
+                        <button type="button" onClick={() => setImagensFiles(imagensFiles.filter((_, j) => j !== i))} className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow"><X className="w-3 h-3" /></button>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex flex-col sm:flex-row items-center gap-2">
+                    <div className="flex-1 w-full flex items-center gap-2">
+                      <input type="url" id="url-input-hoteis" placeholder="Cole o link da imagem e clique Adicionar..." className={inputClass} />
+                      <button type="button" onClick={() => {
+                        const input = document.getElementById('url-input-hoteis') as HTMLInputElement;
+                        if (input && input.value) {
+                          setForm({ ...form, imagens: [...(form.imagens || []), input.value] });
+                          input.value = '';
+                        }
+                      }} className="px-4 py-2 bg-gray-200 dark:bg-zinc-800 rounded-lg text-sm font-bold whitespace-nowrap hover:bg-gray-300 dark:hover:bg-zinc-700">Adicionar URL</button>
                     </div>
-                  ))}
-                  <label className="flex items-center gap-2 cursor-pointer px-4 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-800 font-sans text-sm">
-                    <Upload className="w-5 h-5" /><span>Adicionar</span>
-                    <input type="file" accept="image/*" multiple className="hidden" onChange={(e) => setImagensFiles(Array.from(e.target.files || []))} />
-                  </label>
+                    <span className="text-xs text-gray-500 font-sans mx-1">ou</span>
+                    <label className="flex items-center justify-center gap-2 cursor-pointer px-4 py-2 border border-gray-300 dark:border-zinc-800 rounded-lg bg-white dark:bg-zinc-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-zinc-800 font-sans text-sm whitespace-nowrap w-full sm:w-auto">
+                      <Upload className="w-5 h-5" /><span>PC</span>
+                      <input type="file" accept="image/*" multiple className="hidden" onChange={(e) => {
+                        const files = Array.from(e.target.files || []);
+                        if (files.length > 0) setImagensFiles(prev => [...prev, ...files]);
+                      }} />
+                    </label>
+                  </div>
                 </div>
               </div>
               <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-zinc-800">
