@@ -7,6 +7,8 @@ import { Instagram, Globe, Phone, ArrowLeft, MapPin, Utensils } from 'lucide-rea
 import Link from 'next/link';
 import MobileNav from '@/components/MobileNav';
 
+export const revalidate = 60; // Cache de 60 segundos (ISR)
+
 async function getGastronomiaData(slug: string): Promise<any> {
   try {
     const docRef = doc(db, 'gastronomia', slug);

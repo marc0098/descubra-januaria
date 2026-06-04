@@ -7,6 +7,8 @@ import { Instagram, Globe, Compass, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import MobileNav from '@/components/MobileNav';
 
+export const revalidate = 60; // Cache de 60 segundos (ISR)
+
 async function getPontoData(slug: string): Promise<any> {
   try {
     // 1. Tentar buscar por ID

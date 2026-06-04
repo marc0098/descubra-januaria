@@ -7,6 +7,8 @@ import { Instagram, Globe, MessageCircle, ArrowLeft, Star, Shield, MapPin, Exter
 import Link from 'next/link';
 import MobileNav from '@/components/MobileNav';
 
+export const revalidate = 60; // Cache de 60 segundos (ISR)
+
 async function getGuiaData(slug: string): Promise<any> {
   try {
     const docRef = doc(db, 'guias', slug);

@@ -217,6 +217,7 @@ export default function Pontos() {
                     openGallery(ponto);
                   }}
                   passHref legacyBehavior
+                  prefetch={false}
                 >
                   <motion.a
                     layout

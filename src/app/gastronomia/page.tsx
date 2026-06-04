@@ -171,6 +171,7 @@ export default function Gastronomia() {
                     setSelectedItem(item);
                   }}
                   passHref legacyBehavior
+                  prefetch={false}
                 >
                 <motion.a
                   layout

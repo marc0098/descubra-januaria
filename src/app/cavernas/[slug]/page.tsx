@@ -7,6 +7,8 @@ import { ArrowLeft, ArrowRight, Mountain, Map, Compass, Anchor, Palmtree, Camera
 import Link from 'next/link';
 import MobileNav from '@/components/MobileNav';
 
+export const revalidate = 60; // Cache de 60 segundos (ISR)
+
 const iconMap: Record<string, React.ElementType> = {
   Mountain,
   Map,

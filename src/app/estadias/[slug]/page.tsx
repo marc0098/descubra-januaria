@@ -7,6 +7,8 @@ import { Instagram, Globe, Phone, ArrowLeft, MapPin, Bed, Star } from 'lucide-re
 import Link from 'next/link';
 import MobileNav from '@/components/MobileNav';
 
+export const revalidate = 60; // Cache de 60 segundos (ISR)
+
 async function getHotelData(slug: string): Promise<any> {
   try {
     const docRef = doc(db, 'hoteis', slug);
