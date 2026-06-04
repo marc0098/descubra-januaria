@@ -3,25 +3,22 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { db } from '@/lib/firebase';
 import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
-import { Instagram, Globe, Calendar, ArrowLeft, MapPin, Clock } from 'lucide-react';
+import { Instagram, Globe, Calendar, ArrowLeft, MapPin, Clock, Check } from 'lucide-react';
 import Link from 'next/link';
 import MobileNav from '@/components/MobileNav';
+import { fetchDocumentById, fetchDocumentBySlug } from '@/lib/firestore-rest';
 
 export const revalidate = 60; // Cache de 60 segundos (ISR)
 
 async function getEventoData(slug: string): Promise<any> {
   try {
     const decodedSlug = decodeURIComponent(slug);
-    const docRef = doc(db, 'eventos', decodedSlug);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) return { id: docSnap.id, ...docSnap.data() };
+    
+    let data = await fetchDocumentById('eventos', decodedSlug);
+    if (data) return data;
 
-    const q = query(collection(db, 'eventos'), where('slug', '==', decodedSlug));
-    const querySnapshot = await getDocs(q);
-    if (!querySnapshot.empty) {
-      const docData = querySnapshot.docs[0];
-      return { id: docData.id, ...docData.data() };
-    }
+    data = await fetchDocumentBySlug('eventos', decodedSlug);
+    if (data) return data;
     
     return null;
   } catch (error) {
