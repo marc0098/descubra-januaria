@@ -7,21 +7,19 @@ import { Instagram, Globe, MessageCircle, ArrowLeft, Star, Shield, MapPin, Exter
 import Link from 'next/link';
 import MobileNav from '@/components/MobileNav';
 
+import { fetchDocumentById, fetchDocumentBySlug } from '@/lib/firestore-rest';
+
 export const revalidate = 60; // Cache de 60 segundos (ISR)
 
 async function getGuiaData(slug: string): Promise<any> {
   try {
     const decodedSlug = decodeURIComponent(slug);
-    const docRef = doc(db, 'guias', decodedSlug);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) return { id: docSnap.id, ...docSnap.data() };
+    
+    let data = await fetchDocumentById('guias', decodedSlug);
+    if (data) return data;
 
-    const q = query(collection(db, 'guias'), where('slug', '==', decodedSlug));
-    const querySnapshot = await getDocs(q);
-    if (!querySnapshot.empty) {
-      const docData = querySnapshot.docs[0];
-      return { id: docData.id, ...docData.data() };
-    }
+    data = await fetchDocumentBySlug('guias', decodedSlug);
+    if (data) return data;
     
     return null;
   } catch (error) {

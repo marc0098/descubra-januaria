@@ -7,6 +7,8 @@ import { Instagram, Globe, Phone, ArrowLeft, MapPin, Utensils } from 'lucide-rea
 import Link from 'next/link';
 import MobileNav from '@/components/MobileNav';
 
+import { fetchDocumentById, fetchDocumentBySlug } from '@/lib/firestore-rest';
+
 export const revalidate = 60; // Cache de 60 segundos (ISR)
 
 async function getGastronomiaData(slug: string): Promise<any> {
@@ -14,17 +16,12 @@ async function getGastronomiaData(slug: string): Promise<any> {
     const decodedSlug = decodeURIComponent(slug);
     
     // 1. Tentar buscar por ID
-    const docRef = doc(db, 'gastronomia', decodedSlug);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) return { id: docSnap.id, ...docSnap.data() };
+    let data = await fetchDocumentById('gastronomia', decodedSlug);
+    if (data) return data;
 
     // 2. Tentar buscar pelo campo slug
-    const q = query(collection(db, 'gastronomia'), where('slug', '==', decodedSlug));
-    const querySnapshot = await getDocs(q);
-    if (!querySnapshot.empty) {
-      const docData = querySnapshot.docs[0];
-      return { id: docData.id, ...docData.data() };
-    }
+    data = await fetchDocumentBySlug('gastronomia', decodedSlug);
+    if (data) return data;
     
     return null;
   } catch (error) {

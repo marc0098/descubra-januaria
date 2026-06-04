@@ -7,21 +7,19 @@ import { Instagram, Globe, Phone, ArrowLeft, MapPin, Bed, Star } from 'lucide-re
 import Link from 'next/link';
 import MobileNav from '@/components/MobileNav';
 
+import { fetchDocumentById, fetchDocumentBySlug } from '@/lib/firestore-rest';
+
 export const revalidate = 60; // Cache de 60 segundos (ISR)
 
 async function getHotelData(slug: string): Promise<any> {
   try {
     const decodedSlug = decodeURIComponent(slug);
-    const docRef = doc(db, 'hoteis', decodedSlug);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) return { id: docSnap.id, ...docSnap.data() };
+    
+    let data = await fetchDocumentById('hoteis', decodedSlug);
+    if (data) return data;
 
-    const q = query(collection(db, 'hoteis'), where('slug', '==', decodedSlug));
-    const querySnapshot = await getDocs(q);
-    if (!querySnapshot.empty) {
-      const docData = querySnapshot.docs[0];
-      return { id: docData.id, ...docData.data() };
-    }
+    data = await fetchDocumentBySlug('hoteis', decodedSlug);
+    if (data) return data;
     
     return null;
   } catch (error) {
