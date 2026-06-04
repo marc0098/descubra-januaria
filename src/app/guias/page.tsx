@@ -4,7 +4,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Star, MessageCircle, ExternalLink, 
-  Award, Shield, MapPin, Users
+  Award, Shield, MapPin, Users, Instagram, Globe
 } from 'lucide-react';
 import Link from 'next/link';
 import MobileNav from '@/components/MobileNav';
@@ -22,6 +22,8 @@ interface Guia {
   whatsapp: string;
   image: string;
   hasDetailedItinerary: boolean;
+  instagramUrl?: string;
+  websiteUrl?: string;
 }
 
 export default function GuiasPage() {
@@ -62,7 +64,9 @@ export default function GuiasPage() {
           reviews: data.reviews || 0,
           whatsapp: data.whatsapp || '',
           image: data.foto || data.image || '',
-          hasDetailedItinerary: data.hasDetailedItinerary || false
+          hasDetailedItinerary: data.hasDetailedItinerary || false,
+          instagramUrl: data.instagramUrl || '',
+          websiteUrl: data.websiteUrl || ''
         } as Guia;
       });
       
@@ -190,26 +194,42 @@ export default function GuiasPage() {
                     </div>
 
                     {/* Ações */}
-                    <div className="flex gap-1.5">
-                      <a
-                        href={`https://wa.me/${guia.whatsapp}?text=Olá ${guia.name}, vi seu perfil no Descubra Januária e gostaria de agendar um roteiro.`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center gap-1.5 bg-primary text-white py-2.5 sm:py-3 rounded-xl font-sans text-[10px] font-bold uppercase tracking-wider hover:bg-primary/90 active:scale-[0.98] transition-all"
-                      >
-                        <MessageCircle size={13} />
-                        <span className="hidden sm:inline">WhatsApp</span>
-                        <span className="sm:hidden">Contato</span>
-                      </a>
-
-                      {guia.hasDetailedItinerary && (
-                        <Link
-                          href="/guias/peruacu"
-                          className="flex items-center justify-center w-10 bg-surface-container rounded-xl text-on-surface-variant hover:bg-secondary hover:text-white transition-all"
-                          title="Ver Roteiro"
+                    <div className="flex flex-col gap-1.5 mt-1">
+                      <div className="flex gap-1.5">
+                        <a
+                          href={`https://wa.me/${guia.whatsapp}?text=Olá ${guia.name}, vi seu perfil no Descubra Januária e gostaria de agendar um roteiro.`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 flex items-center justify-center gap-1.5 bg-primary text-white py-2.5 sm:py-3 rounded-xl font-sans text-[10px] font-bold uppercase tracking-wider hover:bg-primary/90 active:scale-[0.98] transition-all"
                         >
-                          <ExternalLink size={14} />
-                        </Link>
+                          <MessageCircle size={13} />
+                          <span className="hidden sm:inline">WhatsApp</span>
+                          <span className="sm:hidden">Contato</span>
+                        </a>
+
+                        {guia.hasDetailedItinerary && (
+                          <Link
+                            href="/guias/peruacu"
+                            className="flex items-center justify-center w-10 bg-surface-container rounded-xl text-on-surface-variant hover:bg-secondary hover:text-white transition-all"
+                            title="Ver Roteiro"
+                          >
+                            <ExternalLink size={14} />
+                          </Link>
+                        )}
+                      </div>
+                      {(guia.instagramUrl || guia.websiteUrl) && (
+                        <div className="flex gap-1.5">
+                          {guia.instagramUrl && (
+                            <a href={guia.instagramUrl} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1.5 bg-pink-600 text-white py-2.5 rounded-xl font-sans text-[10px] font-bold uppercase tracking-wider hover:bg-pink-700 active:scale-[0.98] transition-all">
+                              <Instagram size={13} /> Instagram
+                            </a>
+                          )}
+                          {guia.websiteUrl && (
+                            <a href={guia.websiteUrl} target="_blank" rel="noopener noreferrer" className="flex-1 flex items-center justify-center gap-1.5 bg-blue-600 text-white py-2.5 rounded-xl font-sans text-[10px] font-bold uppercase tracking-wider hover:bg-blue-700 active:scale-[0.98] transition-all">
+                              <Globe size={13} /> Site
+                            </a>
+                          )}
+                        </div>
                       )}
                     </div>
                   </div>

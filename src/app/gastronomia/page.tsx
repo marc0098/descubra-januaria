@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  X, Utensils, MapPin, Phone, ArrowRight
+  X, Utensils, MapPin, Phone, ArrowRight, Instagram, Globe
 } from 'lucide-react';
 import MobileNav from '@/components/MobileNav';
 import PageHeader from '@/components/PageHeader';
@@ -22,6 +22,8 @@ interface GastronomiaItem {
   especialidade?: string;
   fotos: string[];
   redes_sociais?: string;
+  instagramUrl?: string;
+  websiteUrl?: string;
 }
 
 const categoryIcons: Record<string, React.ElementType> = {
@@ -71,7 +73,9 @@ export default function Gastronomia() {
           telefone: data.telefone || '',
           especialidade: data.especialidade || '',
           fotos: data.imagens && data.imagens.length > 0 ? data.imagens : (data.fotos || []),
-          redes_sociais: data.redes_sociais || ''
+          redes_sociais: data.redes_sociais || '',
+          instagramUrl: data.instagramUrl || '',
+          websiteUrl: data.websiteUrl || ''
         } as GastronomiaItem;
       });
       
@@ -312,17 +316,23 @@ export default function Gastronomia() {
                   </div>
                 )}
 
-                {selectedItem.telefone && selectedItem.tipo === 'Restaurante' && (
-                  <a
-                    href={`https://wa.me/${selectedItem.telefone.replace(/\D/g, '')}?text=Olá ${selectedItem.nome}, vi seu perfil no Descubra Januária e gostaria de fazer uma reserva.`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2.5 w-full bg-primary text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-primary/90 active:scale-[0.98] transition-all mt-1"
-                  >
-                    <Phone size={15} />
-                    Reservar / Contatar
-                  </a>
-                )}
+                <div className="flex flex-col gap-2 mt-1">
+                  {selectedItem.instagramUrl && (
+                    <a href={selectedItem.instagramUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-pink-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-pink-700 active:scale-[0.98] transition-all">
+                      <Instagram size={15} /> Instagram Oficial
+                    </a>
+                  )}
+                  {selectedItem.websiteUrl && (
+                    <a href={selectedItem.websiteUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-blue-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all">
+                      <Globe size={15} /> Acessar Site
+                    </a>
+                  )}
+                  {selectedItem.telefone && selectedItem.tipo === 'Restaurante' && (
+                    <a href={`https://wa.me/${selectedItem.telefone.replace(/\D/g, '')}?text=Olá ${selectedItem.nome}, vi seu perfil no Descubra Januária e gostaria de fazer uma reserva.`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-primary text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-primary/90 active:scale-[0.98] transition-all">
+                      <Phone size={15} /> Reservar / Contatar
+                    </a>
+                  )}
+                </div>
               </div>
             </motion.div>
           </motion.div>

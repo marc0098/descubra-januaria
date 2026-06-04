@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  X, Bed, MapPin, Phone, ArrowRight, Star
+  X, Bed, MapPin, Phone, ArrowRight, Star, Instagram, Globe
 } from 'lucide-react';
 import MobileNav from '@/components/MobileNav';
 import PageHeader from '@/components/PageHeader';
@@ -20,6 +20,8 @@ interface Hotel {
   fotos: string[];
   redes_sociais?: string;
   distancia_parque?: string;
+  instagramUrl?: string;
+  websiteUrl?: string;
 }
 
 const categoryIcons: Record<string, React.ElementType> = {
@@ -66,7 +68,9 @@ export default function EstadiasPage() {
           sobre: data.descricao || data.sobre || '',
           fotos: data.imagens && data.imagens.length > 0 ? data.imagens : (data.fotos || []),
           redes_sociais: data.redes_sociais || '',
-          distancia_parque: data.distancia_parque || ''
+          distancia_parque: data.distancia_parque || '',
+          instagramUrl: data.instagramUrl || '',
+          websiteUrl: data.websiteUrl || ''
         } as Hotel;
       });
       
@@ -303,15 +307,23 @@ export default function EstadiasPage() {
                   )}
                 </div>
 
-                <a
-                  href={`https://wa.me/${selectedHotel.telefone.replace(/\D/g, '')}?text=Olá ${selectedHotel.nome}, vi seu perfil no Descubra Januária e gostaria de fazer uma reserva.`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2.5 w-full bg-primary text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-primary/90 active:scale-[0.98] transition-all mt-1"
-                >
-                  <Phone size={15} />
-                  Reservar / Contatar
-                </a>
+                <div className="flex flex-col gap-2 mt-1">
+                  {selectedHotel.instagramUrl && (
+                    <a href={selectedHotel.instagramUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-pink-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-pink-700 active:scale-[0.98] transition-all">
+                      <Instagram size={15} /> Instagram Oficial
+                    </a>
+                  )}
+                  {selectedHotel.websiteUrl && (
+                    <a href={selectedHotel.websiteUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-blue-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all">
+                      <Globe size={15} /> Acessar Site
+                    </a>
+                  )}
+                  {selectedHotel.telefone && (
+                    <a href={`https://wa.me/${selectedHotel.telefone.replace(/\D/g, '')}?text=Olá ${selectedHotel.nome}, vi seu perfil no Descubra Januária e gostaria de fazer uma reserva.`} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-primary text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-primary/90 active:scale-[0.98] transition-all">
+                      <Phone size={15} /> Reservar / Contatar
+                    </a>
+                  )}
+                </div>
               </div>
             </motion.div>
           </motion.div>

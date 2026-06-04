@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   ChevronLeft, ChevronRight, ImageOff, X,
-  MapPin, ArrowRight, History, Mountain, Palmtree, Camera, Compass, Search
+  MapPin, ArrowRight, History, Mountain, Palmtree, Camera, Compass, Search, Instagram, Globe
 } from 'lucide-react';
 import MobileNav from '@/components/MobileNav';
 import PageHeader from '@/components/PageHeader';
@@ -22,6 +22,8 @@ interface PontoTuristico {
   descricao?: string;
   images?: string[];
   imagem?: string;
+  instagramUrl?: string;
+  websiteUrl?: string;
 }
 
 const categoryIcons: Record<string, React.ElementType> = {
@@ -69,7 +71,9 @@ export default function Pontos() {
           category: data.categoria || data.category || 'Natural',
           descricao: data.descricao || data.content || '',
           imagem: data.imagem || (data.images && data.images[0]) || '',
-          images: data.images || (data.imagem ? [data.imagem] : [])
+          images: data.images || (data.imagem ? [data.imagem] : []),
+          instagramUrl: data.instagramUrl || '',
+          websiteUrl: data.websiteUrl || ''
         } as PontoTuristico;
       });
       
@@ -421,15 +425,21 @@ export default function Pontos() {
                 {/* Descrição */}
                 <p className="font-sans text-sm text-on-surface-variant leading-relaxed">{selectedPonto.descricao || selectedPonto.content}</p>
 
-                {/* Botão Visitar */}
-                <Link
-                  href="/guias"
-                  onClick={closeGallery}
-                  className="flex items-center justify-center gap-2.5 w-full bg-primary text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-primary/90 active:scale-[0.98] transition-all mt-1"
-                >
-                  <Compass size={15} />
-                  Visitar com Guia
-                </Link>
+                <div className="flex flex-col gap-2 mt-1">
+                  {selectedPonto.instagramUrl && (
+                    <a href={selectedPonto.instagramUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-pink-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-pink-700 active:scale-[0.98] transition-all">
+                      <Instagram size={15} /> Instagram Oficial
+                    </a>
+                  )}
+                  {selectedPonto.websiteUrl && (
+                    <a href={selectedPonto.websiteUrl} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2.5 w-full bg-blue-600 text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-blue-700 active:scale-[0.98] transition-all">
+                      <Globe size={15} /> Acessar Site
+                    </a>
+                  )}
+                  <Link href="/guias" onClick={closeGallery} className="flex items-center justify-center gap-2.5 w-full bg-primary text-white py-3.5 rounded-xl font-sans text-[11px] font-bold uppercase tracking-widest hover:bg-primary/90 active:scale-[0.98] transition-all">
+                    <Compass size={15} /> Visitar com Guia
+                  </Link>
+                </div>
               </div>
             </motion.div>
           </motion.div>
