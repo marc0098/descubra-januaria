@@ -198,8 +198,8 @@ export default function EventosClient({ initialEventos, initialConfig }: { initi
           </p>
         </div>
 
-        {/* GRID DE EVENTOS */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        {/* LISTA DE EVENTOS HORIZONTAL */}
+        <div className="flex flex-col gap-6">
             {filteredEventos.map((evento, index) => {
               const Icon = categoryIcons[evento.tipo] || categoryIcons.default;
 
@@ -214,89 +214,79 @@ export default function EventosClient({ initialEventos, initialConfig }: { initi
                   passHref legacyBehavior
                 >
                 <div
-                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col cursor-pointer premium-card-hover text-left break-inside-avoid w-full h-full"
+                  className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group transition-all duration-500 flex flex-col md:flex-row cursor-pointer premium-card-hover text-left break-inside-avoid w-full shadow-md hover:shadow-lg"
                 >
-                  {/* IMAGEM */}
-                  <div className="relative overflow-hidden bg-surface-container aspect-[16/9] shrink-0">
+                  {/* IMAGEM (ESQUERDA NO DESKTOP, TOPO NO MOBILE) */}
+                  <div className="relative w-full md:w-[320px] lg:w-[360px] aspect-[4/3] md:aspect-auto md:min-h-[220px] shrink-0 overflow-hidden bg-surface-container">
                     <img
                       src={evento.imagem}
                       alt={evento.nome}
                       className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 block"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
-
-                    {/* Calendário flutuante no topo direito */}
-                    <div className="absolute top-0 right-4 bg-white text-center rounded-b-xl shadow-lg overflow-hidden flex flex-col min-w-[50px] z-10 border border-t-0 border-outline-variant/20">
-                        <strong className="bg-white text-gray-800 text-lg sm:text-xl font-black pt-2 pb-1 leading-none">{evento.diaBadge}</strong>
-                        <span className="bg-primary text-white text-[9px] sm:text-[10px] font-bold py-1.5 px-2 uppercase tracking-widest">{evento.mesBadge}</span>
-                    </div>
-
-                    {/* Badge tipo */}
-                    <div className="absolute top-3 left-3">
-                      <div className="bg-surface/90 backdrop-blur-sm px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-sm border border-outline-variant/20">
-                        <Icon className="text-quaternary" size={12} />
-                        <span className="font-sans text-[9px] font-black uppercase tracking-wider text-on-surface">{evento.tipo}</span>
-                      </div>
-                    </div>
-
-                    {/* Título e Status Encerrado na imagem */}
-                    <div className="absolute bottom-3 left-4 right-4 flex flex-col items-start gap-1.5">
-                      {evento.isEncerrado && (
-                        <div className="flex items-center gap-1.5 bg-red-600/95 backdrop-blur-sm text-white px-2.5 py-1 rounded-md text-[9px] font-black uppercase shadow-sm border border-red-500/50">
-                          <span className="tracking-widest">Encerrado</span>
-                          <Check size={10} strokeWidth={4} />
-                        </div>
-                      )}
-                      <h2 className="font-headline text-lg sm:text-xl font-bold text-white leading-tight drop-shadow-md">{evento.nome}</h2>
+                    
+                    {/* Calendário flutuante no canto inferior esquerdo */}
+                    <div className="absolute bottom-4 left-4 bg-white text-center rounded-lg shadow-xl overflow-hidden flex flex-col min-w-[56px] border border-outline-variant/20 z-10">
+                        <strong className="bg-white text-gray-800 text-xl font-black pt-2 pb-1 leading-none">{evento.diaBadge}</strong>
+                        <span className="bg-primary text-white text-[10px] font-bold py-1.5 px-2 uppercase tracking-widest">{evento.mesBadge}</span>
                     </div>
                   </div>
 
-                  {/* DETALHES */}
-                  <div className="p-4 sm:p-5 flex flex-col flex-1 gap-4">
+                  {/* CONTEÚDO (DIREITA) */}
+                  <div className="p-5 md:p-6 lg:p-8 flex flex-col flex-1">
                     
-                    {/* Bloco de Datas (Início / Fim) */}
-                    <div className="flex flex-col gap-2.5 bg-surface-container/50 p-3.5 rounded-xl border border-outline-variant/30">
-                       <div className="flex items-start gap-2.5">
-                          <Calendar size={14} className="text-primary mt-0.5 shrink-0" />
-                          <div className="flex flex-col gap-0.5">
-                             <span className="font-sans text-[9px] font-bold text-on-surface-variant uppercase tracking-wider">Início</span>
-                             <span className="font-sans text-[11px] sm:text-xs font-semibold text-on-surface">
-                                {evento.data_inicio} {evento.horario && `às ${evento.horario}`}
-                             </span>
+                    {/* Linha do Título e Status */}
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
+                      <h2 className="font-headline text-xl sm:text-2xl font-bold text-on-surface uppercase pr-4">{evento.nome}</h2>
+                      
+                      {evento.isEncerrado && (
+                        <div className="flex items-center gap-1.5 text-red-600 shrink-0 mt-1 sm:mt-0">
+                          <span className="font-sans text-[11px] font-black uppercase tracking-widest">Encerrado</span>
+                          <div className="bg-red-600 text-white rounded-full p-0.5">
+                            <Check size={12} strokeWidth={4} />
                           </div>
-                       </div>
-                       
-                       {evento.data_encerramento && (
-                         <>
-                           <div className="w-full h-px bg-outline-variant/30" />
-                           <div className="flex items-start gap-2.5">
-                              <Calendar size={14} className="text-primary mt-0.5 shrink-0" />
-                              <div className="flex flex-col gap-0.5">
-                                 <span className="font-sans text-[9px] font-bold text-on-surface-variant uppercase tracking-wider">Encerramento</span>
-                                 <span className="font-sans text-[11px] sm:text-xs font-semibold text-on-surface">
-                                    {evento.data_encerramento}
-                                 </span>
-                              </div>
-                           </div>
-                         </>
-                       )}
-                    </div>
-
-                    {/* Local */}
-                    <div className="flex items-start gap-2 px-1">
-                      <MapPin size={13} className="text-quaternary mt-0.5 shrink-0" />
-                      <span className="font-sans text-xs text-on-surface-variant leading-relaxed">{evento.local}</span>
+                        </div>
+                      )}
                     </div>
 
                     {/* Descrição */}
-                    <p className="font-sans text-xs text-on-surface-variant leading-relaxed line-clamp-3 flex-1 px-1">
+                    <p className="font-sans text-sm text-on-surface-variant leading-relaxed line-clamp-2 md:line-clamp-3 mb-6">
                       {evento.descricao}
                     </p>
 
-                    {/* Botão */}
-                    <button className="flex items-center justify-center gap-2 w-full bg-quaternary/10 text-quaternary py-3 rounded-xl font-sans text-[10px] font-bold uppercase tracking-wider hover:bg-quaternary hover:text-white transition-all duration-300 mt-auto">
-                      Ver programação
-                    </button>
+                    {/* Rodapé de Informações (Datas e Categoria) */}
+                    <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mt-auto pt-5 border-t border-outline-variant/30">
+                       <div className="flex items-center gap-2">
+                          <div className="bg-surface-container rounded-md p-1.5 shrink-0 text-on-surface-variant">
+                             <Calendar size={14} />
+                          </div>
+                          <span className="font-sans text-xs sm:text-sm text-on-surface-variant">
+                             <strong className="text-on-surface">Início:</strong> {evento.data_inicio} {evento.horario && `às ${evento.horario}`}
+                          </span>
+                       </div>
+                       
+                       {evento.data_encerramento && (
+                         <div className="flex items-center gap-2">
+                            <div className="bg-surface-container rounded-md p-1.5 shrink-0 text-on-surface-variant">
+                               <Calendar size={14} />
+                            </div>
+                            <span className="font-sans text-xs sm:text-sm text-on-surface-variant">
+                               <strong className="text-on-surface">Encerramento:</strong> {evento.data_encerramento}
+                            </span>
+                         </div>
+                       )}
+
+                       {evento.tipo && (
+                         <div className="flex items-center gap-2">
+                            <div className="bg-surface-container rounded-md p-1.5 shrink-0 text-on-surface-variant">
+                               <Icon size={14} />
+                            </div>
+                            <span className="font-sans text-xs sm:text-sm text-on-surface-variant">
+                               <strong className="text-on-surface">Categoria:</strong> {evento.tipo}
+                            </span>
+                         </div>
+                       )}
+                    </div>
+
                   </div>
                 </div>
                 </Link>
