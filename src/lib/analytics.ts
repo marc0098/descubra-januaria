@@ -33,10 +33,8 @@ export const trackClick = async (collectionName: string, id: string, type: Click
     }, { merge: true });
     
     console.log(`[Analytics] Registrado clique em ${type} para ${collectionName}/${id}`);
-    alert(`DEBUG: Sucesso! O clique em ${type} foi enviado para o banco de dados.`);
-  } catch (error: any) {
+  } catch (error) {
     // Falhas de analytics não devem quebrar a experiência do usuário, então apenas logamos
     console.error(`[Analytics] Erro ao registrar clique em ${collectionName}/${id}:`, error);
-    alert(`DEBUG ERRO: O Firebase bloqueou o salvamento. Motivo: ${error.message}`);
   }
 };
