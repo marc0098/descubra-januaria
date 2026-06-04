@@ -112,8 +112,8 @@ export default function HomePage() {
       }, (error) => {
         console.warn('Erro ao escutar configuracoes globais:', error);
       }),
-      onSnapshot(query(collection(db, 'destaques'), where('isActive', '==', true), orderBy('order', 'asc')), (snap) => {
-        const data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Destaque));
+      onSnapshot(query(collection(db, 'destaques'), orderBy('order', 'asc')), (snap) => {
+        const data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Destaque)).filter(d => d.isActive);
         setDestaques(data);
       }, (error) => {
         console.warn('Erro ao escutar destaques:', error);
