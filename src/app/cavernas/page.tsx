@@ -164,7 +164,7 @@ export default function CavernasPage() {
                   className="bg-surface rounded-2xl sm:rounded-3xl lg:rounded-[32px] overflow-hidden shadow-xl flex flex-col border border-outline-variant/30 group premium-card-hover"
                 >
                   {/* Imagem Container */}
-                  <Link href={`/cavernas/${item.slug || item.id}`} className="h-56 sm:h-64 lg:h-72 2xl:h-80 relative overflow-hidden block" prefetch={false}>
+                  <Link href={`/cavernas/${item.slug || item.id}`} className="h-56 sm:h-64 lg:h-72 2xl:h-80 relative overflow-hidden block">
                     <motion.img 
                       whileHover={{ scale: 1.05 }}
                       transition={{ duration: 0.6 }}

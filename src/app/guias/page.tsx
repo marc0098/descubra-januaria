@@ -162,7 +162,7 @@ export default function GuiasPage() {
                   className="bg-surface rounded-2xl border border-outline-variant/30 overflow-hidden group premium-card-hover flex flex-col"
                 >
                   {/* Imagem compacta */}
-                  <Link href={`/guias/${guia.slug || guia.id}`} className="relative aspect-[4/3] overflow-hidden bg-surface-container block" prefetch={false}>
+                  <Link href={`/guias/${guia.slug || guia.id}`} className="relative aspect-[4/3] overflow-hidden bg-surface-container block">
                     <img
                       src={guia.image}
                       alt={guia.name}

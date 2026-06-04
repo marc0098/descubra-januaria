@@ -170,7 +170,6 @@ export default function EstadiasPage() {
                       setSelectedHotel(hotel);
                     }}
                     passHref legacyBehavior
-                    prefetch={false}
                   >
                   <motion.a
                     layout

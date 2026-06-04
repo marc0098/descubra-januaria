@@ -171,7 +171,6 @@ export default function Eventos() {
                     setSelectedEvent(evento);
                   }}
                   passHref legacyBehavior
-                  prefetch={false}
                 >
                 <motion.a
                   layout
