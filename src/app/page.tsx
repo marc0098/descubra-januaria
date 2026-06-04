@@ -319,10 +319,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Seção Destaques (Carrossel Estilo Lume Studio) */}
+      {/* Seção Destaques (Carrossel Estilo Lume Studio + Design Januária) */}
       {destaques.length > 0 && (
-        <section className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16 my-8 sm:my-10">
-          <div className="relative w-full h-[320px] sm:h-[400px] md:h-[460px] rounded-3xl overflow-hidden shadow-lg bg-neutral-900 group">
+        <section className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16 my-10 sm:my-14">
+          <div className="relative w-full h-[350px] sm:h-[450px] md:h-[520px] rounded-[2rem] overflow-hidden shadow-2xl bg-neutral-900 group border border-white/10">
             <AnimatePresence initial={false} mode="wait">
               <motion.div
                 key={currentDestaque}
@@ -339,42 +339,43 @@ export default function HomePage() {
                 />
 
                 {/* Layer 2: Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent pointer-events-none" />
 
                 {/* Layer 3: Sharp Image Center */}
-                <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-8 pointer-events-none">
+                <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8 md:p-12 pointer-events-none">
                   <img
                     src={destaques[currentDestaque]?.imageUrl}
                     alt={destaques[currentDestaque]?.title}
-                    className="max-w-full max-h-full object-contain drop-shadow-2xl"
+                    className="max-w-full max-h-full object-contain drop-shadow-[0_20px_30px_rgba(0,0,0,0.5)]"
                   />
                 </div>
 
                 {/* Layer 4: Overlays */}
                 {/* Badge */}
                 <div className="absolute top-4 left-4 sm:top-6 sm:left-6">
-                  <span className="bg-amber-500 text-white text-[10px] sm:text-xs font-bold tracking-wider uppercase px-3 py-1.5 rounded-full shadow-md">
-                    Destaque
-                  </span>
+                  <div className="inline-flex items-center gap-2 bg-amber-500/90 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg text-black">
+                    <Sun className="w-4 h-4 animate-spin-slow" />
+                    <span className="text-xs font-bold uppercase tracking-[0.2em]">Destaque</span>
+                  </div>
                 </div>
 
                 {/* Info Text */}
-                <div className="absolute bottom-6 left-4 right-20 sm:bottom-8 sm:left-6 sm:right-24 flex flex-col gap-1 text-white">
-                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold leading-tight drop-shadow-md line-clamp-1">
+                <div className="absolute bottom-8 left-4 right-20 sm:bottom-10 sm:left-6 sm:right-28 flex flex-col gap-2 text-white">
+                  <h2 className="font-headline text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold uppercase tracking-tight leading-[1.1] drop-shadow-lg line-clamp-2">
                     {destaques[currentDestaque]?.title}
                   </h2>
-                  <p className="text-[10px] sm:text-xs md:text-sm text-white/80 line-clamp-2 max-w-xl drop-shadow-sm">
+                  <p className="font-sans text-sm sm:text-base md:text-lg text-white/90 font-medium drop-shadow-md line-clamp-2 md:line-clamp-3 max-w-2xl">
                     {destaques[currentDestaque]?.description}
                   </p>
                 </div>
 
                 {/* Cart/Arrow Button */}
-                <div className="absolute bottom-6 right-4 sm:bottom-8 sm:right-6 pointer-events-auto">
+                <div className="absolute bottom-8 right-4 sm:bottom-10 sm:right-6 pointer-events-auto">
                   <button
                     onClick={() => router.push(destaques[currentDestaque]?.link || '#')}
-                    className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-800 text-white rounded-2xl flex items-center justify-center shadow-lg hover:bg-emerald-700 hover:scale-105 active:scale-95 transition-all duration-200"
+                    className="w-12 h-12 sm:w-14 sm:h-14 bg-amber-500 text-black rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:bg-amber-400 hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] hover:scale-105 active:scale-95 transition-all duration-300"
                   >
-                    <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                    <ArrowRight className="w-6 h-6 sm:w-7 sm:h-7" />
                   </button>
                 </div>
               </motion.div>
@@ -382,12 +383,12 @@ export default function HomePage() {
 
             {/* Carousel Dots */}
             {destaques.length > 1 && (
-              <div className="absolute bottom-2 left-0 right-0 flex justify-center items-center gap-2 z-20">
+              <div className="absolute bottom-3 left-0 right-0 flex justify-center items-center gap-2 z-20">
                 {destaques.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCurrentDestaque(idx)}
-                    className={`transition-all duration-300 rounded-full ${currentDestaque === idx ? 'w-6 h-1.5 bg-amber-500' : 'w-1.5 h-1.5 bg-white/50 hover:bg-white/80'}`}
+                    className={`transition-all duration-300 rounded-full ${currentDestaque === idx ? 'w-8 h-2 bg-amber-500' : 'w-2 h-2 bg-white/50 hover:bg-white/80'}`}
                     aria-label={`Ir para o slide ${idx + 1}`}
                   />
                 ))}
@@ -398,10 +399,10 @@ export default function HomePage() {
           {/* Wide Button Below Banner */}
           <button
             onClick={() => router.push(destaques[currentDestaque]?.link || '#')}
-            className="w-full mt-3 flex items-center justify-center gap-2 text-emerald-900 dark:text-emerald-100 text-xs sm:text-sm font-semibold py-3 sm:py-3.5 rounded-xl bg-emerald-600/10 hover:bg-emerald-600/20 active:scale-95 transition-all duration-200"
+            className="w-full mt-4 flex items-center justify-center gap-3 bg-amber-500 hover:bg-amber-400 text-black px-8 py-4 rounded-xl text-sm sm:text-base font-bold uppercase tracking-[0.15em] transition-all shadow-lg hover:shadow-[0_10px_20px_rgba(245,158,11,0.3)] active:scale-95"
           >
             <span>{destaques[currentDestaque]?.buttonText || 'Ver detalhes'}</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-5 h-5" />
           </button>
         </section>
       )}
