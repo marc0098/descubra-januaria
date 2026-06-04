@@ -29,8 +29,9 @@ async function getGastronomiaData(slug: string): Promise<any> {
   }
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const data = await getGastronomiaData(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const data = await getGastronomiaData(resolvedParams.slug);
   
   if (!data) return { title: 'Item não encontrado' };
 
@@ -55,8 +56,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function GastronomiaSlugPage({ params }: { params: { slug: string } }) {
-  const item = await getGastronomiaData(params.slug);
+export default async function GastronomiaSlugPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
+  const item = await getGastronomiaData(resolvedParams.slug);
 
   if (!item) {
     notFound();

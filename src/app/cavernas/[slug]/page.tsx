@@ -40,8 +40,9 @@ async function getAtrativoData(slug: string): Promise<any> {
   }
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const data = await getAtrativoData(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const data = await getAtrativoData(resolvedParams.slug);
   
   if (!data) return { title: 'Atrativo não encontrado' };
 
@@ -66,8 +67,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function AtrativoSlugPage({ params }: { params: { slug: string } }) {
-  const item = await getAtrativoData(params.slug);
+export default async function AtrativoSlugPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
+  const item = await getAtrativoData(resolvedParams.slug);
 
   if (!item) {
     notFound();

@@ -29,8 +29,9 @@ async function getHotelData(slug: string): Promise<any> {
   }
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const data = await getHotelData(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const data = await getHotelData(resolvedParams.slug);
   
   if (!data) return { title: 'Hotel não encontrado' };
 
@@ -55,8 +56,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function EstadiaSlugPage({ params }: { params: { slug: string } }) {
-  const hotel = await getHotelData(params.slug);
+export default async function EstadiaSlugPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
+  const hotel = await getHotelData(resolvedParams.slug);
 
   if (!hotel) {
     notFound();

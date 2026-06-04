@@ -31,8 +31,9 @@ async function getPontoData(slug: string): Promise<any> {
   }
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const data = await getPontoData(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const data = await getPontoData(resolvedParams.slug);
   
   if (!data) return { title: 'Ponto não encontrado' };
 
@@ -57,8 +58,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function PontoSlugPage({ params }: { params: { slug: string } }) {
-  const ponto = await getPontoData(params.slug);
+export default async function PontoSlugPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
+  const ponto = await getPontoData(resolvedParams.slug);
 
   if (!ponto) {
     notFound();

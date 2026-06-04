@@ -29,8 +29,9 @@ async function getGuiaData(slug: string): Promise<any> {
   }
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const data = await getGuiaData(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const data = await getGuiaData(resolvedParams.slug);
   
   if (!data) return { title: 'Guia não encontrado' };
 
@@ -55,8 +56,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function GuiaSlugPage({ params }: { params: { slug: string } }) {
-  const guia = await getGuiaData(params.slug);
+export default async function GuiaSlugPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
+  const guia = await getGuiaData(resolvedParams.slug);
 
   if (!guia) {
     notFound();
