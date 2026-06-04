@@ -343,7 +343,7 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none" />
 
                 {/* Layer 3: Sharp Image Center */}
-                <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8 md:p-12 pointer-events-none">
+                <div className="absolute inset-0 flex items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8 pointer-events-none">
                   <img
                     src={destaques[currentDestaque]?.imageUrl}
                     alt={destaques[currentDestaque]?.title}
