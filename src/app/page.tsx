@@ -319,97 +319,97 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Seção Destaques (Carrossel Anúncios CTA Chamativo) */}
+      {/* Seção Destaques (Carrossel Full-Width) */}
       {destaques.length > 0 && (
-        <section className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16 my-8 sm:my-12">
-          <div className="relative w-full h-[350px] sm:h-[450px] md:h-[520px] rounded-[2rem] overflow-hidden shadow-2xl bg-surface group border border-outline-variant/30">
-            <AnimatePresence initial={false} mode="wait">
-              <motion.div
-                key={currentDestaque}
-                initial={{ opacity: 0, scale: 1.02 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
-                className="absolute inset-0"
-              >
-                {/* Layer 1: Blurred Background (Fully opaque to fill edges) */}
-                <div
-                  className="absolute inset-0 bg-cover bg-center blur-3xl scale-125 select-none"
-                  style={{ backgroundImage: `url('${destaques[currentDestaque]?.imageUrl}')` }}
-                />
+        <section className="relative w-full h-[450px] sm:h-[550px] lg:h-[650px] xl:h-[750px] overflow-hidden bg-neutral-900">
+          <AnimatePresence initial={false} mode="wait">
+            <motion.div
+              key={currentDestaque}
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: `url('${destaques[currentDestaque]?.imageUrl}')` }}
+            >
+              {/* Gradient Overlays for Text Readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent pointer-events-none hidden sm:block" />
 
-                {/* Layer 2: Soft Light/Dark Overlay to ensure contrast, but not pitch black */}
-                <div className="absolute inset-0 bg-black/20 dark:bg-black/50" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent pointer-events-none" />
-
-                {/* Layer 3: Sharp Image Center */}
-                <div className="absolute inset-0 flex items-center justify-center p-2 sm:p-4 md:p-6 lg:p-8 pointer-events-none">
-                  <img
-                    src={destaques[currentDestaque]?.imageUrl}
-                    alt={destaques[currentDestaque]?.title}
-                    className="max-w-full max-h-full object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
-                  />
-                </div>
-
-                {/* Layer 4: Overlays */}
-                {/* Badge Promocional */}
-                <div className="absolute top-4 left-4 sm:top-6 sm:left-6">
-                  <div className="inline-flex items-center gap-2 bg-[#ff3333] px-4 py-1.5 rounded-full shadow-[0_0_15px_rgba(255,51,51,0.5)] text-white">
+              {/* Content Box */}
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16 flex flex-col items-start pt-20 sm:pt-24 lg:pt-32">
+                  
+                  {/* Badge */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                    className="inline-flex items-center gap-2 bg-[#ff3333] px-3 sm:px-4 py-1.5 rounded-full shadow-[0_0_15px_rgba(255,51,51,0.5)] text-white mb-4 sm:mb-6"
+                  >
                     <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.1em] flex items-center gap-1.5">
                       <span className="w-2 h-2 rounded-full bg-white animate-pulse" /> Destaque
                     </span>
-                  </div>
-                </div>
+                  </motion.div>
 
-                {/* Info Text */}
-                <div className="absolute bottom-10 left-4 right-20 sm:bottom-12 sm:left-6 sm:right-28 flex flex-col gap-1 text-white">
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold leading-tight drop-shadow-lg line-clamp-2">
-                    {destaques[currentDestaque]?.title}
-                  </h2>
-                  <p className="text-xs sm:text-sm text-white/80 line-clamp-2 max-w-xl drop-shadow-md">
-                    {destaques[currentDestaque]?.description}
-                  </p>
-                </div>
-
-                {/* CTA Icon Button */}
-                <div className="absolute bottom-10 right-4 sm:bottom-12 sm:right-6 pointer-events-auto">
-                  <button
-                    onClick={() => router.push(destaques[currentDestaque]?.link || '#')}
-                    className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.5)] hover:scale-110 active:scale-95 transition-all duration-300"
+                  {/* Title */}
+                  <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.5 }}
+                    className="font-headline text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold uppercase tracking-tight leading-[1.1] text-white drop-shadow-lg max-w-3xl mb-3 sm:mb-4"
                   >
-                    <ArrowRight className="w-6 h-6 sm:w-7 sm:h-7" />
-                  </button>
+                    {destaques[currentDestaque]?.title}
+                  </motion.h2>
+
+                  {/* Description */}
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.5 }}
+                    className="font-sans text-sm sm:text-base md:text-lg lg:text-xl text-white/90 font-medium max-w-2xl drop-shadow-md leading-relaxed mb-8 sm:mb-10 line-clamp-3"
+                  >
+                    {destaques[currentDestaque]?.description}
+                  </motion.p>
+
+                  {/* Call to Action Button */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.5 }}
+                    className="w-full sm:w-auto"
+                  >
+                    <button
+                      onClick={() => router.push(destaques[currentDestaque]?.link || '#')}
+                      className="group relative w-full sm:w-auto flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 text-white px-8 sm:px-10 py-4 sm:py-5 rounded-full text-sm sm:text-base font-black uppercase tracking-[0.1em] overflow-hidden transition-all shadow-[0_10px_30px_rgba(16,185,129,0.3)] hover:shadow-[0_15px_40px_rgba(16,185,129,0.5)] hover:-translate-y-1 active:scale-95"
+                      style={{ backgroundSize: '200% 100%', animation: 'gradientMove 3s linear infinite' }}
+                    >
+                      {/* Efeito de Brilho */}
+                      <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover:animate-shine" />
+                      
+                      <span className="relative z-10">{destaques[currentDestaque]?.buttonText || 'Aproveitar Oferta'}</span>
+                      <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </motion.div>
+
                 </div>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Carousel Dots */}
-            {destaques.length > 1 && (
-              <div className="absolute bottom-3 left-0 right-0 flex justify-center items-center gap-2 z-20">
-                {destaques.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentDestaque(idx)}
-                    className={`transition-all duration-300 rounded-full ${currentDestaque === idx ? 'w-6 h-1.5 bg-emerald-500' : 'w-1.5 h-1.5 bg-white/30 hover:bg-white/60'}`}
-                    aria-label={`Ir para o slide ${idx + 1}`}
-                  />
-                ))}
               </div>
-            )}
-          </div>
+            </motion.div>
+          </AnimatePresence>
 
-          {/* Super Chamativo Wide CTA Button Below Banner */}
-          <button
-            onClick={() => router.push(destaques[currentDestaque]?.link || '#')}
-            className="group relative w-full mt-4 flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-600 via-emerald-500 to-emerald-600 text-white px-8 py-4 sm:py-5 rounded-2xl text-sm sm:text-base font-black uppercase tracking-[0.1em] overflow-hidden transition-all shadow-[0_10px_30px_rgba(16,185,129,0.3)] hover:shadow-[0_15px_40px_rgba(16,185,129,0.5)] hover:-translate-y-1 active:scale-95"
-            style={{ backgroundSize: '200% 100%', animation: 'gradientMove 3s linear infinite' }}
-          >
-            {/* Efeito de Brilho (Shine) */}
-            <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover:animate-shine" />
-            
-            <span className="relative z-10">{destaques[currentDestaque]?.buttonText || 'Aproveitar Oferta'}</span>
-            <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
-          </button>
+          {/* Carousel Dots */}
+          {destaques.length > 1 && (
+            <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 flex justify-center items-center gap-3 z-20">
+              {destaques.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentDestaque(idx)}
+                  className={`transition-all duration-300 rounded-full ${currentDestaque === idx ? 'w-10 h-2 bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.8)]' : 'w-2 h-2 bg-white/40 hover:bg-white/80'}`}
+                  aria-label={`Ir para o slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </section>
       )}
 
