@@ -153,6 +153,20 @@ export default async function GastronomiaSlugPage({ params }: { params: Promise<
                 </a>
               )}
             </div>
+
+            <div className="mt-4 pt-6 border-t border-outline-variant/30 text-center">
+              <p className="font-sans text-xs text-on-surface-variant">
+                É o dono deste estabelecimento?{' '}
+                <a 
+                  href={`https://wa.me/5538992664400?text=Olá, sou o proprietário do estabelecimento *${nome}* listado no Descubra Januária e gostaria de atualizar minhas informações ou reivindicar a página.`} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-primary font-bold hover:underline"
+                >
+                  [Clique aqui]
+                </a> para atualizar as informações ou reivindicar sua página.
+              </p>
+            </div>
           </div>
         </div>
       </div>
