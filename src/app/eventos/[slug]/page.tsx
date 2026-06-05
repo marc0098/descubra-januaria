@@ -129,6 +129,17 @@ export default async function EventoSlugPage({ params }: { params: Promise<{ slu
               {descricao}
             </p>
 
+            {evento.images && evento.images.length > 0 && (
+              <div className="pt-4">
+                <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-quaternary mb-4 block">Galeria de Fotos</span>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                  {evento.images.map((img: string, idx: number) => (
+                    <img key={idx} src={img} alt={`${nome} - foto ${idx + 1}`} className="w-full aspect-[4/3] object-cover rounded-xl border border-outline-variant/30 shadow-sm" />
+                  ))}
+                </div>
+              </div>
+            )}
+
             {evento.Highlights && evento.Highlights.length > 0 && (
               <div className="pt-4 border-t border-outline-variant/30">
                 <span className="font-sans text-xs font-bold uppercase tracking-[0.15em] text-quaternary mb-3 block">O que você encontra</span>

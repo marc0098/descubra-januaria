@@ -18,6 +18,7 @@ interface Evento {
   local?: string;
   tipo?: string;
   imagem: string;
+  images?: string[];
   instagramUrl?: string;
   websiteUrl?: string;
   destaque: boolean;
@@ -47,7 +48,7 @@ export default function AdminEventos() {
 
   const openModal = (item?: Evento) => {
     if (item) { setEditing(item); setForm(item); }
-    else { setEditing(null); setForm({ nome: '', descricao: '', data: '', data_inicio: '', data_encerramento: '', horario: '', local: '', tipo: 'Festa Popular', imagem: '', instagramUrl: '', websiteUrl: '', destaque: false }); }
+    else { setEditing(null); setForm({ nome: '', descricao: '', data: '', data_inicio: '', data_encerramento: '', horario: '', local: '', tipo: 'Festa Popular', imagem: '', images: [], instagramUrl: '', websiteUrl: '', destaque: false }); }
     setImagemFile(null);
     setShowModal(true);
   };
@@ -62,7 +63,7 @@ export default function AdminEventos() {
         await uploadBytes(storageRef, imagemFile);
         imagemUrl = await getDownloadURL(storageRef);
       }
-      const payload = { ...form, imagem: imagemUrl, destaque: form.destaque || false, data: form.data_inicio || form.data };
+      const payload = { ...form, imagem: imagemUrl, images: form.images || [], destaque: form.destaque || false, data: form.data_inicio || form.data };
       if (editing) { await updateDoc(doc(db, 'eventos', editing.id), payload); }
       else { await addDoc(collection(db, 'eventos'), payload); }
       setShowModal(false);
@@ -180,6 +181,31 @@ export default function AdminEventos() {
                       </label>
                     </div>
                   </div>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Galeria de Fotos Adicionais (URLs)</label>
+                <div className="flex flex-col gap-2">
+                  {(form.images || []).map((imgUrl, index) => (
+                    <div key={index} className="flex items-center gap-2">
+                      <input type="url" value={imgUrl} onChange={(e) => {
+                        const newImages = [...(form.images || [])];
+                        newImages[index] = e.target.value;
+                        setForm({ ...form, images: newImages });
+                      }} className={inputClass} placeholder="URL da foto adicional" />
+                      <button type="button" onClick={() => {
+                        const newImages = [...(form.images || [])].filter((_, i) => i !== index);
+                        setForm({ ...form, images: newImages });
+                      }} className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded shrink-0">
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                  <button type="button" onClick={() => {
+                    setForm({ ...form, images: [...(form.images || []), ''] });
+                  }} className="flex items-center gap-2 text-sm text-purple-600 dark:text-purple-400 font-semibold self-start hover:underline mt-1 font-sans">
+                    <Plus className="w-4 h-4" /> Adicionar Foto Extra
+                  </button>
                 </div>
               </div>
               <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-zinc-800">

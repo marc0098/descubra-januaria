@@ -27,6 +27,7 @@ export interface Evento {
   local: string;
   descricao: string;
   imagem: string;
+  images?: string[];
   Highlights?: string[];
   instagramUrl?: string;
   websiteUrl?: string;
@@ -51,6 +52,7 @@ export default function EventosClient({ initialEventos, initialConfig }: { initi
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMonth, setSelectedMonth] = useState('Todos');
   const [selectedEvent, setSelectedEvent] = useState<Evento | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [eventos, setEventos] = useState<Evento[]>(initialEventos);
   const [pageConfig, setPageConfig] = useState(initialConfig);
 
@@ -143,6 +145,7 @@ export default function EventosClient({ initialEventos, initialConfig }: { initi
           local: data.local || '',
           descricao: data.descricao || '',
           imagem: data.imagem || '',
+          images: data.images || [],
           Highlights: data.Highlights || [],
           instagramUrl: data.instagramUrl || '',
           websiteUrl: data.websiteUrl || ''
@@ -210,6 +213,7 @@ export default function EventosClient({ initialEventos, initialConfig }: { initi
                   onClick={(e) => {
                     e.preventDefault();
                     setSelectedEvent(evento);
+                    setCurrentImageIndex(0);
                   }}
                   passHref legacyBehavior
                 >
@@ -334,18 +338,51 @@ export default function EventosClient({ initialEventos, initialConfig }: { initi
               className="bg-surface rounded-2xl sm:rounded-3xl border border-outline-variant/30 overflow-hidden w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
+              {(() => {
+                const hasGallery = selectedEvent.images && selectedEvent.images.length > 0;
+                const allImages = hasGallery ? [selectedEvent.imagem, ...selectedEvent.images] : [selectedEvent.imagem];
+                const currentImage = allImages[currentImageIndex];
+
+                const nextImage = (e: React.MouseEvent) => {
+                  e.stopPropagation();
+                  setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
+                };
+
+                const prevImage = (e: React.MouseEvent) => {
+                  e.stopPropagation();
+                  setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
+                };
+
+                return (
+                  <>
               {/* IMAGEM */}
-              <div className="relative aspect-[16/10] sm:aspect-[16/9] bg-surface-container shrink-0 overflow-hidden">
+              <div className="relative aspect-[16/10] sm:aspect-[16/9] bg-surface-container shrink-0 overflow-hidden group/modalimg">
                 <img
-                  src={selectedEvent.imagem}
+                  key={currentImage}
+                  src={currentImage}
                   alt={selectedEvent.nome}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover animate-in fade-in duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
 
+                {hasGallery && (
+                  <>
+                    <button onClick={prevImage} className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-all z-20 opacity-0 group-hover/modalimg:opacity-100 hidden sm:flex">
+                      <ChevronLeft size={24} />
+                    </button>
+                    <button onClick={nextImage} className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/40 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-all z-20 opacity-0 group-hover/modalimg:opacity-100 hidden sm:flex">
+                      <ChevronRight size={24} />
+                    </button>
+                    
+                    <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-white font-sans text-xs font-bold z-20">
+                      {currentImageIndex + 1} / {allImages.length}
+                    </div>
+                  </>
+                )}
+
                 <button
                   onClick={() => setSelectedEvent(null)}
-                  className="absolute top-3 right-3 sm:top-4 sm:right-4 w-9 h-9 bg-black/40 backdrop-blur-sm rounded-xl flex items-center justify-center text-white hover:bg-black/60 transition-colors z-20"
+                  className="absolute top-3 right-3 sm:top-4 sm:right-4 w-9 h-9 bg-black/40 backdrop-blur-sm rounded-xl flex items-center justify-center text-white hover:bg-black/60 transition-colors z-30"
                 >
                   <X size={18} />
                 </button>
@@ -437,6 +474,9 @@ export default function EventosClient({ initialEventos, initialConfig }: { initi
                   </a>
                 </div>
               </div>
+                  </>
+                );
+              })()}
             </motion.div>
           </motion.div>
         )}
