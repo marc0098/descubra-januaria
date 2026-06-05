@@ -12,6 +12,11 @@ interface Evento {
   nome: string;
   descricao: string;
   data: string;
+  data_inicio?: string;
+  data_encerramento?: string;
+  horario?: string;
+  local?: string;
+  tipo?: string;
   imagem: string;
   instagramUrl?: string;
   websiteUrl?: string;
@@ -42,7 +47,7 @@ export default function AdminEventos() {
 
   const openModal = (item?: Evento) => {
     if (item) { setEditing(item); setForm(item); }
-    else { setEditing(null); setForm({ nome: '', descricao: '', data: '', imagem: '', instagramUrl: '', websiteUrl: '', destaque: false }); }
+    else { setEditing(null); setForm({ nome: '', descricao: '', data: '', data_inicio: '', data_encerramento: '', horario: '', local: '', tipo: 'Festa Popular', imagem: '', instagramUrl: '', websiteUrl: '', destaque: false }); }
     setImagemFile(null);
     setShowModal(true);
   };
@@ -57,7 +62,7 @@ export default function AdminEventos() {
         await uploadBytes(storageRef, imagemFile);
         imagemUrl = await getDownloadURL(storageRef);
       }
-      const payload = { ...form, imagem: imagemUrl, destaque: form.destaque || false };
+      const payload = { ...form, imagem: imagemUrl, destaque: form.destaque || false, data: form.data_inicio || form.data };
       if (editing) { await updateDoc(doc(db, 'eventos', editing.id), payload); }
       else { await addDoc(collection(db, 'eventos'), payload); }
       setShowModal(false);
@@ -100,8 +105,9 @@ export default function AdminEventos() {
               <div className="p-4">
                 <h3 className="font-bold text-gray-900 dark:text-white font-sans">{item.nome}</h3>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 line-clamp-2 font-sans">{item.descricao}</p>
-                <div className="flex items-center gap-2 mt-2 text-gray-500 dark:text-gray-400 text-xs font-sans">
-                  <Calendar className="w-3.5 h-3.5" />{item.data}
+                <div className="flex flex-wrap items-center gap-4 mt-2 text-gray-500 dark:text-gray-400 text-xs font-sans">
+                  <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" /> {item.data_inicio || item.data}</span>
+                  {item.tipo && <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded font-bold">{item.tipo}</span>}
                 </div>
                 <div className="flex justify-end gap-2 mt-4">
                   <button onClick={() => openModal(item)} className="p-2 text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 rounded transition-colors"><Pencil className="w-4 h-4" /></button>
@@ -123,8 +129,29 @@ export default function AdminEventos() {
             </div>
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
               <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Nome</label><input type="text" value={form.nome || ''} onChange={(e) => setForm({ ...form, nome: e.target.value })} className={inputClass} required /></div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Categoria (Tipo)</label>
+                   <input type="text" list="categorias-evento" placeholder="Ex: Festa Popular, Religioso..." value={form.tipo || ''} onChange={(e) => setForm({ ...form, tipo: e.target.value })} className={inputClass} />
+                   <datalist id="categorias-evento">
+                     <option value="Festa Popular" />
+                     <option value="Tradicional" />
+                     <option value="Festa Junina" />
+                     <option value="Religioso" />
+                     <option value="Gastronomia" />
+                     <option value="Musical" />
+                   </datalist>
+                </div>
+                <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Local</label><input type="text" placeholder="Onde vai ser?" value={form.local || ''} onChange={(e) => setForm({ ...form, local: e.target.value })} className={inputClass} /></div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Data Início</label><input type="date" value={form.data_inicio || form.data || ''} onChange={(e) => setForm({ ...form, data_inicio: e.target.value, data: e.target.value })} className={inputClass} required /></div>
+                <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Data Encerramento</label><input type="date" value={form.data_encerramento || ''} onChange={(e) => setForm({ ...form, data_encerramento: e.target.value })} className={inputClass} /></div>
+                <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Horário</label><input type="text" placeholder="Ex: 19h00" value={form.horario || ''} onChange={(e) => setForm({ ...form, horario: e.target.value })} className={inputClass} /></div>
+              </div>
+
               <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Descrição</label><textarea value={form.descricao || ''} onChange={(e) => setForm({ ...form, descricao: e.target.value })} className={inputClass} rows={4} /></div>
-              <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Data</label><input type="date" value={form.data || ''} onChange={(e) => setForm({ ...form, data: e.target.value })} className={inputClass} required /></div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Link do Instagram</label><input type="url" placeholder="https://instagram.com/..." value={form.instagramUrl || ''} onChange={(e) => setForm({ ...form, instagramUrl: e.target.value })} className={inputClass} /></div>
                 <div><label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 font-sans">Link do Site / Outro</label><input type="url" placeholder="https://..." value={form.websiteUrl || ''} onChange={(e) => setForm({ ...form, websiteUrl: e.target.value })} className={inputClass} /></div>
